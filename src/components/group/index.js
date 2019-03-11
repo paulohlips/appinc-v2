@@ -30,10 +30,10 @@ class Group extends Component {
   }
   did
 
-  
+
 
   render() {
-      console.tron.log(['props group', this.props])
+      console.tron.log(['props groups', this.props])
     return (
       <View style={styles.container}>
         <Text style={styles.hint}>Component Group</Text>

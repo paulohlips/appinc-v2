@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 5,    
     elevation: 2,
+    margin: 10,
+    alignItems: 'center',
   },
   hint: {
     fontSize: responsividade.fonts.descriptionSize * 0.9,
@@ -34,6 +36,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
+  },
+  viewMinus: {
+    backgroundColor: colors.danger,
+    marginTop: 20,
+    width: 60,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    margin: 20,
   }
 });
 

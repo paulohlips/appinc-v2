@@ -41,16 +41,17 @@ class Group extends Component {
     const array = {}
 
     components_group.map(item => {
-      array[item.data_name] = null;
-      this.setState({ prototype: array })
-    })
+      array[item.data_name] = null;      
+    });
+    array['index'] = 0;
+    this.setState({ prototype: array });
   }
 
   decrementDataGroup = (id) => {};
 
   render() {
     const { dataGroup } = this.state;
-    console.tron.log(['props groups', this.props])
+    console.tron.log(['props groups', this.props, this.state])
     return (
       <View style={styles.container}>
         <ScrollView 

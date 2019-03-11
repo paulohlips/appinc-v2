@@ -8,6 +8,7 @@ import ComponentList from '../../pages/Step/components/ComponentsList';
 // styles
 import { View, TextInput, Text } from 'react-native';
 import styles from './style';
+import Icons from 'react-native-vector-icons/FontAwesome5';
 
 class Group extends Component {
   state = {
@@ -33,13 +34,17 @@ class Group extends Component {
 
 
   render() {
-      console.tron.log(['props groups', this.props])
+    console.tron.log(['props groups', this.props])
     return (
       <View style={styles.container}>
-        <Text style={styles.hint}>Component Group</Text>
-        {
-            this.props.data.components_group.map(item => <ComponentList data={item}/>)
-        }        
+        <View style={styles.boxGroup}>
+            {
+                this.props.data.components_group.map(item => <ComponentList data={item}/>)
+            }
+        </View>
+        <View style={styles.viewPlus}>
+            <Icons name="plus" size={20} color="#232f34" />
+        </View>   
       </View>
     );
   }

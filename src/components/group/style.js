@@ -6,10 +6,18 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: 'pink',
     width: responsividade.largura_tela,
-    padding: 20,
-    paddingBottom: 40,
+    //padding: 20,
+    alignItems: 'center',
+    paddingBottom: 40,   
+    borderBottomColor: 'black',             
     borderBottomWidth: 0.5,
-    borderBottomColor: 'black',
+  },
+  boxGroup: {
+    width: responsividade.largura_tela * 0.95,
+    padding: 5,
+    backgroundColor: 'white',
+    borderRadius: 5,    
+    elevation: 2,
   },
   hint: {
     fontSize: responsividade.fonts.descriptionSize * 0.9,
@@ -17,6 +25,15 @@ const styles = StyleSheet.create({
     color: 'black',
     opacity: 0.3,
     paddingVertical: 10,
+  },
+  viewPlus: {
+    backgroundColor: colors.secundary,
+    marginTop: 20,
+    width: 60,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
   }
 });
 

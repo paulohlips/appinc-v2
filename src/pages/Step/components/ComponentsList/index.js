@@ -19,7 +19,6 @@ import styles from './styles';
 
 const ComponentList = (props) => (   
   <View style={styles.container}>
-  {console.tron.log(props)} 
     <ScrollView>
       {
         props.data.component_type === 'group' && (

@@ -7,6 +7,7 @@ import { Creators as FormActions } from '../../store/ducks/form';
 // styles
 import { View, TextInput, Text } from 'react-native';
 import styles from './styles';
+import stylesGroup from './stylesGroup';
 
 
 class InputText extends Component {
@@ -52,17 +53,18 @@ class InputText extends Component {
   }
 
   render() {
-    const { data_name, label, hint, default_value, newState } = this.props.data;
+    const { data_name, label, hint, default_value, newState, group } = this.props.data;
     const { saveStep, step } = this.props.form;
+
 
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });
     }
     return (
-      <View style={styles.container}>
+      <View style={true ? stylesGroup.container : styles.container}>
         <Text style={styles.hint}>{hint}</Text>
         <TextInput
-          style={styles.input}
+          style={group ? stylesGroup.input : styles.input}
           autoCapitalize="sentences"
           autoCorrect={false}
           placeholder={"Digite aqui..."}

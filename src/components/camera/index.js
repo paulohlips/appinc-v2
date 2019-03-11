@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 
 import styles from './styles';
+import stylesGroup from './stylesGroup';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { responsividade } from '../../styles';
@@ -218,7 +219,7 @@ class Camera extends React.Component {
   }
 
   render() {
-    const { data_name, label, hint, default_value, newState } = this.props.data;
+    const { data_name, label, hint, default_value, newState, group } = this.props.data;
     const { saveStep } = this.props.form;
     const  { largura_tela } = responsividade;
 
@@ -226,7 +227,7 @@ class Camera extends React.Component {
       this.saveFormInput({ data_name, default_value });
     }
     return (
-      <View style={styles.container}>
+      <View style={group ? stylesGroup.container : styles.container}>
 
         <ScrollView>
           {this.state.image ? this.renderAsset(this.state.image) : null}
@@ -257,7 +258,7 @@ class Camera extends React.Component {
         </View>
         <View style={styles.containerText}>
           <TextInput
-            style={styles.input}
+            style={group ? stylesGroup.input : styles.input}
             autoCapitalize="none"
             autoCorrect={false}
             multiline

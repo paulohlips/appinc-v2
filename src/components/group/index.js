@@ -11,35 +11,35 @@ import styles from './style';
 
 class Group extends Component {
   state = {
-    prototype: null,
-    dataGroup: [
-        {
-            texto2: '',
-            camera2: null,
-            geoloc2: '',
-            index: 0,
-        },
-        {
-            texto2: '',
-            camera2: null,
-            geoloc2: '',
-            index: 1,
-        }
-
-    ],
+    prototype: [],
+    //dataGroup: [],
   }
-  did
+
+
+  componentWillMount() {
+    this.readGroup();
+  }
+
+
+  readGroup = () => {
+    const { components_group } = this.props.data;
+    const array = {}
+
+    components_group.map(item => {
+      array[item.data_name] = null;
+      this.setState({ prototype: array })
+    })
+  }
 
 
 
   render() {
-      console.tron.log(['props groups', this.props])
     return (
       <View style={styles.container}>
         <Text style={styles.hint}>Component Group</Text>
         {
-            this.props.data.components_group.map(item => <ComponentList data={item}/>)
-        }        
+          this.props.data.components_group.map(item => <ComponentList data={item} />)
+        }
       </View>
     );
   }

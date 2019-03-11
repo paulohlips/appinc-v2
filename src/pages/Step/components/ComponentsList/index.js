@@ -1,25 +1,24 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
-import { 
-  InputText, 
-  AudioRec, 
-  Camera, 
-  MyDatePicker, 
-  GeoLocation, 
-  Veiculos, 
-  Check, 
-  Scanner, 
-  Sketch, 
-  Vestigios, 
+import {
+  InputText,
+  AudioRec,
+  Camera,
+  MyDatePicker,
+  GeoLocation,
+  Veiculos,
+  Check,
+  Scanner,
+  Sketch,
+  Vestigios,
   OCR,
   Group,
 } from '../../../../components';
 import styles from './styles';
 
 
-const ComponentList = (props) => (   
+const ComponentList = (props) => (
   <View style={styles.container}>
-  {console.tron.log(props)} 
     <ScrollView>
       {
         props.data.component_type === 'group' && (

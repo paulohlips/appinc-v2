@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // redux
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Creators as FormActions } from '../../store/ducks/form';
+import { Creators as GroupActions } from '../../store/ducks/group';
 import ComponentList from '../../pages/Step/components/ComponentsList';
 
 // styles
@@ -17,14 +17,13 @@ class Group extends Component {
   }
 
   componentWillMount() {
-
     this.readGroup();
-    this.decrementDataGroup();
+    //this.decrementDataGroup();
   }
 
-  renderOneGroup = () => this.props.data.components_group.map(item => <ComponentList data={item} />);
+  renderOneGroup = index  => this.props.data.components_group.map(item => <ComponentList data={item} index={index}/>);
 
-  incrementDataGroup = () => {
+  increment = () => {
       const { dataGroup, prototype } = this.state;
       const size = dataGroup.length;
       var prototypeVar = prototype;
@@ -33,6 +32,7 @@ class Group extends Component {
           index: size
       }
       console.tron.log(size, prototypeVar);
+      this.props.incrementDataGroup(prototypeVar)
       this.setState({ dataGroup: [ ...dataGroup, prototypeVar ] });
   }
 
@@ -47,6 +47,7 @@ class Group extends Component {
       this.setState({ prototype: array });     
     });
     array['index'] = 0;
+    this.props.incrementDataGroup(array);
     this.setState({ prototype: array, dataGroup: [ ...dataGroup, array ] });
   }
 
@@ -61,7 +62,9 @@ class Group extends Component {
   };
 
   render() {
-    const { dataGroup } = this.state
+      const { group } = this.props
+    const { dataGroup } = this.state;
+    console.tron.log([dataGroup, this.props]);
     return (
       <View style={styles.container}>
         <ScrollView
@@ -69,9 +72,9 @@ class Group extends Component {
           pagingEnabled
         >
           {
-            dataGroup.map(item =>
+            group.dataGroup.map(item =>
               <View style={styles.boxGroup}>
-                {this.renderOneGroup()}
+                {this.renderOneGroup(item.index)}
                 <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrementDataGroup(item.index)}>
                   <Icons name="minus" size={20} color="#FFF" />
                 </TouchableOpacity>
@@ -79,7 +82,7 @@ class Group extends Component {
             )
           }
         </ScrollView>
-        <TouchableOpacity style={styles.viewPlus} onPress={() => this.incrementDataGroup()}>
+        <TouchableOpacity style={styles.viewPlus} onPress={() => this.increment()}>
           <Icons name="plus" size={20} color="#232f34" />
         </TouchableOpacity>
       </View>
@@ -87,4 +90,11 @@ class Group extends Component {
   }
 }
 
-export default Group;
+const mapStateToProps = state => ({
+    group: state.groupState,
+});
+
+const mapDispatchToProps = dispatch => 
+    bindActionCreators(GroupActions, dispatch);
+    
+export default connect(mapStateToProps, mapDispatchToProps)(Group);

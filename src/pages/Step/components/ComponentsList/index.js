@@ -30,14 +30,14 @@ const ComponentList = (props) => (
       {
         props.data.component_type === 'ocr' && (
           <View style={styles.component}>
-            <OCR data={props.data} />
+            <OCR data={props.data} index={props.data.group ? props.index : null}/>
           </View>
         )
       }
       {
         props.data.component_type === 'scanner' && (
           <View style={styles.component}>
-            <Scanner data={props.data} />
+            <Scanner data={props.data} index={props.data.group ? props.index : null}/>
           </View>
         )
       }
@@ -45,7 +45,7 @@ const ComponentList = (props) => (
       {
         props.data.component_type === 'croqui' && (
           <View style={styles.component}>
-            <Sketch data={props.data} />
+            <Sketch data={props.data} index={props.data.group ? props.index : null}/>
           </View>
         )
       }
@@ -61,42 +61,42 @@ const ComponentList = (props) => (
       {
         props.data.component_type === 'camera' && (
           <View style={styles.component}>
-            <Camera data={props.data} />
+            <Camera data={props.data} index={props.data.group ? props.index : null}/>
           </View>
         )
       }
       {
         props.data.component_type === 'text' && (
           <View style={styles.component}>
-            <InputText data={props.data} />
+            <InputText data={props.data} index={props.data.group ? props.index : null}/>
           </View>
         )
       }
       {
         props.data.component_type === 'audiorec' && (
           <View style={styles.component}>
-            <AudioRec data={props.data} />
+            <AudioRec data={props.data} index={props.data.group ? props.index : null}/>
           </View>
         )
       }
       {
         props.data.component_type === 'date' && (
           <View style={styles.component}>
-            <MyDatePicker data={props.data} />
+            <MyDatePicker data={props.data} index={props.data.group ? props.index : null}/>
           </View>
         )
       }
       {
         props.data.component_type === 'geoloc' && (
           <View style={styles.component}>
-            <GeoLocation data={props.data} />
+            <GeoLocation data={props.data} index={props.data.group ? props.index : null}/>
           </View>
         )
       }
       {
         props.data.component_type === 'veiculo' && (
           <View style={styles.component}>
-            <Veiculos data={props.data} />
+            <Veiculos data={props.data} index={props.data.group ? props.index : null}/>
           </View>
         )
       }

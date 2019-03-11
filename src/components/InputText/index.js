@@ -48,13 +48,13 @@ class InputText extends Component {
         }
       }
     }
-
     startControlArray();
   }
 
   render() {
     const { data_name, label, hint, default_value, newState, group } = this.props.data;
     const { saveStep, step } = this.props.form;
+    console.tron.log([group, this.props.index]);
 
 
     if (saveStep) {

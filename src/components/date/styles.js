@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     elevation: 1,
+    right: responsividade.largura_tela*0.04
   },
  picker:{
   width: 10

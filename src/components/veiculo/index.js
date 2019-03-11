@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { responsividade } from '../../styles';
 
 
+
 class Veiculos extends Component {
 
   state = {
@@ -439,7 +440,7 @@ class Veiculos extends Component {
             
              </View>
 
-             <View style={styles.parale}><Text style={styles.button_text}>CONSULTAR FIPE</Text></View></View>
+             <View style={styles.parale}><Text style={styles.button_text}>CONSULTAR "DENATRAN"</Text></View></View>
     
    </TouchableOpacity>
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Alert, Text, TouchableOpacity } from 'react-native';
 import BarcodeScanner from 'react-native-barcode-scanner-google';
 import styles from './styles';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -76,8 +76,8 @@ class Scanner extends Component {
         {
           showButton && (
             <TouchableOpacity onPress={() => this.setState({ showScanner: true, showButton: false })} style={styles.button}>
-              <View style={styles.square}><Icon name="qrcode" size={largura_tela < 430 ? 28 : 40} color="black" style={styles.icon} /></View>
-              <View style={styles.parale}><Text style={styles.button_text}>ESCANEAR CÓDIGO</Text></View>
+              <View style={styles.square}><Icon name="create" size={largura_tela < 430 ? 28 : 40} color="black" style={styles.icon} /></View>
+              <View style={styles.parale}><Text style={styles.button_text}>ABRIR CROQUI</Text></View>
             </TouchableOpacity>
           )}
 

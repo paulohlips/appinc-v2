@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ModalCheck } from '../../globalComponents';
+import  {SnackBar}  from '../../globalComponents';
 import {
   View,
   Text,
@@ -24,6 +24,7 @@ const imageCheck = require('../../assents/lottie/warning.json');
 import styles from './styles';
 import { red } from 'ansi-colors';
 import Axios from 'axios';
+
 
 const labels = ["ID", "PIN", "Senha"];
 const customStyles = {
@@ -95,6 +96,7 @@ class Login extends Component {
 
   confereID = () => {
     const { inputSave } = this.state;
+    this.setState({ viewModal: false});
     Axios({
       method: 'post',
       url: 'http://35.198.17.69/api/pericia/usuario/cadastro',
@@ -156,12 +158,7 @@ class Login extends Component {
         </HideWithKeyboard>
         {
           viewModal && (
-            <ModalCheck
-              message={messageRequest}
-              viewModal
-              failure
-              sourceImage={imageCheck}
-            />
+            <SnackBar content = {this.state.messageRequest} color = "white"/>
           )
         }
       </View>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { ModalCheck } from '../../globalComponents';
+import  {SnackBar}  from '../../globalComponents';
 import {
   View,
   Text,
@@ -74,6 +75,7 @@ class Login extends Component {
 
   confereCadastro = () => {
     const { password, inputSave, nome } = this.state;
+    this.setState({ viewModal: false});
     axios({
       method: 'post',
       url: 'http://35.198.17.69/api/pericia/usuario/login',
@@ -143,12 +145,7 @@ class Login extends Component {
         </View>
         {
           viewModal && (
-            <ModalCheck
-              message={messageRequest}
-              viewModal
-              failure
-              sourceImage={imageCheck}
-            />
+           <SnackBar content = {this.state.messageRequest} color = "white" />
           )
         }
       </ImageBackground>

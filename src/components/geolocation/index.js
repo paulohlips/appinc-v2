@@ -15,6 +15,7 @@ import { bindActionCreators } from 'redux';
 import { Creators as FormActions } from '../../store/ducks/form';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { responsividade } from '../../styles';
+import  {SnackBar}  from '../../globalComponents';
 
 
 class GeoLocation extends Component {
@@ -77,7 +78,7 @@ class GeoLocation extends Component {
           longitude: position.coords.longitude,
           acuracia: position.coords.accuracy,
           altitude: position.coords.altitude,
-          error: null,
+          error: false,
           view: true,
           load: false,
         });
@@ -85,7 +86,7 @@ class GeoLocation extends Component {
       (error) => this.setState({
         error: error.message,
         dataGeo: 'GPS indísponivel',
-        view: null,
+        view: true,
         load: false,
       }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
@@ -150,9 +151,7 @@ class GeoLocation extends Component {
       <View>
       {
           error && (
-            <View style={styles.errov}>
-                <Text style={styles.erro}>Local não encontrado. Tente ir para um ambiente mais aberto</Text>
-              </View>
+            <SnackBar content = "Local não encontrado"/>
           )
         }
           <TouchableOpacity onPress={this.refresh} style={styles.button}>

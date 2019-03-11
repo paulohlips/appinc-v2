@@ -21,6 +21,7 @@ import axios from 'axios';
 import { bindActionCreators } from 'redux';
 import { Creators as FormAction } from '../../store/ducks/form';
 import { Creators as HistActions } from '../../store/ducks/hist';
+import  {SnackBar}  from '../../globalComponents';
 
 
 class StepList extends Component {
@@ -162,17 +163,13 @@ class StepList extends Component {
         />
         {
           viewError && (
-            <View style={styles.message}>
-              <Text style={styles.messageError}>Sem conexão!</Text>
-            </View>
+            <SnackBar content = "Sem conexão!" color = "white"/>
           )
         }
 
         {
           saved && (
-            <View style={styles.saved}>
-              <Text style={styles.messagesaved}>Salvo!</Text>
-            </View>
+            <SnackBar content = "Salvo!" color = "white"/>
           )
         }
         <ScrollView>
@@ -185,13 +182,13 @@ class StepList extends Component {
             <TouchableOpacity style={styles.enviarbutton} onPress={() => this.enviaForm()}>
 
               <Text style={styles.buttonText}>
-                Enviar
+                ENVIAR
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.salvarbutton} onPress={() => this.saveForm2()}>
               <Text style={styles.buttonTextsalvar}>
-                Salvar
+                SALVAR
               </Text>
             </TouchableOpacity>
           </View>

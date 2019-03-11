@@ -95,6 +95,7 @@ class Login extends Component {
 
    salvarId = () => {
     const { id, idRegistro, pinRegistro, inputSave1, inputSave2 } = this.state;
+    this.setState({ viewModal: false});
     if (inputSave1 == inputSave2){
       Axios({
         method: 'post',

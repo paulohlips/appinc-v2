@@ -47,10 +47,25 @@ const styles = StyleSheet.create({
   },
 
   bar: {
-    width: responsividade.LARGURACARD * 0.95,   
-    padding: 10,
+    
+    width: responsividade.LARGURACARD * 0.85,   
+    padding: 5,
     marginTop: responsividade.margin.mainMargin,
   },
+
+  number: {
+    fontSize: 12,
+  },
+
+  number_view: {
+    //backgroundColor: 'pink',
+    top: responsividade.largura_tela*0.01,
+    justifyContent: 'center',
+  },
+
+  row: {
+    flexDirection: 'row',   
+  }
 
 });
 

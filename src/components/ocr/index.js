@@ -8,6 +8,7 @@ import styles from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 var ImagePicker = NativeModules.ImageCropPicker;
 import axios from 'axios';
+import { responsividade } from '../../styles';
 
 class OCR extends Component {
     state = {
@@ -80,18 +81,15 @@ class OCR extends Component {
 
     render() {
         const { text } = this.state;
+        const  { largura_tela } = responsividade;
         return (
             <View style={styles.container}>
 
-                <TouchableOpacity onPress={() => this.pickSingleWithCamera(true)}>
-                    <View style={styles.avatarContainer}>
-                        <View style={styles.avatarContainer2}><Icon name="add-a-photo" size={30} style={styles.icon} />
-                            <View style={styles.text_foto}>
-                                <Text style={styles.text}>Tirar uma foto</Text>
-                            </View>
-                        </View>
-                    </View>
+                <TouchableOpacity  onPress={() => this.pickSingleWithCamera(true)} style={styles.button}>
+                    <View style={styles.square}><Icon name="crop-free" size={ largura_tela< 430 ? 28 : 40} color="black" style={styles.icon} /></View>
+                    <View style={styles.parale}><Text style={styles.button_text}>ABRIR CÂMERA</Text></View>  
                 </TouchableOpacity>
+
                 {
                     text && (
                         <View style={styles.input}>

@@ -20,6 +20,8 @@ class StepBoxComponent extends Component {
     createdForms: null,
     arrayProgress: {},
     progress: 0,
+    countProgress: '',
+    array: ''
   }
 
   componentWillMount() {
@@ -95,7 +97,7 @@ class StepBoxComponent extends Component {
       }
     }
     progress = countProgress / arrayProgress.length;
-    this.setState({ progress });
+    this.setState({ progress , count: countProgress , array: arrayProgress.length });
   }
 
   render() {
@@ -118,7 +120,7 @@ class StepBoxComponent extends Component {
           <View style={styles.card_descricao}>
             <Text style={styles.descricao}>{item.step_description}</Text>
           </View>
-
+          <View style={styles.row}>
           <View style={styles.bar}>
             <ProgressBarAndroid
               styleAttr="Horizontal"
@@ -126,6 +128,11 @@ class StepBoxComponent extends Component {
               progress={progress}
             />
           </View>
+          <View style={styles.number_view}><Text style={styles.number}>{this.state.count + "/" +  this.state.array}</Text></View>
+          
+          
+          </View>
+          
 
         </TouchableOpacity>
       </View>

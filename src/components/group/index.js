@@ -13,17 +13,11 @@ import Icons from 'react-native-vector-icons/FontAwesome5';
 class Group extends Component {
   state = {
     prototype: [],
-    dataGroup: [
-        {
-            texto2: '',
-            camera2: null,
-            geoloc2: '',
-            index: 0,
-        },
-    ],
+    dataGroup: [],
   }
 
   componentWillMount() {
+
     this.readGroup();
   }
 
@@ -31,20 +25,27 @@ class Group extends Component {
 
   incrementDataGroup = () => {
       const { dataGroup, prototype } = this.state;
-      var dataGroupVar = dataGroup;
-      dataGroupVar.push(prototype)
-      this.setState({ dataGroup: dataGroupVar });
+      const size = dataGroup.length;
+      var prototypeVar = prototype;
+      prototypeVar = {
+          ...prototype,
+          index: size
+      }
+      console.tron.log(size, prototypeVar);
+      this.setState({ dataGroup: [ ...dataGroup, prototypeVar ] });
   }
 
   readGroup = () => {
     const { components_group } = this.props.data;
+    const { dataGroup } = this.state;
     const array = {}
 
     components_group.map(item => {
-      array[item.data_name] = null;      
+      array[item.data_name] = null;
+      this.setState({ prototype: array });     
     });
     array['index'] = 0;
-    this.setState({ prototype: array });
+    this.setState({ prototype: array, dataGroup: [ ...dataGroup, array ] });
   }
 
   decrementDataGroup = (id) => {};

@@ -12,20 +12,13 @@ import Icons from 'react-native-vector-icons/FontAwesome5';
 
 class Group extends Component {
   state = {
-    prototype: {
-        texto2: '',
-        camera2: null,
-        geoloc2: '',
-        index: 0,
-    },
-    dataGroup: [
-        {
-            texto2: '',
-            camera2: null,
-            geoloc2: '',
-            index: 0,
-        },
-    ],
+    prototype: [],
+    //dataGroup: [],
+  }
+
+
+  componentWillMount() {
+    this.readGroup();
   }
 
   renderOneGroup = () =>  this.props.data.components_group.map(item => <ComponentList data={item}/>);
@@ -36,32 +29,28 @@ class Group extends Component {
       dataGroupVar.push(prototype)
       this.setState({ dataGroup: dataGroupVar });
   }
+  readGroup = () => {
+    const { components_group } = this.props.data;
+    const array = {}
+
+    components_group.map(item => {
+      array[item.data_name] = null;
+      this.setState({ prototype: array })
+    })
+  }
+
+
 
   decrementDataGroup = (id) => {};
-
   render() {
     const { dataGroup } = this.state;
     console.tron.log(['props groups', this.props])
     return (
       <View style={styles.container}>
-        <ScrollView 
-           horizontal
-           pagingEnabled
-        >
-            {
-                dataGroup.map(item => 
-                    <View style={styles.boxGroup}>
-                        { this.renderOneGroup() }
-                        <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrementDataGroup(item.index)}>
-                            <Icons name="minus" size={20} color="#FFF" />
-                        </TouchableOpacity>
-                    </View>                
-                )
-            }           
-        </ScrollView>
-        <TouchableOpacity style={styles.viewPlus} onPress={() => this.incrementDataGroup()}>
-            <Icons name="plus" size={20} color="#232f34" />
-        </TouchableOpacity>   
+        <Text style={styles.hint}>Component Group</Text>
+        {
+            this.props.data.components_group.map(item => <ComponentList data={item}/>)
+        }        
       </View>
     );
   }

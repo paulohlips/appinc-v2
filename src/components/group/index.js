@@ -14,64 +14,73 @@ class Group extends Component {
   state = {
     prototype: [],
     dataGroup: [
-        {
-            texto2: '',
-            camera2: null,
-            geoloc2: '',
-            index: 0,
-        },
+      {
+        texto2: '',
+        camera2: null,
+        geoloc2: '',
+        index: 0,
+      },
     ],
   }
 
   componentWillMount() {
     this.readGroup();
+    this.decrementDataGroup();
   }
 
-  renderOneGroup = () =>  this.props.data.components_group.map(item => <ComponentList data={item}/>);
+  renderOneGroup = () => this.props.data.components_group.map(item => <ComponentList data={item} />);
 
   incrementDataGroup = () => {
-      const { dataGroup, prototype } = this.state;
-      var dataGroupVar = dataGroup;
-      dataGroupVar.push(prototype)
-      this.setState({ dataGroup: dataGroupVar });
+    const { dataGroup, prototype } = this.state;
+    var dataGroupVar = dataGroup;
+    dataGroupVar.push(prototype)
+    this.setState({ dataGroup: dataGroupVar });
   }
 
   readGroup = () => {
     const { components_group } = this.props.data;
     const array = {}
+    let count = 0;
 
     components_group.map(item => {
-      array[item.data_name] = null;      
+      array[item.data_name] = null;
     });
     array['index'] = 0;
     this.setState({ prototype: array });
   }
 
-  decrementDataGroup = (id) => {};
+  decrementDataGroup = (id) => {
+    var arrayState = this.state.dataGroup;
+    arrayState.map(item => {
+      if (item.index === id) {
+        arrayState.splice(item.index, 1);
+      }
+    });
+    this.setState({ dataGroup: arrayState })
+  };
 
   render() {
-    const { dataGroup } = this.state;
-    console.tron.log(['props groups', this.props, this.state])
+    const { dataGroup } = this.state
     return (
       <View style={styles.container}>
-        <ScrollView 
-           horizontal
-           pagingEnabled
+        <ScrollView
+          horizontal
+          pagingEnabled
         >
-            {
-                dataGroup.map(item => 
-                    <View style={styles.boxGroup}>
-                        { this.renderOneGroup() }
-                        <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrementDataGroup(item.index)}>
-                            <Icons name="minus" size={20} color="#FFF" />
-                        </TouchableOpacity>
-                    </View>                
-                )
-            }           
+          {
+            dataGroup.map(item =>
+              <View style={styles.boxGroup}>
+                {this.renderOneGroup()}
+                <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrementDataGroup(item.index)}>
+                  <Icons name="minus" size={20} color="#FFF" />
+                </TouchableOpacity>
+              </View>
+            )
+          }
         </ScrollView>
         <TouchableOpacity style={styles.viewPlus} onPress={() => this.incrementDataGroup()}>
-            <Icons name="plus" size={20} color="#232f34" />
-        </TouchableOpacity>   
+          <Icons name="plus" size={20} color="#232f34" />
+        </TouchableOpacity>
       </View>
     );
   }

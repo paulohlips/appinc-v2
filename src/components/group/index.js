@@ -24,8 +24,9 @@ class Group extends Component {
   renderOneGroup = index  => this.props.data.components_group.map(item => <ComponentList data={item} index={index}/>);
 
   increment = () => {
+      const { group } = this.props;
       const { dataGroup, prototype } = this.state;
-      const size = dataGroup.length;
+      const size = group.dataGroup.length;
       var prototypeVar = prototype;
       prototypeVar = {
           ...prototype,
@@ -33,7 +34,6 @@ class Group extends Component {
       }
       console.tron.log(size, prototypeVar);
       this.props.incrementDataGroup(prototypeVar)
-      this.setState({ dataGroup: [ ...dataGroup, prototypeVar ] });
   }
 
   readGroup = () => {
@@ -51,7 +51,7 @@ class Group extends Component {
     this.setState({ prototype: array, dataGroup: [ ...dataGroup, array ] });
   }
 
-  decrementDataGroup = (id) => {
+  decrement = (id) => {
     var arrayState = this.state.dataGroup;
     arrayState.map(item => {
       if (item.index === id) {
@@ -59,10 +59,11 @@ class Group extends Component {
       }
     });
     this.setState({ dataGroup: arrayState })
+    this.props.decrementDataGroup(id);
   };
 
   render() {
-      const { group } = this.props
+    const { group } = this.props
     const { dataGroup } = this.state;
     console.tron.log([dataGroup, this.props]);
     return (
@@ -75,7 +76,7 @@ class Group extends Component {
             group.dataGroup.map(item =>
               <View style={styles.boxGroup}>
                 {this.renderOneGroup(item.index)}
-                <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrementDataGroup(item.index)}>
+                <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrement(item.index)}>
                   <Icons name="minus" size={20} color="#FFF" />
                 </TouchableOpacity>
               </View>

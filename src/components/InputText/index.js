@@ -56,7 +56,6 @@ class InputText extends Component {
     const { saveStep, step } = this.props.form;
     console.tron.log([group, this.props.index]);
 
-
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });
     }

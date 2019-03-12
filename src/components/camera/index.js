@@ -201,7 +201,7 @@ class Camera extends React.Component {
       for (var key in form.step) {
         if (key === data.data_name) {
           const form = {};
-          form[data.data_name] = { key: data.data_name, value: { uri: imagePath, type: 'image/jpeg', name: `${data.data_name}.jpg` }, data: image, filled: true };
+          form[data.data_name] = { key: data.data_name, value: { uri: image.uri, type: 'image/jpeg', name: `${data.data_name}.jpg` }, data: image, filled: true };
           getSaveStateForm(form);
         }
       }
@@ -220,7 +220,7 @@ class Camera extends React.Component {
   render() {
     const { data_name, label, hint, default_value, newState } = this.props.data;
     const { saveStep } = this.props.form;
-    const  { largura_tela } = responsividade;
+    const { largura_tela } = responsividade;
 
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });
@@ -236,7 +236,7 @@ class Camera extends React.Component {
           <TouchableOpacity onPress={() => this.pickSingleWithCamera(true)}>
             <View style={styles.avatarContainer}>
               <View style={styles.avatarContainer2}>
-                <Icon name="add-a-photo" color = "black" size={largura_tela< 430 ? 20 : 30} style={styles.icon} />
+                <Icon name="add-a-photo" color="black" size={largura_tela < 430 ? 20 : 30} style={styles.icon} />
                 <View style={styles.text_foto}>
                   <Text style={styles.text1}>Tirar foto</Text>
                 </View>
@@ -247,7 +247,7 @@ class Camera extends React.Component {
           <TouchableOpacity onPress={() => this.pickSingle(false)} style={styles.button}>
             <View style={styles.avatarContainer1}>
               <View style={styles.avatarContainer2}>
-                <Icon name="photo-library" color = "white" size={largura_tela< 430 ? 20 : 30} style={styles.icon} />
+                <Icon name="photo-library" color="white" size={largura_tela < 430 ? 20 : 30} style={styles.icon} />
                 <View style={styles.text_foto}>
                   <Text style={styles.text}>Abrir galeria</Text>
                 </View>

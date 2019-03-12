@@ -2,10 +2,12 @@ const Types = {
     ICREMENT_DATA_GROUP: 'group/ICREMENT_DATA_GROUP',
     DECREMENT_DATA_GROUP: 'group/DECREMENT_DATA_GROUP',
     SAVE_DATA_GROUP: 'group/SAVE_DATA_GROUP',
+    FLAG_DATA_GROUP: 'group/FLAG_DATA_GROUP',
 }
 
 const INITIAL_STATE = {
     dataGroup: [],
+    flag: false,
 }
 
 export default function groupState(state = INITIAL_STATE, action) {
@@ -28,6 +30,8 @@ export default function groupState(state = INITIAL_STATE, action) {
             console.log(['return function', array]);
             return { ...state, dataGroup: array };
         }
+        case Types.FLAG_DATA_GROUP: 
+            return { ...state, flag: true }
         default:
             return state;
     }
@@ -45,6 +49,9 @@ export const Creators = {
     saveDataGroup: data => ({
         type: Types.SAVE_DATA_GROUP,
         payload: { data },
+    }),
+    activeFlag: () => ({
+        type: Types.FLAG_DATA_GROUP,
     }),
 }
 
@@ -64,12 +71,13 @@ const decrement = (id, state) => {
 const saveData = (data, state) => {
     var arrayState = state.dataGroup;
     arrayState.map(item => {
-        if (item.index === data.index) {
-            item[data.name] = {
-                key: data.name,
-                value: data.data,
-                filled: true
-            }
+        if (item.index === data.index) {           
+                item[data.name] = {
+                    key: data.name,
+                    value: data.data,
+                    filled: true,
+                    extra: data.extra,
+                }                     
         }
     })
     return arrayState;

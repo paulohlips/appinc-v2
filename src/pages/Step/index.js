@@ -51,18 +51,18 @@ const COMPONENT_EXAMPLE = [
                 "required_message": ""
             },
             {
-                "hint": "GPS em um grupo",
+                "hint": "Leitor QR/Bar code",
                 "group": "true",
-                "label": "Gps em um grupo",
+                "label": "Leitor de QR ou Bar code",
                 "required": "true",
-                "data_name": "geoloc_2",
+                "data_name": "scanner_2",
                 "lenght_max": "",
                 "length_min": "",
                 "invalid_text": "",
                 "default_value": "",
-                "component_type": "geoloc",
+                "component_type": "scanner",
                 "required_message": ""
-            }
+            },
         ],
         "required_message": ""
     },
@@ -214,7 +214,7 @@ class StepPage extends Component {
 
     render() {
         const { navigation } = this.props;
-        //const step = navigation.getParam('step');
+        const step = navigation.getParam('step'); // pra testar group comentar essa linha
         //console.tron.log(step.components)
 
         return (
@@ -226,19 +226,20 @@ class StepPage extends Component {
                     showInfo
                     info={this.props.navigation.state.params.step.info_step}
                     goBack={this.props.navigation.goBack}
-                />
+                /> 
 
-                <ScrollView>
-                    {COMPONENT_EXAMPLE.map((item, i) =>
-                        <View style={styles.coluna}>
-                            <View style={styles.linha}>
-                                <View style={styles.ball}>
-                                    <Text style={styles.numberType}>{i + 1}</Text>
+                <ScrollView> 
+                    {//troca step.components por COMPONENT_EXAMPLE para testar group 
+                        step.components.map((item, i) =>
+                            <View style={styles.coluna}>
+                                <View style={styles.linha}>
+                                    <View style={styles.ball}>
+                                        <Text style={styles.numberType}>{i + 1}</Text>
+                                    </View>
+                                    <Text style={styles.textType}> {item.label}: </Text>
                                 </View>
-                                <Text style={styles.textType}> {item.label}: </Text>
+                                <ComponentList data={item} />
                             </View>
-                            <ComponentList data={item} />
-                        </View>
                     )}
                 </ScrollView>
             </View>

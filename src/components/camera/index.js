@@ -15,6 +15,7 @@ var ImagePicker = NativeModules.ImageCropPicker;
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as FormActions } from '../../store/ducks/form';
+import { Creators as GroupActions } from '../../store/ducks/group';
 
 class Camera extends React.Component {
 
@@ -28,15 +29,26 @@ class Camera extends React.Component {
 
 
   componentWillMount() {
-    const { form, data } = this.props;
+    const { form, data, group, index } = this.props;
 
-    for (var key in form.step) {
-      if (key === data.data_name) {
-        if (form.step[key].filled === true) {
-          this.setState({ image: form.step[key].data, imagePath: form.step[key].value.uri });
+    if (data.group === 'true') {
+      group.dataGroup.map(item => {
+        //console.log(['map array', data.group, item])
+        if (item.index === index) {
+          if (item[data.data_name] !== null) {
+            this.setState({ image: item[data.data_name].extra, imagePath: item[data.data_name].value.uri });
+          }
+        }
+      });
+    } else {
+      for (var key in form.step) {
+        if (key === data.data_name) {
+          if (form.step[key].filled === true) {
+            this.setState({ image: form.step[key].data, imagePath: form.step[key].value.uri });
+          }
         }
       }
-    }
+    }    
 
   }
 
@@ -67,6 +79,7 @@ class Camera extends React.Component {
       cropping: cropit,
       includeBase64: true,
       includeExif: true,
+
     }).then(image => {
       console.log('received base64 image');
       this.setState({
@@ -194,23 +207,40 @@ class Camera extends React.Component {
     return this.renderImage(image);
   }
 
-  saveFormInput = data => {
+  saveFormInput = info => {
     const { imageData, imagePath, image } = this.state;
-    const { form, getSaveStateForm, startControlArray } = this.props;
+    const { 
+      form, 
+      getSaveStateForm, 
+      startControlArray, 
+      saveDataGroup, //importa
+      data, // importa
+      index, //importa
+      group, // importa
+    } = this.props;
 
     if (imagePath || image) {
-      for (var key in form.step) {
-        if (key === data.data_name) {
-          const form = {};
-          form[data.data_name] = { key: data.data_name, value: { uri: imagePath, type: 'image/jpeg', name: `${data.data_name}.jpg` }, data: image, filled: true };
-          getSaveStateForm(form);
+      if (data.group === 'true') {
+        group.dataGroup.map(item => {
+          if (item.index === index) {
+            saveDataGroup({ index, name: info.data_name, data: { uri: image.uri, type: 'image/jpeg', name: `${info.data_name}.jpg` }, type: data.component_type, extra: image })
+           // saveDataGroup({ index: , name: , data: , type: , extra: })
+          }
+        });
+      } else {
+        for (var key in form.step) {
+          if (key === info.data_name) {
+            const form = {};
+            form[info.data_name] = { key: info.data_name, value: { uri: imagePath, type: 'image/jpeg', name: `${info.data_name}.jpg` }, data: image, filled: true };
+            getSaveStateForm(form);
+          }
         }
-      }
+      }      
     } else {
       for (var key in form.step) {
-        if (key === data.data_name && data.data_name.filled === false) {
+        if (key === info.data_name && info.data_name.filled === false) {
           const form = {};
-          form[data.data_name] = { key: data.data_name, value: { uri: '', type: '', name: '' }, data: image, filled: false };
+          form[info.data_name] = { key: info.data_name, value: { uri: '', type: '', name: '' }, data: image, filled: false };
           getSaveStateForm(form);
         }
       }
@@ -276,9 +306,10 @@ class Camera extends React.Component {
 }
 const mapStateToProps = state => ({
   form: state.formState,
+  group: state.groupState,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(FormActions, dispatch);
+  bindActionCreators({ ...FormActions, ...GroupActions }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Camera);

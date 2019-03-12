@@ -85,7 +85,7 @@ class InputText extends Component {
       this.saveFormInput({ data_name, default_value });
     }
     return (
-      <View style={true ? stylesGroup.container : styles.container}>
+      <View style={group ? stylesGroup.container : styles.container}>
         <Text style={styles.hint}>{hint}</Text>
         <TextInput
           style={group ? stylesGroup.input : styles.input}

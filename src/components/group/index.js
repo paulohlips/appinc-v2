@@ -17,7 +17,11 @@ class Group extends Component {
   }
 
   componentWillMount() {
-    this.readGroup();
+    const { group } = this.props;
+    if (!group.flag) {
+      this.readGroup();
+    }
+    
     //this.decrementDataGroup();
   }
 
@@ -30,13 +34,14 @@ class Group extends Component {
       var prototypeVar = prototype;
       prototypeVar = {
           ...prototype,
-          index: size
+          index: Math.random(),
       }
       console.tron.log(size, prototypeVar);
       this.props.incrementDataGroup(prototypeVar)
   }
 
   readGroup = () => {
+    this.props.activeFlag();
     const { components_group } = this.props.data;
     const { dataGroup } = this.state;
     const array = {}
@@ -46,7 +51,8 @@ class Group extends Component {
       array[item.data_name] = null;
       this.setState({ prototype: array });     
     });
-    array['index'] = 0;
+    array['index'] = Math.random();
+    array['extra'] = null;
     this.props.incrementDataGroup(array);
     this.setState({ prototype: array, dataGroup: [ ...dataGroup, array ] });
   }

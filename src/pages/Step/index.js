@@ -214,23 +214,15 @@ class StepPage extends Component {
 
     render() {
         const { navigation } = this.props;
-        const step = navigation.getParam('step'); // pra testar group comentar essa linha
+       // const step = navigation.getParam('step'); // pra testar group comentar essa linha
         //console.tron.log(step.components)
 
         return (
             <View style={styles.container}>
-                <Header
-                    title={this.props.navigation.state.params.step.step_name}
-                    showArrow
-                    showProgress
-                    showInfo
-                    info={this.props.navigation.state.params.step.info_step}
-                    goBack={this.props.navigation.goBack}
-                /> 
 
                 <ScrollView> 
                     {//troca step.components por COMPONENT_EXAMPLE para testar group 
-                        step.components.map((item, i) =>
+                        COMPONENT_EXAMPLE.map((item, i) =>
                             <View style={styles.coluna}>
                                 <View style={styles.linha}>
                                     <View style={styles.ball}>

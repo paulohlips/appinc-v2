@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     width: responsividade.largura_tela,
     //padding: 20,
     alignItems: 'center',
-    paddingBottom: 40,   
+    paddingBottom: 20,   
     borderBottomColor: 'black',             
     borderBottomWidth: 0.5,
   },
@@ -30,9 +30,9 @@ const styles = StyleSheet.create({
   },
   viewPlus: {
     backgroundColor: colors.secundary,
-    marginTop: 20,
-    width: 60,
-    height: 30,
+    marginTop: 15,
+    width:  40,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
@@ -40,12 +40,25 @@ const styles = StyleSheet.create({
   viewMinus: {
     backgroundColor: colors.danger,
     marginTop: 20,
-    width: 60,
-    height: 30,
+    width: 40,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
     margin: 20,
+  },
+  viewIndicator: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 12,
+    flexDirection: 'row',
+  },
+  indicator: {
+    backgroundColor: colors.dark,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    margin: 3.    
   }
 });
 

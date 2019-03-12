@@ -76,22 +76,31 @@ class Group extends Component {
       <View style={styles.container}>
         <ScrollView
           horizontal
-          pagingEnabled
+          pagingEnabled    
+          ref={ref => this.scrollView = ref}
+          onContentSizeChange={(contentWidth, contentHeight)=>{        
+            this.scrollView.scrollToEnd({animated: true, duration: 3000});
+          }}
         >
           {
             group.dataGroup.map(item =>
               <View style={styles.boxGroup}>
                 {this.renderOneGroup(item.index)}
                 <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrement(item.index)}>
-                  <Icons name="minus" size={20} color="#FFF" />
+                  <Icons name="minus" size={18} color="#FFF" />
                 </TouchableOpacity>
               </View>
             )
           }
         </ScrollView>
+        <View style={styles.viewIndicator}>
+          {
+              group.dataGroup.map(item =>  <View style={styles.indicator} />)
+          }          
+        </View>
         <TouchableOpacity style={styles.viewPlus} onPress={() => this.increment()}>
-          <Icons name="plus" size={20} color="#232f34" />
-        </TouchableOpacity>
+          <Icons name="plus" size={18} color="#232f34" />
+        </TouchableOpacity>        
       </View>
     );
   }

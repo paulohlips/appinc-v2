@@ -50,11 +50,14 @@ export const Creators = {
 
 const decrement = (id, state) => {
     var arrayState = state.dataGroup;
+    let count = 0;
     arrayState.map(item => {
         if (item.index === id) {
-            arrayState.splice(item.index, 1);
+            arrayState.splice(count, 1);
         }
+        count += 1;
     });
+    console.log(arrayState);
     return arrayState;
 }
 

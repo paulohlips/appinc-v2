@@ -21,7 +21,7 @@ class InputText extends Component {
 
     if (data.group === 'true') {
       group.dataGroup.map(item => {
-        console.log(['map array', data.group, item])
+        //console.log(['map array', data.group, item])
         if (item.index === index) {
           if (item[data.data_name] !== null) {
             this.setState({ inputSave: item[data.data_name].value });
@@ -47,7 +47,7 @@ class InputText extends Component {
 
     if (inputSave) {
       if (data.group === 'true') {
-        console.log(['group save', data.group, info.data_name])
+        //console.log(['group save', data.group, info.data_name])
         group.dataGroup.map(item => {
           if (item.index === index) {
             saveDataGroup({ index, name: info.data_name, data: inputSave })
@@ -58,7 +58,7 @@ class InputText extends Component {
           if (key === info.data_name) {
             const form = {};
             form[info.data_name] = { key: info.data_name, value: inputSave, filled: true };
-            console.log(form[info.data_name])
+            //console.log(form[info.data_name])
             getSaveStateForm(form);
           }
         }
@@ -68,7 +68,7 @@ class InputText extends Component {
         if (key === info.data_name) {
           const form = {};
           form[info.data_name] = { key: info.data_name, value: inputSave, filled: false };
-          console.log(form[info.data_name])
+          //console.log(form[info.data_name])
           getSaveStateForm(form);
         }
       }
@@ -79,7 +79,7 @@ class InputText extends Component {
   render() {
     const { data_name, label, hint, default_value, newState, group } = this.props.data;
     const { saveStep, step } = this.props.form;
-    console.log([group, this.props]);
+    //console.log([group, this.props]);
 
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });

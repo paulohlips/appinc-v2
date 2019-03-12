@@ -11,7 +11,7 @@ const INITIAL_STATE = {
 export default function groupState(state = INITIAL_STATE, action) {
     switch (action.type) {
         case Types.ICREMENT_DATA_GROUP:
-            return { 
+            return {
                 ...state,
                 dataGroup: [
                     ...state.dataGroup,
@@ -23,8 +23,10 @@ export default function groupState(state = INITIAL_STATE, action) {
             return { ...state, dataGroup: array };
         }
         case Types.SAVE_DATA_GROUP: {
-            console.tron.log(action.payload.data);
-            return state;
+            console.log(['action save', action.payload.data]);
+            const array = saveData(action.payload.data, state);
+            console.log(['return function', array]);
+            return { ...state, dataGroup: array };
         }
         default:
             return state;
@@ -49,9 +51,23 @@ export const Creators = {
 const decrement = (id, state) => {
     var arrayState = state.dataGroup;
     arrayState.map(item => {
-      if (item.index === id) {
-        arrayState.splice(item.index, 1);
-      }
+        if (item.index === id) {
+            arrayState.splice(item.index, 1);
+        }
     });
+    return arrayState;
+}
+
+const saveData = (data, state) => {
+    var arrayState = state.dataGroup;
+    arrayState.map(item => {
+        if (item.index === data.index) {
+            item[data.name] = {
+                key: data.name,
+                value: data.data,
+                filled: true
+            }
+        }
+    })
     return arrayState;
 }

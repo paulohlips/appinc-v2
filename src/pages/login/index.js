@@ -15,6 +15,9 @@ import {
   Alert
 } from 'react-native';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Creators as LoginActions } from '../../store/ducks/login';
 
 import axios from 'axios';
 import { responsividade } from '../../styles';
@@ -72,6 +75,7 @@ class Login extends Component {
     AsyncStorage.setItem('@IdProv', this.state.inputSave);
   }
 
+  /*
   confereCadastro = () => {
     const { password, inputSave, nome } = this.state;
     axios({
@@ -92,7 +96,12 @@ class Login extends Component {
         this.setState({ viewModal: true });
       });
   }
+*/
 
+  confereCadastro = () =>{
+    const data = { inputSave:this.state.inputSave, password:this.state.password};
+    this.props.getLoginRequest(data)
+  }
   onPressAnimated = async () => {
     this.animation.play(30, 1000);
   }
@@ -156,10 +165,12 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  login: state.loginState,
+});
 
+const mapDispatchToProps = dispatch => 
+      bindActionCreators(LoginActions, dispatch);
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
-/*
- <Image style={styles.image} source={require('../../assents/imgs/policia-federal-logo.png')} />
-*/

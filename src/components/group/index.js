@@ -21,19 +21,19 @@ class Group extends Component {
     //this.decrementDataGroup();
   }
 
-  renderOneGroup = index  => this.props.data.components_group.map(item => <ComponentList data={item} index={index}/>);
+  renderOneGroup = index => this.props.data.components_group.map(item => <ComponentList data={item} index={index} />);
 
   increment = () => {
-      const { group } = this.props;
-      const { dataGroup, prototype } = this.state;
-      const size = group.dataGroup.length;
-      var prototypeVar = prototype;
-      prototypeVar = {
-          ...prototype,
-          index: size
-      }
-      console.tron.log(size, prototypeVar);
-      this.props.incrementDataGroup(prototypeVar)
+    const { group } = this.props;
+    const { dataGroup, prototype } = this.state;
+    const size = group.dataGroup.length;
+    var prototypeVar = prototype;
+    prototypeVar = {
+      ...prototype,
+      index: size
+    }
+    console.tron.log(size, prototypeVar);
+    this.props.incrementDataGroup(prototypeVar)
   }
 
   readGroup = () => {
@@ -44,11 +44,11 @@ class Group extends Component {
 
     components_group.map(item => {
       array[item.data_name] = null;
-      this.setState({ prototype: array });     
+      this.setState({ prototype: array });
     });
     array['index'] = 0;
     this.props.incrementDataGroup(array);
-    this.setState({ prototype: array, dataGroup: [ ...dataGroup, array ] });
+    this.setState({ prototype: array, dataGroup: [...dataGroup, array] });
   }
 
   decrement = (id) => {
@@ -92,10 +92,10 @@ class Group extends Component {
 }
 
 const mapStateToProps = state => ({
-    group: state.groupState,
+  group: state.groupState,
 });
 
-const mapDispatchToProps = dispatch => 
-    bindActionCreators(GroupActions, dispatch);
-    
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(GroupActions, dispatch);
+
 export default connect(mapStateToProps, mapDispatchToProps)(Group);

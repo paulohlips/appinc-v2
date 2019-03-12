@@ -17,15 +17,28 @@ class InputText extends Component {
   }
 
   componentDidMount() {
-    const { form, data } = this.props;
+    const { form, data, group, index } = this.props;
 
-    for (var key in form.step) {
-      if (key === data.data_name) {
-        if (form.step[key].filled === true) {
-          this.setState({ inputSave: form.step[key].value });
+    if (data.group === 'true') {
+      group.dataGroup.map(item => {
+        console.log(['map array', data.group, item])
+        if (item.index === index) {
+          if (item[data.data_name] !== null) {
+            this.setState({ inputSave: item[data.data_name].value });
+          }
+        }
+      });
+    } else {
+      for (var key in form.step) {
+        if (key === data.data_name) {
+          if (form.step[key].filled === true) {
+            this.setState({ inputSave: form.step[key].value });
+          }
         }
       }
     }
+
+
   }
 
   saveFormInput = info => {

@@ -6,66 +6,13 @@ import { Creators as FormActions } from '../../store/ducks/form';
 import { Header } from '../../globalComponents';
 
 // styles
-import { View, FlatList, ScrollView, TouchableOpacity, Text, ProgressBarAndroid, BackHandler } from 'react-native';
+import { View, FlatList, ScrollView, TouchableOpacity, Text, ProgressBarAndroid, BackHandler, Animated } from 'react-native';
 import styles from './styles';
 import ComponentList from './components/ComponentsList';
 
 const COMPONENT_EXAMPLE = [
 
-    {
-        "hint": "Grupo de componentes",
-        "group": "false",
-        "label": "Grupo de componentes",
-        "required": "true",
-        "data_name": "grupo_1",
-        "lenght_max": "",
-        "length_min": "",
-        "invalid_text": "",
-        "default_value": "",
-        "component_type": "group",
-        "components_group": [
-            {
-                "hint": "Texto em um grupo",
-                "group": "true",
-                "label": "Texto em um grupo",
-                "required": "true",
-                "data_name": "texto_2",
-                "lenght_max": "",
-                "length_min": "",
-                "invalid_text": "",
-                "default_value": "",
-                "component_type": "text",
-                "required_message": ""
-            },
-            {
-                "hint": "Foto em um grupo",
-                "group": "true",
-                "label": "Foto em um grupo",
-                "required": "",
-                "data_name": "camera_2",
-                "lenght_max": "",
-                "length_min": "",
-                "invalid_text": "",
-                "default_value": "",
-                "component_type": "camera",
-                "required_message": ""
-            },
-            {
-                "hint": "Leitor QR/Bar code",
-                "group": "true",
-                "label": "Leitor de QR ou Bar code",
-                "required": "true",
-                "data_name": "scanner_2",
-                "lenght_max": "",
-                "length_min": "",
-                "invalid_text": "",
-                "default_value": "",
-                "component_type": "scanner",
-                "required_message": ""
-            },
-        ],
-        "required_message": ""
-    },
+   
     {
         "hint": "OCR do local",
         "group": "false",
@@ -198,10 +145,19 @@ const COMPONENT_EXAMPLE = [
     }
 ];
 
-class StepPage extends Component {
+var i = 1;
 
+class StepPage extends Component {
+    state = { 
+        move: new Animated.Value(20),
+    }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.saveStep);
+        Animated.timing(this.state.move, {
+            toValue: 0,
+            duration: 300,
+            delay: 250,
+          }).start()
     }
 
     componentWillMount() {
@@ -214,25 +170,35 @@ class StepPage extends Component {
 
     render() {
         const { navigation } = this.props;
-       // const step = navigation.getParam('step'); // pra testar group comentar essa linha
+        const step = navigation.getParam('step'); // pra testar group comentar essa linha
         //console.tron.log(step.components)
 
         return (
             <View style={styles.container}>
+            <Header 
+                title={this.props.navigation.state.params.step.step_name} 
+                showArrow
+                showProgress 
+                showInfo
+                info={this.props.navigation.state.params.step.info_step}
+                goBack={this.props.navigation.goBack} 
+            />
 
                 <ScrollView> 
                     {//troca step.components por COMPONENT_EXAMPLE para testar group 
-                        COMPONENT_EXAMPLE.map((item, i) =>
-                            <View style={styles.coluna}>
+                        COMPONENT_EXAMPLE.map((item, i) =>{
+                            i = i + 1;
+                            return (
+                            <Animated.View style={{...styles.coluna, top: this.state.move }}>
                                 <View style={styles.linha}>
                                     <View style={styles.ball}>
                                         <Text style={styles.numberType}>{i + 1}</Text>
                                     </View>
                                     <Text style={styles.textType}> {item.label}: </Text>
                                 </View>
-                                <ComponentList data={item} />
-                            </View>
-                    )}
+                                <ComponentList data={item} index={i} />
+                            </Animated.View>)
+                    })}
                 </ScrollView>
             </View>
         );

@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 4,
     marginTop: responsividade.margin.mainMargin / 2,
+    left: 40,
   },
   viewicon: {
     justifyContent: 'center',

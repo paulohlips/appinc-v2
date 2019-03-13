@@ -150,6 +150,7 @@ class StepList extends Component {
     }
     const { navigation } = this.props;
     const { viewError, load, saved } = this.state;
+    let i = 0;
 
     return (
       <View style={styles.container}>
@@ -178,7 +179,7 @@ class StepList extends Component {
         <ScrollView>
           <FlatList
             data={form.steps}
-            renderItem={item => <StepBox steps={item} form={form} />}
+            renderItem={item => { i = i+1 ; return <StepBox steps={item} form={form} index={i} />}}
           />
           <View style={styles.container}>
 

@@ -5,9 +5,36 @@ const api = axios.create({
 });
 
 const user = {
-  getHist: id =>{ console.tron.log(id); return api.post('/pericia/formulario/recebidos', { matricula: id })},
+  // requisição para ter historico de pericias
+  getHist: id => { 
+    console.tron.log(id); 
+    return api.post('/pericia/formulario/recebidos', { matricula: id })
+  },
+}
+
+const form = {
+  // requisiçao para obter um novo pop atraves de um numero identificador
+  getNewForm: number => {     
+    return api.get(`/pericia/formularios/${number}`)
+  },
+  // requisição para enviar um formulario
+  postForm: data => {
+    console.tron.log(data);  
+    return api.post('/pericia/formulario/recebidos', data.body,
+      { 
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'application/json',
+          'matricula': data.matricula,
+          'referencia': data.ref,
+        }
+      },      
+    )
+  },
 }
 
 export default Api = {
-  user, 
+  api,
+  user,
+  form, 
 };

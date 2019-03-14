@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   erro: {
     color: '#B83E3E',
     fontSize: responsividade.fonts.errorSize,
-    margin: responsividade.margin.mainMargin,
+    margin: responsividade.margin.mainMargin * 0.5,
   },
 
   errov: {
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     justifyContent: 'center',
     alignItems: 'flex-start',
-    marginBottom: responsividade.margin.mainMargin / 2,
+    //marginBottom: responsividade.margin.mainMargin / 5,
 
   }
 

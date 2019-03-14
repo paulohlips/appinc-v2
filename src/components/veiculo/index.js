@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as FormActions } from '../../store/ducks/form';
 
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import { responsividade } from '../../styles';
 

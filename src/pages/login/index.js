@@ -145,7 +145,7 @@ class Login extends Component {
         </View>
         {
           viewModal && (
-           <SnackBar content = {this.state.messageRequest} color = "white" />
+           <SnackBar inside content = {this.state.messageRequest} color = "white" />
           )
         }
       </ImageBackground>

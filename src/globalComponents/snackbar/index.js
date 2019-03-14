@@ -3,24 +3,29 @@ import { Text, View , StyleSheet, Animated , TouchableOpacity} from 'react-nativ
 import styles from './styles';
 import {responsividade} from './../../styles'
 
+/*<TouchableOpacity onPress = { () => {}} style = {styles.action_view}>
+<Text style = {{ color : this.props.fontcolor }}>OK</Text>
+</TouchableOpacity>*/
+
+
 
 export default class SnackBar extends Component {
 
     state = {
-        x: new Animated.Value(responsividade.altura_tela),
+        x: new Animated.Value(responsividade.largura_tela),
     }
 
 
   componentDidMount () {
         Animated.sequence([
             Animated.timing(this.state.x , {
-                toValue: responsividade.altura_tela * 0.8,
-                duration: 500,
+                toValue: 0,
+                duration: 400,
             }),
-            Animated.delay(4000),
+            Animated.delay(2000),
         Animated.timing(this.state.x , {
-                toValue: responsividade.altura_tela,
-                duration: 500,
+                toValue: responsividade.largura_tela,
+                duration: 400,
             })
         ]
         ).start()
@@ -31,38 +36,69 @@ export default class SnackBar extends Component {
     closeSnack = () =>  {
 
         Animated.timing(this.state.x , {
-            toValue: responsividade.altura_tela,
-            duration: 500,
+            toValue: -100,
+            duration: 200,
         }).start()
 
     }
   
 
   render() {
+      const { inside , outside } = this.props;
     return (
       <View style = {styles.container}>
-        <Animated.View style = {{ 
-            justifyContent: 'space-between',
-            width: 330,
-            height: 60,
-            top: this.state.x,
-            borderRadius: 5,
-            alignItems: 'center',
-            backgroundColor: this.props.color,
-            margin: 20,
-            elevation: 1,
-            flexDirection: 'row',
-            paddingHorizontal : 20,
-        }}>
-            <View style = {styles.text_view}>
-                <Text style = {styles.text}>{this.props.content}</Text>
-            </View>
+      
+      {
+          inside && (
+           
+            <Animated.View style = {{ 
+                justifyContent: 'space-between',
+                width: 330,
+                height: 60,
+                left: this.state.x,
+                top: responsividade.largura_tela*0.04,
+                borderRadius: 5,
+                alignItems: 'center',
+                backgroundColor: this.props.color,
+                margin: 20,
+                elevation: 1,
+                flexDirection: 'row',
+                paddingHorizontal : 20,
+                //position: 'absolute',
+            }}>
+                <View style = {styles.text_view}>
+                    <Text style = {{ fontSize: 16 , color: this.props.fontcolor,}}>{this.props.content}</Text>
+                </View>
+                
+            </Animated.View> 
+          )
+      }
 
-            <TouchableOpacity onPress={this.closeSnack} style = {styles.action_view}>
-                <Text style = {styles.text}>OK</Text>
-            </TouchableOpacity>
-        
-        </Animated.View>       
+
+{
+          outside && (
+            <Animated.View style = {{ 
+                justifyContent: 'space-between',
+                width: 330,
+                height: 60,
+                left: this.state.x,
+                top: responsividade.largura_tela*0.15,
+                borderRadius: 5,
+                alignItems: 'center',
+                backgroundColor: this.props.color,
+                margin: 20,
+                elevation: 1,
+                flexDirection: 'row',
+                paddingHorizontal : 20,
+                //position: 'absolute',
+            }}>
+                <View style = {styles.text_view}>
+                    <Text style = {{ fontSize: 16 , color: this.props.fontcolor,}}>{this.props.content}</Text>
+                </View>
+            
+            </Animated.View> 
+          )
+      }
        </View>
 
         

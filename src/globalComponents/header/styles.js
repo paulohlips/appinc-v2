@@ -9,6 +9,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: responsividade.ALTURA_HEADER,
+    //position: 'absolute',
+    zIndex: 2
   },
 
   iconMenu: {

@@ -158,7 +158,7 @@ class Login extends Component {
         </HideWithKeyboard>
         {
           viewModal && (
-            <SnackBar content = {this.state.messageRequest} color = "white"/>
+            <SnackBar inside content = {this.state.messageRequest} color = "white"/>
           )
         }
       </View>

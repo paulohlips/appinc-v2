@@ -95,6 +95,7 @@ class StepList extends Component {
   enviaForm = async () => {
     const { matriculaAsync } = this.state;
     const { reference, formulario, setUpdateHistory } = this.props;
+    this.setState({ sending: true , original : false });
 
     const matriculaProv = await AsyncStorage.getItem('@AppInc:matricula');
     const matricula = JSON.stringify(matriculaProv);
@@ -150,7 +151,7 @@ class StepList extends Component {
       this.setState({ formRedux: false });
     }
     const { navigation } = this.props;
-    const { viewError, load, saved } = this.state;
+    const { viewError, load, sending , original , saved  } = this.state;
 
     return (
       <View style={styles.container}>
@@ -163,13 +164,14 @@ class StepList extends Component {
         />
         {
           viewError && (
-            <SnackBar content = "Sem conexão!" color = "white"/>
+            <SnackBar outside content = "Sem conexão!" color = '#3C3C46' fontcolor = "white"/>
           )
         }
 
         {
           saved && (
-            <SnackBar content = "Salvo!" color = "white"/>
+            <SnackBar outside content = "Progresso Salvo!" color = '#3C3C46' fontcolor = "white"/>
+            
           )
         }
         <ScrollView>
@@ -180,10 +182,9 @@ class StepList extends Component {
           <View style={styles.container}>
 
             <TouchableOpacity style={styles.enviarbutton} onPress={() => this.enviaForm()}>
-
-              <Text style={styles.buttonText}>
-                ENVIAR
-              </Text>
+                  <Text style={styles.buttonText}>
+                    ENVIAR
+                  </Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.salvarbutton} onPress={() => this.saveForm2()}>

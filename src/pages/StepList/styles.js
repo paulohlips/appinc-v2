@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 
-
 });
 
 export default styles;

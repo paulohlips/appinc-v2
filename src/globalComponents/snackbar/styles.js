@@ -5,7 +5,8 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'flex-end',
         alignItems: 'center',
-        position: 'absolute'
+        position: 'absolute',
+        elevation: 1,
       },
   
       card: {
@@ -16,7 +17,6 @@ const styles = StyleSheet.create({
           alignItems: 'center',
           backgroundColor: 'white',
           margin: 20,
-          elevation: 1,
           flexDirection: 'row',
           paddingHorizontal : 20, 
       },
@@ -33,13 +33,14 @@ const styles = StyleSheet.create({
   
       action: {
           fontSize: 16,
-          color: 'grey',
+          color: '#6200EE',
           //fontWeight: 'bold',
       },
   
       action_view: {
-          //backgroundColor: 'pink',
+          backgroundColor: 'pink',
           marginHorizontal: 8,
+          padding: 10,
       }
 });
 

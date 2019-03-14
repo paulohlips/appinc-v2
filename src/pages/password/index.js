@@ -17,6 +17,7 @@ import {
   BackHandler
 } from 'react-native';
 import { ModalCheck } from '../../globalComponents';
+import {SnackBar} from './../../globalComponents';
 import StepIndicator from 'react-native-step-indicator';
 import Axios from 'axios';
 
@@ -187,13 +188,7 @@ class Login extends Component {
         }
         {
           viewModal && (
-            <ModalCheck
-              message={messageRequest}
-              viewModal
-              failure
-              sourceImage={imageCheck}
-              onClose={this.closeModal}
-            />
+          <SnackBar inside content = {this.state.messageRequest} color = "white" fontcolor = "grey"/>
           )
         }
       </View>

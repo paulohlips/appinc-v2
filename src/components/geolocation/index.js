@@ -15,7 +15,7 @@ import { bindActionCreators } from 'redux';
 import { Creators as FormActions } from '../../store/ducks/form';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { responsividade } from '../../styles';
-import  {SnackBar}  from '../../globalComponents';
+
 
 
 class GeoLocation extends Component {
@@ -151,7 +151,7 @@ class GeoLocation extends Component {
       <View>
       {
           error && (
-            <SnackBar content = "Local não encontrado"/>
+           <View style={styles.errov}><Text style={styles.erro}>Não foi possível capturar a localização</Text></View>
           )
         }
           <TouchableOpacity onPress={this.refresh} style={styles.button}>

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {SnackBar} from './../../globalComponents';
 
-import { ModalCheck } from '../../globalComponents';
 import {
   View,
   Text,
@@ -161,12 +161,7 @@ class Login extends Component {
         </HideWithKeyboard>
         {
           viewModal && (
-            <ModalCheck
-              message={messageRequest}
-              viewModal
-              failure
-              sourceImage={imageCheck}
-            />
+            <SnackBar inside content = {this.state.messageRequest} color = "white"/>
           )
         }
       </View>

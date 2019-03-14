@@ -12,7 +12,7 @@ import ComponentList from './components/ComponentsList';
 
 const COMPONENT_EXAMPLE = [
 
-   
+
     {
         "hint": "OCR do local",
         "group": "false",
@@ -148,7 +148,7 @@ const COMPONENT_EXAMPLE = [
 var i = 1;
 
 class StepPage extends Component {
-    state = { 
+    state = {
         move: new Animated.Value(20),
     }
     componentDidMount() {
@@ -157,7 +157,7 @@ class StepPage extends Component {
             toValue: 0,
             duration: 300,
             delay: 250,
-          }).start()
+        }).start()
     }
 
     componentWillMount() {
@@ -175,30 +175,30 @@ class StepPage extends Component {
 
         return (
             <View style={styles.container}>
-            <Header 
-                title={this.props.navigation.state.params.step.step_name} 
-                showArrow
-                showProgress 
-                showInfo
-                info={this.props.navigation.state.params.step.info_step}
-                goBack={this.props.navigation.goBack} 
-            />
+                <Header
+                    title={this.props.navigation.state.params.step.step_name}
+                    showArrow
+                    showProgress
+                    showInfo
+                    info={this.props.navigation.state.params.step.info_step}
+                    goBack={this.props.navigation.goBack}
+                />
 
-                <ScrollView> 
+                <ScrollView>
                     {//troca step.components por COMPONENT_EXAMPLE para testar group 
-                        COMPONENT_EXAMPLE.map((item, i) =>{
+                        step.components.map((item, i) => {
                             i = i + 1;
                             return (
-                            <Animated.View style={{...styles.coluna, top: this.state.move }}>
-                                <View style={styles.linha}>
-                                    <View style={styles.ball}>
-                                        <Text style={styles.numberType}>{i + 1}</Text>
+                                <Animated.View style={{ ...styles.coluna, top: this.state.move }}>
+                                    <View style={styles.linha}>
+                                        <View style={styles.ball}>
+                                            <Text style={styles.numberType}>{i + 1}</Text>
+                                        </View>
+                                        <Text style={styles.textType}> {item.label}: </Text>
                                     </View>
-                                    <Text style={styles.textType}> {item.label}: </Text>
-                                </View>
-                                <ComponentList data={item} index={i} />
-                            </Animated.View>)
-                    })}
+                                    <ComponentList data={item} index={i} />
+                                </Animated.View>)
+                        })}
                 </ScrollView>
             </View>
         );
@@ -214,12 +214,12 @@ const mapDispatchToProps = dispatch => bindActionCreators(FormActions, dispatch)
 export default connect(null, mapDispatchToProps)(StepPage);
 
 /*
- <Header 
-        title={this.props.navigation.state.params.step.step_name} 
+ <Header
+        title={this.props.navigation.state.params.step.step_name}
         showArrow
-        showProgress 
+        showProgress
         showInfo
         info={this.props.navigation.state.params.step.info_step}
-        goBack={this.props.navigation.goBack} 
+        goBack={this.props.navigation.goBack}
       />
 */

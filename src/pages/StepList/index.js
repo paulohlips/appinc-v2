@@ -22,7 +22,7 @@ import Api from '../../services/api';
 import { bindActionCreators } from 'redux';
 import { Creators as FormAction } from '../../store/ducks/form';
 import { Creators as HistActions } from '../../store/ducks/hist';
-import  {SnackBar}  from '../../globalComponents';
+import { SnackBar } from '../../globalComponents';
 
 
 class StepList extends Component {
@@ -96,7 +96,7 @@ class StepList extends Component {
   enviaForm = async () => {
     const { matriculaAsync } = this.state;
     const { reference, formulario, setUpdateHistory } = this.props;
-    this.setState({ sending: true , original : false });
+    this.setState({ sending: true, original: false });
 
     const matriculaProv = await AsyncStorage.getItem('@AppInc:matricula');
     const matricula = JSON.stringify(matriculaProv);
@@ -125,7 +125,7 @@ class StepList extends Component {
     setUpdateHistory();
     this.setState({ matriculaAsync: matricula });
 
-    //const response = await Api.form.postForm({body: data, matricula, ref: formulario.ref});
+    //const response = await Api.form.postForm({ body: data, matricula, ref: formulario.ref });
     //console.tron.log(response)
 
     axios({
@@ -171,26 +171,26 @@ class StepList extends Component {
         />
         {
           viewError && (
-            <SnackBar outside content = "Sem conexão!" color = '#3C3C46' fontcolor = "white"/>
+            <SnackBar outside content="Sem conexão!" color='#3C3C46' fontcolor="white" />
           )
         }
 
         {
           saved && (
-            <SnackBar outside content = "Progresso Salvo!" color = '#3C3C46' fontcolor = "white"/>
-            
+            <SnackBar outside content="Progresso Salvo!" color='#3C3C46' fontcolor="white" />
+
           )
         }
         <ScrollView>
           <FlatList
             data={form.steps}
-            renderItem={item => { i = i+1 ; return <StepBox steps={item} form={form} index={i} />}}
+            renderItem={item => { i = i + 1; return <StepBox steps={item} form={form} index={i} /> }}
           />
           <View style={styles.container}>
 
             <TouchableOpacity style={styles.enviarbutton} onPress={() => this.enviaForm()}>
-                  <Text style={styles.buttonText}>
-                    ENVIAR
+              <Text style={styles.buttonText}>
+                ENVIAR
                   </Text>
             </TouchableOpacity>
 

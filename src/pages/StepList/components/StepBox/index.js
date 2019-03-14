@@ -21,7 +21,8 @@ class StepBoxComponent extends Component {
     arrayProgress: {},
     progress: 0,
     countProgress: '',
-    array: ''
+    array: '',
+
     move: new Animated.Value(40),
   }
 
@@ -103,7 +104,7 @@ class StepBoxComponent extends Component {
       }
     }
     progress = countProgress / arrayProgress.length;
-    this.setState({ progress , count: countProgress , array: arrayProgress.length });
+    this.setState({ progress, count: countProgress, array: arrayProgress.length });
   }
 
   render() {
@@ -119,12 +120,13 @@ class StepBoxComponent extends Component {
     }
 
     return (
-      <Animated.View style={{ ...styles.container, 
+      <Animated.View style={{
+        ...styles.container,
         left: this.state.move,
         opacity: this.state.move.interpolate({
           inputRange: [0, 40],
           outputRange: [1, 0],
-        }), 
+        }),
       }}>
         <TouchableOpacity onPress={() => this.props.navigation.navigate('StepPage', { step: item })}>
           <View style={styles.card_titulo}>
@@ -134,14 +136,14 @@ class StepBoxComponent extends Component {
             <Text style={styles.descricao}>{item.step_description}</Text>
           </View>
           <View style={styles.row}>
-          <View style={styles.bar}>
-            <ProgressBarAndroid
-              styleAttr="Horizontal"
-              indeterminate={false}
-              progress={progress}
-            />
+            <View style={styles.bar}>
+              <ProgressBarAndroid
+                styleAttr="Horizontal"
+                indeterminate={false}
+                progress={progress}
+              />
+            </View>
           </View>
-
         </TouchableOpacity>
       </Animated.View>
     );

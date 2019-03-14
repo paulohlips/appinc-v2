@@ -40,7 +40,7 @@ const Routes = StackNavigator(
     StepPage: { screen: StepPage },
     Logged: createDrawerNavigator(
       {
-        Main: { screen: Main },
+        Main: { screen: Login },
         NewMenu: { screen: New },
         Hist: { screen: Hist },
         Offline: { screen: Offline },

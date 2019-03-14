@@ -33,25 +33,20 @@ export default class Sketch extends Component {
     const { showScanner, showButton } = this.state;
     const { largura_tela } = responsividade;
     return (
-      <View style={{ justifyContent: 'center', alignItem: 'center' }}>
-        {
-          showButton && (
-            <TouchableOpacity onPress={() => this.setState({ showScanner: true, showButton: false })} style={styles.button}>
-              <View style={styles.square}><Icon name="qrcode" size={largura_tela < 430 ? 28 : 40} color="black" style={styles.icon} /></View>
-              <View style={styles.parale}><Text style={styles.button_text}>ESCANEAR CÓDIGO</Text></View>
-            </TouchableOpacity>
-          )}
-
-        {
-          showScanner && (
-            <View style={{ alignItems: 'center', height: 250 }}>
-              <BarcodeScanner
-                style={{ width: 330, height: 250, rigth: 50 }}
-                onBarcodeRead={({ data }) => {
-                  this.setState({ data }); //Guarda o valor de todos os códigos lidos.
-                  this.setState({ showScanner: false, showButton2: true, showCode: true });
-
-                }}
+      <View style={{ justifyContent: "center", alignItem: "center" }}>
+        {showButton && (
+          <TouchableOpacity
+            onPress={() =>
+              this.setState({ showScanner: true, showButton: false })
+            }
+            style={styles.button}
+          >
+            <View style={styles.square}>
+              <Icon
+                name="create"
+                size={largura_tela < 430 ? 28 : 40}
+                color="black"
+                style={styles.icon}
               />
             </View>
             <View style={styles.parale}>
@@ -65,7 +60,7 @@ export default class Sketch extends Component {
               animationType="slide"
               transparent={false}
               visible={showScanner}
-              onRequestClose={() => {}}
+              onRequestClose={() => { }}
             >
               <View style={styles.container}>
                 <View style={{ flex: 1, flexDirection: "row" }}>

@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { Creators as FormsActions } from '../../../../store/ducks/form'
 
 // styles
-import { View, Text, TouchableOpacity, ProgressBarAndroid } from 'react-native';
+import { View, Text, TouchableOpacity, ProgressBarAndroid, Animated } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -22,9 +22,15 @@ class StepBoxComponent extends Component {
     progress: 0,
     countProgress: '',
     array: ''
+    move: new Animated.Value(40),
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    Animated.timing(this.state.move, {
+      toValue: 0,
+      duration: 450,
+      delay: this.props.index * 150,
+    }).start();
   }
 
   createFormsSave = async () => {
@@ -101,9 +107,10 @@ class StepBoxComponent extends Component {
   }
 
   render() {
-    const { steps, form, formState } = this.props;
+    const { steps, form, formState, index } = this.props;
     const { createdForms, arrayProgress, callFunction, progress } = this.state;
     const { item } = steps;
+    console.tron.log(['index', index]);
     if (!createdForms) {
       this.createFormsSave();
     }
@@ -112,7 +119,13 @@ class StepBoxComponent extends Component {
     }
 
     return (
-      <View style={styles.container}>
+      <Animated.View style={{ ...styles.container, 
+        left: this.state.move,
+        opacity: this.state.move.interpolate({
+          inputRange: [0, 40],
+          outputRange: [1, 0],
+        }), 
+      }}>
         <TouchableOpacity onPress={() => this.props.navigation.navigate('StepPage', { step: item })}>
           <View style={styles.card_titulo}>
             <Text style={styles.titulo}>{item.step_name}</Text>
@@ -128,14 +141,9 @@ class StepBoxComponent extends Component {
               progress={progress}
             />
           </View>
-          <View style={styles.number_view}><Text style={styles.number}>{this.state.count + "/" +  this.state.array}</Text></View>
-          
-          
-          </View>
-          
 
         </TouchableOpacity>
-      </View>
+      </Animated.View>
     );
   }
 }

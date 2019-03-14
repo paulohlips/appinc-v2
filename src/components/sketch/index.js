@@ -1,83 +1,44 @@
-import React, { Component } from 'react';
-import { View, Alert, Text, TouchableOpacity } from 'react-native';
-import BarcodeScanner from 'react-native-barcode-scanner-google';
-import styles from './styles';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+  Modal,
+  Picker
+} from "react-native";
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Creators as FormActions } from '../../store/ducks/form';
-import { responsividade } from '../../styles';
+import styles from "./styles";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import { responsividade } from "../../styles";
 
-class Scanner extends Component {
+import RNSketchCanvas from "@terrylinla/react-native-sketch-canvas";
 
-  state = {
-    vetor: [],
-    data: '',
-    showScanner: false,
-    showButton: true,
-    showButton2: false,
-    showCode: false,
-  }
+onPress = () => {
+  const { vetor } = this.state;
+};
 
-  componentDidMount() {
-    const { form, data } = this.props;
-
-    for (var key in form.step) {
-      if (key === data.data_name) {
-        if (form.step[key].filled === true) {
-          this.setState({ data: form.step[key].value });
-        }
-      }
-    }
-  }
-
-
-  onPress = () => {
-    const { vetor } = this.state;
-  }
-
-  saveFormScanner = dataScanner => {
-    const { data } = this.state;
-    const { form, getSaveStateForm, startControlArray } = this.props;
-
-    if (data) {
-      for (var key in form.step) {
-        if (key === dataScanner.data_name) {
-          const form = {};
-          form[dataScanner.data_name] = { key: dataScanner.data_name, value: data, filled: true };
-          getSaveStateForm(form);
-        }
-      }
-    } else {
-      for (var key in form.step) {
-        if (key === dataScanner.data_name) {
-          const form = {};
-          form[dataScanner.data_name] = { key: dataScanner.data_name, value: '', filled: false };
-          getSaveStateForm(form);
-        }
-      }
-    }
-    startControlArray();
+export default class Sketch extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showScanner: false,
+      showButton: true,
+      fundo: ""
+    };
   }
 
   render() {
-    const { data_name, label, hint, default_value, newState } = this.props.data;
-    const { showScanner, showButton, showButton2 } = this.state;
-    const { saveStep, step } = this.props.form;
+    const { showScanner, showButton } = this.state;
     const { largura_tela } = responsividade;
-
-    if (saveStep) {
-      this.saveFormScanner({ data_name, default_value });
-    }
-
     return (
       <View style={{ justifyContent: 'center', alignItem: 'center' }}>
         {
           showButton && (
             <TouchableOpacity onPress={() => this.setState({ showScanner: true, showButton: false })} style={styles.button}>
-              <View style={styles.square}><Icon name="create" size={largura_tela < 430 ? 28 : 40} color="black" style={styles.icon} /></View>
-              <View style={styles.parale}><Text style={styles.button_text}>ABRIR CROQUI</Text></View>
+              <View style={styles.square}><Icon name="qrcode" size={largura_tela < 430 ? 28 : 40} color="black" style={styles.icon} /></View>
+              <View style={styles.parale}><Text style={styles.button_text}>ESCANEAR CÓDIGO</Text></View>
             </TouchableOpacity>
           )}
 
@@ -93,33 +54,130 @@ class Scanner extends Component {
                 }}
               />
             </View>
-
-          )}
-        {
-          this.state.showCode && (
-            <View style={styles.codecontainer}>
-              <Text style={styles.code}> Código: {this.state.data} </Text>
+            <View style={styles.parale}>
+              <Text style={styles.button_text}>FAZER CROQUI</Text>
             </View>
-          )
-        }
-
-        {
-          showButton2 && (
-            <TouchableOpacity onPress={() => this.setState({ showScanner: true, showCode: false })} style={styles.button}>
-              <Text style={styles.button_text}>Escanear código</Text>
-            </TouchableOpacity>
-          )}
-
+          </TouchableOpacity>
+        )}
+        {showScanner && (
+          <View style={{ width: 330, height: 250, rigth: 50 }}>
+            <Modal
+              animationType="slide"
+              transparent={false}
+              visible={showScanner}
+              onRequestClose={() => {}}
+            >
+              <View style={styles.container}>
+                <View style={{ flex: 1, flexDirection: "row" }}>
+                  <RNSketchCanvas
+                    containerStyle={{ backgroundColor: "transparent", flex: 1 }}
+                    canvasStyle={{ backgroundColor: "transparent", flex: 1 }}
+                    defaultStrokeIndex={0}
+                    defaultStrokeWidth={5}
+                    changeImg={
+                      <View style={styles.functionButton}>
+                        <Picker
+                          selectedValue={this.state.fundo}
+                          style={{ height: 50, width: 50 }}
+                          onValueChange={value =>
+                            this.setState({ fundo: value })
+                          }
+                        >
+                          <Picker.Item label="Croqui" value="croqui.png" />
+                          <Picker.Item label="Vítima" value="img.jpg" />
+                        </Picker>
+                      </View>
+                    }
+                    closeComponent={
+                      <View style={styles.functionButton}>
+                        <Text
+                          onPress={() =>
+                            this.setState({
+                              showScanner: false,
+                              showButton: true
+                            })
+                          }
+                          style={{ color: "red", fontWeight: "bold" }}
+                        >
+                          Fechar
+                        </Text>
+                      </View>
+                    }
+                    saveComponent={
+                      <View style={styles.functionButton}>
+                        <Text style={{ color: "green", fontWeight: "bold" }}>
+                          Salvar
+                        </Text>
+                      </View>
+                    }
+                    undoComponent={
+                      <View style={styles.functionButton}>
+                        <Text style={{ color: "white" }}>Desfazer</Text>
+                      </View>
+                    }
+                    clearComponent={
+                      <View style={styles.functionButton}>
+                        <Text style={{ color: "white" }}>Limpar</Text>
+                      </View>
+                    }
+                    eraseComponent={
+                      <View style={styles.functionButton}>
+                        <Text style={{ color: "white" }}>Apagar</Text>
+                      </View>
+                    }
+                    strokeComponent={color => (
+                      <View
+                        style={[
+                          { backgroundColor: color },
+                          styles.strokeColorButton
+                        ]}
+                      />
+                    )}
+                    strokeSelectedComponent={(color, index, changed) => {
+                      return (
+                        <View
+                          style={[
+                            { backgroundColor: color, borderWidth: 2 },
+                            styles.strokeColorButton
+                          ]}
+                        />
+                      );
+                    }}
+                    strokeWidthComponent={w => {
+                      return (
+                        <View style={styles.strokeWidthButton}>
+                          <View
+                            style={{
+                              backgroundColor: "white",
+                              marginHorizontal: 2.5,
+                              width: Math.sqrt(w / 3) * 10,
+                              height: Math.sqrt(w / 3) * 10,
+                              borderRadius: (Math.sqrt(w / 3) * 10) / 2
+                            }}
+                          />
+                        </View>
+                      );
+                    }}
+                    localSourceImage={{
+                      filename: this.state.fundo,
+                      directory: "android/app/src/main/res/drawable",
+                      mode: "AspectFill"
+                    }}
+                    savePreference={() => {
+                      return {
+                        folder: "Croqui",
+                        filename: String(Math.ceil(Math.random() * 100000000)),
+                        transparent: false,
+                        imageType: "png"
+                      };
+                    }}
+                  />
+                </View>
+              </View>
+            </Modal>
+          </View>
+        )}
       </View>
     );
   }
 }
-
-const mapStateToProps = state => ({
-  form: state.formState,
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(FormActions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Scanner);

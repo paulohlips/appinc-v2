@@ -17,6 +17,7 @@ import { Load } from '../../components';
 import { Header } from '../../globalComponents';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import Api from '../../services/api';
 
 import { bindActionCreators } from 'redux';
 import { Creators as FormAction } from '../../store/ducks/form';
@@ -123,6 +124,10 @@ class StepList extends Component {
 
     setUpdateHistory();
     this.setState({ matriculaAsync: matricula });
+
+    //const response = await Api.form.postForm({body: data, matricula, ref: formulario.ref});
+    //console.tron.log(response)
+
     axios({
       method: 'post',
       url: 'http://35.198.17.69/api/pericia/formulario/envio',
@@ -137,6 +142,7 @@ class StepList extends Component {
       .then(function (response) {
         AsyncStorage.setItem('@IDlaudo', response.data.number);
         Alert.alert('ID do laudo', 'O número do seu laudo é ' + response.data.number);
+        console.tron.log(response);
       })
       .catch(error => {
         this.errorMessage();
@@ -151,7 +157,8 @@ class StepList extends Component {
       this.setState({ formRedux: false });
     }
     const { navigation } = this.props;
-    const { viewError, load, sending , original , saved  } = this.state;
+    const { viewError, load, saved } = this.state;
+    let i = 0;
 
     return (
       <View style={styles.container}>
@@ -177,7 +184,7 @@ class StepList extends Component {
         <ScrollView>
           <FlatList
             data={form.steps}
-            renderItem={item => <StepBox steps={item} form={form} />}
+            renderItem={item => { i = i+1 ; return <StepBox steps={item} form={form} index={i} />}}
           />
           <View style={styles.container}>
 

@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
 
     coluna:{
       flexDirection: 'column',
+     
     },
 
     linha: {

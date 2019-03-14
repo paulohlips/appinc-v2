@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { ModalCheck } from '../../globalComponents';
-import  {SnackBar}  from '../../globalComponents';
+import { SnackBar } from '../../globalComponents';
 import {
   View,
   Text,
@@ -100,8 +100,8 @@ class Login extends Component {
   }
 */
 
-  confereCadastro = () =>{
-    const data = { inputSave:this.state.inputSave, password:this.state.password};
+  confereCadastro = () => {
+    const data = { inputSave: this.state.inputSave, password: this.state.password };
     this.props.getLoginRequest(data)
   }
   onPressAnimated = async () => {
@@ -109,7 +109,12 @@ class Login extends Component {
   }
 
   render() {
+    const { login } = this.props;
     const { btt, viewModal, messageRequest } = this.state;
+    if (login.logged) {
+      console.tron.log('entrei no logged')
+      this.navigateToLogged();
+    }
     return (
       <ImageBackground source={require('../../assents/imgs/local_crime.jpg')} style={styles.backgroundImage} >
 
@@ -154,7 +159,7 @@ class Login extends Component {
         </View>
         {
           viewModal && (
-           <SnackBar inside content = {this.state.messageRequest} color = "white" />
+            <SnackBar inside content={this.state.messageRequest} color="white" />
           )
         }
       </ImageBackground>
@@ -166,8 +171,8 @@ const mapStateToProps = state => ({
   login: state.loginState,
 });
 
-const mapDispatchToProps = dispatch => 
-      bindActionCreators(LoginActions, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(LoginActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
 

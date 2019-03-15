@@ -186,7 +186,7 @@ class StepPage extends Component {
 
                 <ScrollView> 
                     {//troca step.components por COMPONENT_EXAMPLE para testar group 
-                        COMPONENT_EXAMPLE.map((item, i) =>{
+                        step.components.map((item, i) =>{
                             i = i + 1;
                             return (
                             <Animated.View style={{...styles.coluna, top: this.state.move }}>

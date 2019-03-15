@@ -94,7 +94,7 @@ class StepList extends Component {
 
   enviaForm = async () => {
     const { matriculaAsync } = this.state;
-    const { reference, formulario, setUpdateHistory } = this.props;
+    const { reference, formulario, setUpdateHistory, group } = this.props;
 
     const matriculaProv = await AsyncStorage.getItem('@AppInc:matricula');
     const matricula = JSON.stringify(matriculaProv);
@@ -123,10 +123,34 @@ class StepList extends Component {
     setUpdateHistory();
     this.setState({ matriculaAsync: matricula });
 
+    const groupData = new FormData();
+    const arrayGroup = [];
+    let index = 0;
+    group.dataGroup.map(item  => {
+      console.tron.log(['item', item]);
+      arrayGroup[index].append(item.texto_2.key, item.texto_2.value);
+      console.tron.log(['group vallue', groupData, arrayGroup]);
+      arrayGroup.push(groupData);
+      console.tron.log(['group arrayvallue', groupData, arrayGroup]);
+    });
+    console.tron.log(['frmdata group', groupData, arrayGroup])
+
+    groupData.map(async item => {
+      console.tron.log(item)
+      try {
+        const response = await Api.form.postGroup({body: item, matricula, ref: formulario.ref});
+        console.tron.log(['response group',response])
+
+      } catch (error) {
+        console.tron.log(['error group',error])
+      }
+    })
+
+    
     //const response = await Api.form.postForm({body: data, matricula, ref: formulario.ref});
     //console.tron.log(response)
 
-    axios({
+    /*axios({
       method: 'post',
       url: 'http://35.198.17.69/api/pericia/formulario/envio',
       data: data,
@@ -144,10 +168,11 @@ class StepList extends Component {
       })
       .catch(error => {
         this.errorMessage();
-      });
+      });*/
   }
 
   render() {
+    console.tron.log(['group steplist', this.props.group])
     const { formRedux } = this.state;
     const form = this.props.form;
     if (formRedux) {
@@ -212,6 +237,7 @@ const mapStateToProps = state => ({
   form: state.newState.data,
   reference: state.newState.reference,
   formulario: state.formState,
+  group: state.groupState,
 });
 
 const mapDispatchToProps = dispatch =>

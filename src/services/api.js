@@ -20,7 +20,7 @@ const form = {
   // requisição para enviar um formulario
   postForm: data => {
     console.tron.log(data);  
-    return api.post('/pericia/formulario/recebidos', data.body,
+    return api.post('/pericia/formulario/envio', data.body,
       { 
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -31,7 +31,21 @@ const form = {
       },      
     )
   },
+  postGroup: data => {
+    console.tron.log(data);  
+    return api.post('/pericia/formularios/envio/teste', data.body,
+      { 
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'application/json',         
+        }
+      },      
+    )
+  }
 }
+
+
+
 
 export default Api = {
   api,

@@ -4,7 +4,7 @@ import { colors, metrics, responsividade } from '../../styles';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'pink',
+    //backgroundColor: colors.light,
     width: responsividade.largura_tela,
     padding: 20,
     paddingBottom: 40,
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
    },
 
   input: {
-     backgroundColor: 'white',
+     //backgroundColor: 'white',
      height: responsividade.ALTURA_INPUT * 1.1,
      borderRadius: 4,
      paddingLeft: 20,

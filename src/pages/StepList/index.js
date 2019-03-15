@@ -91,6 +91,17 @@ class StepList extends Component {
     setTimeout(function () { that.setState({ error: false }) }, 4000);
   }
 
+  sendForm = async form => {
+    const oneGroupData = new FormData();
+    oneGroupData.append(form.texto_2.key, form.texto_2.value);
+    console.tron.log(['envio de gropu', oneGroupData]);
+    try {
+      const response = await Api.form.postForm({body: oneGroupData, matricula, ref: formulario.ref});
+      console.tron.log(['response group',response]);
+    } catch (error) {
+      console.tron.log(['error group',error]);
+    }
+  }
 
   enviaForm = async () => {
     const { matriculaAsync } = this.state;
@@ -123,32 +134,17 @@ class StepList extends Component {
     setUpdateHistory();
     this.setState({ matriculaAsync: matricula });
 
-    const groupData = new FormData();
+    
     const arrayGroup = [];
     let index = 0;
     group.dataGroup.map(item  => {
-      console.tron.log(['item', item]);
-      arrayGroup[index].append(item.texto_2.key, item.texto_2.value);
-      console.tron.log(['group vallue', groupData, arrayGroup]);
-      arrayGroup.push(groupData);
-      console.tron.log(['group arrayvallue', groupData, arrayGroup]);
+      this.sendForm(item);
     });
-    console.tron.log(['frmdata group', groupData, arrayGroup])
-
-    groupData.map(async item => {
-      console.tron.log(item)
-      try {
-        const response = await Api.form.postGroup({body: item, matricula, ref: formulario.ref});
-        console.tron.log(['response group',response])
-
-      } catch (error) {
-        console.tron.log(['error group',error])
-      }
-    })
+   
 
     
-    //const response = await Api.form.postForm({body: data, matricula, ref: formulario.ref});
-    //console.tron.log(response)
+    const response = await Api.form.postForm({body: data, matricula, ref: formulario.ref});
+    console.tron.log(['response sadasd', response])
 
     /*axios({
       method: 'post',

@@ -67,17 +67,14 @@ class Historico extends Component {
     const array = JSON.parse(arrayRef);
     this.setState({ arrayRef: array, idUser: id, errorview: false });
     const idMatricula = this.state.idUser;
-
     try {
       const response =  await Api.user.getHist({ id: 123, token: login.token});
-      console.tron.log('entrei0', response);
       if (response.status === 206) {
         this.setState({ loading: false, errorview: true });
       } else {
         this.setState({ loading: false, arrayEnviados: response.data });
       }
     } catch (error) {
-      console.tron.log(error);
       this.setState({ loading: false, errorview: true })
     }
    

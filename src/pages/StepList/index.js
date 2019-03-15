@@ -142,7 +142,6 @@ class StepList extends Component {
       .then(function (response) {
         AsyncStorage.setItem('@IDlaudo', response.data.number);
         Alert.alert('ID do laudo', 'O número do seu laudo é ' + response.data.number);
-        console.tron.log(response);
       })
       .catch(error => {
         this.errorMessage();

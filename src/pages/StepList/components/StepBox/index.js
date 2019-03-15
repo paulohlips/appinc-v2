@@ -111,7 +111,6 @@ class StepBoxComponent extends Component {
     const { steps, form, formState, index } = this.props;
     const { createdForms, arrayProgress, callFunction, progress } = this.state;
     const { item } = steps;
-    console.tron.log(['index', index]);
     if (!createdForms) {
       this.createFormsSave();
     }

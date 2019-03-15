@@ -36,7 +36,6 @@ class Group extends Component {
           ...prototype,
           index: Math.random(),
       }
-      console.tron.log(size, prototypeVar);
       this.props.incrementDataGroup(prototypeVar)
   }
 
@@ -71,7 +70,6 @@ class Group extends Component {
   render() {
     const { group } = this.props
     const { dataGroup } = this.state;
-    console.tron.log([dataGroup, this.props]);
     return (
       <View style={styles.container}>
         <ScrollView

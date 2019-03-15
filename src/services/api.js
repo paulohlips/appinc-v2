@@ -8,7 +8,6 @@ const api = axios.create({
 const user = {
   // requisição para ter historico de pericias
   getHist: data => {
-    console.tron.log(data);
     return api.post('/pericia/formulario/recebidos', null, {
         headers: {
           'matricula': data.id,
@@ -22,12 +21,10 @@ const user = {
 const form = {
   // requisiçao para obter um novo pop atraves de um numero identificador
   getNewForm: number => {
-    console.tron.log(state);
     return api.get(`/pericia/formularios/${number}`)
   },
   // requisição para enviar um formulario
   postForm: data => {
-    console.tron.log(data);
     return api.post('/pericia/formulario/envio', data.body,
       {
         headers: {

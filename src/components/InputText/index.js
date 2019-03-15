@@ -85,8 +85,6 @@ class InputText extends Component {
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });
     }
-
-    console.tron.log(['group text', group, this.props.data ])
     return (
       <View style={{ ...styles.container, backgroundColor: (group === true ? 'white' : null) }}>
         <Text style={styles.hint}>{hint}</Text>

@@ -80,8 +80,7 @@ class Scanner extends Component {
     if (saveStep) {
       this.saveFormScanner({ data_name, default_value });
     }
-
-    console.tron.log(['info skaner', infoScanner])
+    
     return (
       <View style={{ justifyContent: 'center', alignItem: 'center' }}>
         {

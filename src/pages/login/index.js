@@ -43,6 +43,7 @@ class Login extends Component {
     currentPosition: 0,
     viewModal: false,
     messageRequest: '',
+    call: false,
   }
 
   async componentWillMount() {
@@ -50,6 +51,12 @@ class Login extends Component {
     this.setState({ btt: id });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.login.logged !== this.props.login.logged) {
+      this.navigateToLogged();
+    }
+  }
+  
   navigateToLogged = () => {
     const resetAction = StackActions.reset({
       index: 0,
@@ -69,36 +76,12 @@ class Login extends Component {
         NavigationActions.navigate({ routeName: 'SignUp' }),
       ]
     });
-    this.props.navigation.dispatch(resetAction);
+    this.props.navigation.dispatch(resetAction);    
   }
 
   salvarIdProv = () => {
     AsyncStorage.setItem('@IdProv', this.state.inputSave);
   }
-
-  /*
-  confereCadastro = () => {
-    const { password, inputSave, nome } = this.state;
-    this.setState({ viewModal: false});
-    axios({
-      method: 'post',
-      url: 'http://35.198.17.69/api/pericia/usuario/login',
-      data: { matricula: inputSave, pass: password },
-    })
-      .then((resp) => {
-        if (resp.status === 200) {
-          this.setState({ nome: resp.data.nome });
-          AsyncStorage.setItem('@AppInc:nome', this.state.nome);
-          this.navigateToLogged();
-          AsyncStorage.setItem('@AppInc:matricula', inputSave);
-        } else {
-          this.setState({ viewModal: true, messageRequest: resp.data.mensagem });
-        }
-      }).catch(err => {
-        this.setState({ viewModal: true });
-      });
-  }
-*/
 
   confereCadastro = () => {
     const data = { inputSave: this.state.inputSave, password: this.state.password };
@@ -110,11 +93,7 @@ class Login extends Component {
 
   render() {
     const { login } = this.props;
-    const { btt, viewModal, messageRequest } = this.state;
-    if (login.logged) {
-      console.tron.log('entrei no logged')
-      this.navigateToLogged();
-    }
+    const { btt, viewModal, messageRequest, call } = this.state;
     return (
       <ImageBackground source={require('../../assents/imgs/local_crime.jpg')} style={styles.backgroundImage} >
 
@@ -145,7 +124,7 @@ class Login extends Component {
               onChangeText={password => this.setState({ password })}
               value={this.state.password}
             />
-            <TouchableOpacity style={styles.testebutton} onPress={() => { this.confereCadastro(); }}>
+            <TouchableOpacity style={styles.testebutton} onPress={() => this.props.navigation.navigate('Main')}>
               <Text style={styles.buttonText}>
                 Entrar
                   </Text>

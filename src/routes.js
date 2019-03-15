@@ -1,6 +1,6 @@
 import React from 'react';
 //import { Dimensions } from 'react-native';
-import { StackNavigator, createDrawerNavigator } from 'react-navigation';
+import { StackNavigator, DrawerNavigator } from 'react-navigation';
 import { Menu } from './globalComponents';
 import { responsividade } from './styles';
 //import { colors } from './styles';
@@ -33,14 +33,13 @@ import StepList from './pages/StepList';
 const Routes = StackNavigator(
   {
     Login: { screen: Login },
-    Main: { screen: Main },
     SignUp: { screen: Singup },
     Hash: { screen: Hash },
     Password: { screen: Password },
     StepPage: { screen: StepPage },
-    Logged: createDrawerNavigator(
+    Logged: DrawerNavigator(
       {
-        Main: { screen: Login },
+        Main: { screen: Main },
         NewMenu: { screen: New },
         Hist: { screen: Hist },
         Offline: { screen: Offline },

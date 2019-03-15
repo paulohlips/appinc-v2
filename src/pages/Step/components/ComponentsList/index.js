@@ -24,7 +24,7 @@ class ComponentList extends Component {
   componentDidMount() {
     Animated.timing(this.state.move, {
       toValue: 0,
-      duration: 350,
+      duration: 200,
       delay: 300
     }).start();
   }

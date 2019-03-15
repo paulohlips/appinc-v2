@@ -9,6 +9,7 @@ import { Creators as GroupActions } from '../../store/ducks/group';
 import { View, TextInput, Text } from 'react-native';
 import styles from './styles';
 import stylesGroup from './stylesGroup';
+import { colors } from '../../styles';
 
 
 class InputText extends Component {
@@ -84,11 +85,13 @@ class InputText extends Component {
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });
     }
+
+    console.tron.log(['group text', group, this.props.data ])
     return (
-      <View style={group ? stylesGroup.container : styles.container}>
+      <View style={{ ...styles.container, backgroundColor: (group === true ? 'white' : null) }}>
         <Text style={styles.hint}>{hint}</Text>
         <TextInput
-          style={group ? stylesGroup.input : styles.input}
+          style={{ ...styles.input, backgroundColor: (group === true ? colors.light : 'white') }}
           autoCapitalize="sentences"
           autoCorrect={false}
           placeholder={"Digite aqui..."}

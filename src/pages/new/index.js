@@ -11,7 +11,7 @@ import {
   BackHandler
 } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
-import { Header, ModalCheck } from '../../globalComponents';
+import { Header, ModalCheck, PickerItem } from '../../globalComponents';
 import styles from './styles';
 
 import { connect } from 'react-redux';
@@ -48,6 +48,28 @@ class New extends Component {
     viewModal: false,
     messageRequest: 'Sem conexão',
     viewError: false,
+    infopicker: [
+      {
+        name: 'Veículos',
+        value: 30,
+      },
+      {
+        name: 'Incêndio',
+        value: 32,
+      },
+      {
+        name: 'Genética Forense',
+        value: 33,
+      },
+      {
+        name: 'Arrombamento de Caixa',
+        value: 6,
+      },
+      {
+        name: 'Catálogo de Componentes',
+        value: 1,
+      },
+    ],
   }
 
   componentDidMount() {
@@ -105,15 +127,20 @@ class New extends Component {
     this.props.closeModalError();
   };
 
+  receiveParams = params => {
+    this.setState({ testeParam: params, baseUrl: params });
+    this.reqUrl(params)
+  }
+
   render() {
     const {
       showRef,
       fadeAnim_ref,
       viewError,
       messageRequest,
+      infopicker,
     } = this.state;
     const { navigation, newState } = this.props;
-
     return (
       <View style={styles.container}>
         <Header
@@ -137,18 +164,10 @@ class New extends Component {
               <Text style={styles.textType}> Perícia: </Text>
             </View>
             <View style={styles.Picker}>
-              <Picker
-                style={styles.estiloPicker}
-                onValueChange={(hahaha => { this.setState({ baseUrl: hahaha }); this.reqUrl(hahaha); })}
-                selectedValue={this.state.baseUrl}
-              >
-                <Picker.Item label='Selecione a perícia' />
-                <Picker.Item label='Veículos' value='30' />
-                <Picker.Item label='Incêndio' value='32' />
-                <Picker.Item label='Genética Forense' value='33' />
-                <Picker.Item label='Arrombamento de Caixa' value='6' />
-                <Picker.Item label='Catálogo de Componentes' value='1' />
-              </Picker>
+              <PickerItem 
+                receiveProps={(params => this.receiveParams(params))}
+                arrayConfig={infopicker}
+              />             
             </View>
           </View>
 
@@ -211,3 +230,41 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(New);
+
+/*
+ <Picker
+                style={styles.estiloPicker}
+                onValueChange={(hahaha => { this.setState({ baseUrl: hahaha }); this.reqUrl(hahaha); })}
+                selectedValue={this.state.baseUrl}
+              >
+                <Picker.Item label='Selecione a perícia' />
+                <Picker.Item label='Veículos' value='30' />
+                <Picker.Item label='Incêndio' value='32' />
+                <Picker.Item label='Genética Forense' value='33' />
+                <Picker.Item label='Arrombamento de Caixa' value='6' />
+                <Picker.Item label='Catálogo de Componentes' value='1' />
+              </Picker>
+
+              [
+                {
+                  name: 'Veículos',
+                  value: 30,
+                },
+                {
+                  name: 'Incêndio',
+                  value: 32,
+                },
+                {
+                  name: 'Genética Forense',
+                  value: 33,
+                },
+                {
+                  name: 'Arrombamento de Caixa',
+                  value: 6,
+                },
+                {
+                  name: 'Catálogo de Componentes',
+                  value: 1,
+                },
+              ]
+*/

@@ -79,11 +79,13 @@ const styles = StyleSheet.create({
 
   Picker: {
     backgroundColor: colors.white,
-    height: responsividade.ALTURA_INPUT,
-    width: responsividade.LARGURA_INPUT,
+    //height: responsividade.ALTURA_INPUT,
+    width: responsividade.largura_tela * 0.9,
     borderRadius: responsividade.BORDER_RADIUS_INPUT,
-    paddingHorizontal: 35,
+    //paddingHorizontal: 35,
     marginTop: responsividade.margin.mainMargin * 1.5,
+    alignItems: 'center',
+    flexDirection: 'column',
   },
 
   estiloPicker: {

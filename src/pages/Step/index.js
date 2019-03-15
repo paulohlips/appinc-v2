@@ -155,7 +155,7 @@ class StepPage extends Component {
         BackHandler.addEventListener('hardwareBackPress', this.saveStep);
         Animated.timing(this.state.move, {
             toValue: 0,
-            duration: 300,
+            duration: 200,
             delay: 250,
         }).start()
     }

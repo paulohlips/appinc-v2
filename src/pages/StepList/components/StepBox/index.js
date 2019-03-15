@@ -23,13 +23,13 @@ class StepBoxComponent extends Component {
     countProgress: '',
     array: '',
 
-    move: new Animated.Value(40),
+    move: new Animated.Value(30),
   }
 
   componentDidMount() {
     Animated.timing(this.state.move, {
       toValue: 0,
-      duration: 450,
+      duration: 300,
       delay: this.props.index * 150,
     }).start();
   }

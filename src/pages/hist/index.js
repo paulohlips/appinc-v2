@@ -61,7 +61,7 @@ class Historico extends Component {
   }
 
   requestFroms = async () => {
-    
+    const { login } = this.props;
     const arrayRef = await AsyncStorage.getItem('arrayRef');
     const id = await AsyncStorage.getItem("@AppInc:matricula");
     const array = JSON.parse(arrayRef);
@@ -69,7 +69,7 @@ class Historico extends Component {
     const idMatricula = this.state.idUser;
 
     try {
-      const response =  await Api.user.getHist(123);
+      const response =  await Api.user.getHist({ id: 123, token: login.token});
       console.tron.log('entrei0', response);
       if (response.status === 206) {
         this.setState({ loading: false, errorview: true });
@@ -216,6 +216,7 @@ class Historico extends Component {
 const mapStateToProps = state => ({
   form: state.formState,
   hist: state.histState,
+  login: state.loginState,
 });
 
 const mapDispatchToProps = dispatch =>

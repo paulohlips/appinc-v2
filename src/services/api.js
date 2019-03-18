@@ -1,5 +1,5 @@
 import axios from 'axios';
-import state from 'redux';
+
 
 const api = axios.create({
   baseURL: 'http://35.198.17.69/api',
@@ -7,11 +7,20 @@ const api = axios.create({
 
 const user = {
   // requisição para ter historico de pericias
+  loginUser: data => {
+    return api.post('/pericia/usuario/login',
+      data,
+      {
+        headers: {}
+      },
+    )
+  },
+
   getHist: data => {
     return api.post('/pericia/formulario/recebidos', null, {
         headers: {
           'matricula': data.id,
-          'token': data.token,
+          // 'token': data.token,
         }
       },
     )

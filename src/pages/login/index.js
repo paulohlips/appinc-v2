@@ -47,6 +47,7 @@ class Login extends Component {
   }
 
   async componentWillMount() {
+    console.tron.log(this.props)
     const id = await AsyncStorage.getItem('@Id');
     this.setState({ btt: id });
   }
@@ -124,7 +125,7 @@ class Login extends Component {
               onChangeText={password => this.setState({ password })}
               value={this.state.password}
             />
-            <TouchableOpacity style={styles.testebutton} onPress={() => this.props.navigation.navigate('Main')}>
+            <TouchableOpacity style={styles.testebutton} onPress={() => this.confereCadastro()}>
               <Text style={styles.buttonText}>
                 Entrar
                   </Text>

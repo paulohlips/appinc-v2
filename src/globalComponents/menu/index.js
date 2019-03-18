@@ -5,8 +5,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './style';
 import { responsividade } from '../../styles';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Creators as LoginActions } from '../../store/ducks/login';
+
+
 const pathImage = '../../assents/imgs/avatar.png';
-class Menu extends Component {
+class MenuClass extends Component {
     state= {
         nome: '',
     }
@@ -16,14 +21,19 @@ class Menu extends Component {
         this.setState({
             nome: name
         });
+
+        console.tron.log(['props menu', this.props])
     }
 
-    navigateToScreen = (route) => () => {
+    navigateToScreen = (route, exit) => () => {      
+        if (exit) {
+            this.props.getExitLogin();
+        }
         const navigateAction = NavigationActions.navigate({
           routeName: route
         });
-        this.props.navigation.dispatch(navigateAction);
-      }
+        this.props.navigation.dispatch(navigateAction);        
+    }
 
     render() {
         const { nome } = this.state;
@@ -56,7 +66,7 @@ class Menu extends Component {
                             <Text style={styles.textButton}>Renovar token</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={this.navigateToScreen('Exit')}>
+                    <TouchableOpacity onPress={this.navigateToScreen('Login', true)}>
                         <View style={styles.buttonBox}>
                             <Icon name="exit-to-app" size={largura_tela< 430 ? 19 : 29} color="#fff" style={styles.icon} />
                             <Text style={styles.textButton}>Sair</Text>
@@ -68,4 +78,12 @@ class Menu extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    login: state.loginState,
+  });
+  
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(LoginActions, dispatch);
+
+const Menu = connect(mapStateToProps, mapDispatchToProps)(MenuClass)
 export default withNavigation(Menu);

@@ -24,6 +24,7 @@ const imageCheck = require('../../assents/lottie/warning.json');
 import styles from './styles';
 import { red } from 'ansi-colors';
 import Axios from 'axios';
+import Api  from '../../services/api';
 
 
 const labels = ["ID", "PIN", "Senha"];
@@ -94,10 +95,23 @@ class Login extends Component {
     this.props.navigation.dispatch(resetAction);
   }
 
-  confereID = () => {
+  confereID = async () => {
     const { inputSave } = this.state;
     this.setState({ viewModal: false});
-    Axios({
+    try {
+      const response = await Api.user.postCadastroId({ matricula: inputSave })
+      console.tron.log(response)
+      if (response.status === 200) {
+        console.tron.log('navega')
+        this.navigateToHash();
+      } else {
+        this.setState({ viewModal: true, messageRequest: response.data.mensagem });
+      }
+    } catch {
+      this.setState({ viewModal: true, messageRequest: response.data.mensagem });
+    }
+    
+    /* Axios({
       method: 'post',
       url: 'http://35.198.17.69/api/pericia/usuario/cadastro',
       data: { matricula: inputSave },
@@ -110,7 +124,7 @@ class Login extends Component {
         }
       }).catch(err => {
         this.setState({ viewModal: true, messageRequest: resp.data.mensagem });
-      });
+      });*/
     AsyncStorage.setItem('@IdRegistro', inputSave);
   }
 

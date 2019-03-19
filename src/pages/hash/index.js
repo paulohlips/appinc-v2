@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import Axios from 'axios';
+import Api from '../../services/api';
 
 const imageCheck = require('../../assents/lottie/warning.json');
 
@@ -100,9 +101,21 @@ class Login extends Component {
     this.animation.play(30, 1000);
   }
 
-  conferePIN = () => {
+  conferePIN = async () => {
     const { inputSave, idRegistro } = this.state;
-    Axios({
+
+    try {
+      const response = await Api.user.postConferePIN({ matricula: idRegistro, pin: inputSave });
+      console.tron.log(['hash', response])
+      if (response.status === 200) {
+        this.navigateToPassword();
+      } else {
+        this.setState({ viewModal: true, messageRequest: response.data.mensagem });
+      }
+    } catch {
+      this.setState({ viewModal: true, messageRequest: response.data.mensagem });
+    }
+    /*Axios({
       method: 'post',
       url: 'http://35.198.17.69/api/pericia/usuario/validaPin',
       data: { matricula: idRegistro, pin: inputSave },
@@ -115,7 +128,7 @@ class Login extends Component {
         }
       }).catch(err => {
         this.setState({ viewModal: true, messageRequest: resp.data.mensagem });
-      });
+      });*/
     AsyncStorage.setItem('@PinRegistro', inputSave);
   }
 

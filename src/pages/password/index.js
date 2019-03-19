@@ -20,6 +20,7 @@ import { ModalCheck } from '../../globalComponents';
 import {SnackBar} from './../../globalComponents';
 import StepIndicator from 'react-native-step-indicator';
 import Axios from 'axios';
+import Api from '../../services/api';
 
 const imageCheck = require('../../assents/lottie/warning.json');
 const imageCheck2 = require('../../assents/lottie/check.json');
@@ -94,10 +95,28 @@ class Login extends Component {
   }
 
 
-   salvarId = () => {
+   salvarId = async () => {
     const { id, idRegistro, pinRegistro, inputSave1, inputSave2 } = this.state;
     this.setState({ viewModal: false});
-    if (inputSave1 == inputSave2){
+    
+    if (inputSave1 == inputSave2) {
+      try {
+        const response = await Api.user.createPassword({ matricula: idRegistro, pin: pinRegistro, pass: inputSave2 });
+        console.tron.log('pasword', response)
+        if (response.status === 200) {
+          this.setState({ viewModals: true })
+        } else {
+          Alert.alert(response.data.mensagem);
+        }
+      } catch {
+        this.setState({ viewModal: true , messageRequest: 'Erro de conexão' });
+      }
+    } else {
+      this.setState({ viewModal: true , messageRequest: 'Senhas diferentes' });
+    }
+   
+    
+    /*if (inputSave1 == inputSave2){
       Axios({
         method: 'post',
         url: 'http://35.198.17.69/api/pericia/usuario/geraSenha',
@@ -114,7 +133,7 @@ class Login extends Component {
       });
     } else {
       this.setState({ viewModal: true , messageRequest: 'Senhas diferentes' });
-    }
+    }*/
     AsyncStorage.setItem('@Id', id);
   }
 

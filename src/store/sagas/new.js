@@ -1,9 +1,10 @@
 import Api from '../../services/api';
-import { call, put } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 
 import { Creators as NewActions } from '../ducks/new';
 
-export function* getNewRequest(action) {
+
+export function* getNewRequest(action, state) {
   try {
     const response = yield call(Api.form.getNewForm, action.payload.number);    
     yield put(NewActions.getNewSucsses(response.data));

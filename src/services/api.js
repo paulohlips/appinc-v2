@@ -7,9 +7,10 @@ const api = axios.create({
 
 const tokenAuth = null;
 
-const setToken = token => {
-  console.tron.log(['peuei', token])
+const setToken = (token, matricula) => {
+  console.tron.log(['peuei', token, matricula])
   axios.defaults.headers.common['X-Token']=`${token}`;
+  axios.defaults.headers.common['matricula']=`${matricula}`;
 }
 
 const user = {

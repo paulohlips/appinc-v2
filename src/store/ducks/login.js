@@ -14,6 +14,7 @@ const InitialState = {
   logged: false,
 };
 
+
 export default function LoginState(state = InitialState, action) {
   switch (action.type) {
     case Types.GET_REQUEST_LOGIN:
@@ -55,3 +56,7 @@ export const Creators = {
   })
 
 };
+
+export const LoginToken = state => {
+  return 'ksjdhfkjsdhf';
+}

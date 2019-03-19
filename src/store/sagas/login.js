@@ -7,8 +7,9 @@ export function* getLoginRequest(action) {
   try {
     const response = yield call(Api.user.loginUser, { matricula: action.payload.data.inputSave, pass: action.payload.data.password });
     console.tron.log(response)
-    
-    yield put(LoginActions.getLoginSucsses(response.data, action.payload.data.inputSave));
+    if (response.status === 200) {
+      yield put(LoginActions.getLoginSucsses(response.data, action.payload.data.inputSave));
+    }    
   } catch{
     // console.tron.log("Deu ruim")
   }

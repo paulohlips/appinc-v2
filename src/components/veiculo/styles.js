@@ -121,13 +121,10 @@ const styles = StyleSheet.create({
 
   Picker: {
     backgroundColor: 'white',
-    height: responsividade.ALTURA_INPUT,
     width: responsividade.LARGURA_INPUT,
     margin: responsividade.margin.mainMargin / 2,
-    borderRadius: responsividade.BORDER_RADIUS_INPUT,
-    paddingLeft: 20,
+    borderRadius: responsividade.BORDER_RADIUS_INPUT,   
     fontSize: responsividade.fonts.descriptionSize,
-
   },
 
   estiloPicker: {

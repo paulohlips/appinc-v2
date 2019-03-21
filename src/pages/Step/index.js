@@ -11,136 +11,17 @@ import styles from './styles';
 import ComponentList from './components/ComponentsList';
 
 const COMPONENT_EXAMPLE = [
-
-
     {
-        "hint": "OCR do local",
-        "group": "false",
-        "label": "OCR",
+        "hint": "Componente data",
+        "group": "true",
+        "label": "Informações do veículo",
         "required": "true",
-        "data_name": "ocr_1",
-        "lenght_max": "",
-        "length_min": "",
-        "invalid_text": "",
-        "default_value": "",
-        "component_type": "ocr",
-        "required_message": ""
-    },
-    {
-        "hint": "Croqui do local",
-        "group": "false",
-        "label": "Croqui",
-        "required": "true",
-        "data_name": "croqui_1",
-        "lenght_max": "",
-        "length_min": "",
-        "invalid_text": "",
-        "default_value": "",
-        "component_type": "croqui",
-        "required_message": ""
-    },
-    {
-        "hint": "Leitor QR/Bar code",
-        "group": "false",
-        "label": "Leitor de QR ou Bar code",
-        "required": "true",
-        "data_name": "scanner_1",
-        "lenght_max": "",
-        "length_min": "",
-        "invalid_text": "",
-        "default_value": "",
-        "component_type": "scanner",
-        "required_message": ""
-    },
-    {
-        "hint": "Tire uma foto ou selecione da galeria",
-        "group": "false",
-        "label": "Tire uma foto",
-        "required": "",
-        "data_name": "camera_1",
-        "lenght_max": "",
-        "length_min": "",
-        "invalid_text": "",
-        "default_value": "",
-        "component_type": "camera",
-        "required_message": ""
-    },
-    {
-        "hint": "Insira um texto",
-        "group": "false",
-        "label": "Digite um texto",
-        "required": "true",
-        "data_name": "texto_1",
-        "lenght_max": "",
-        "length_min": "",
-        "invalid_text": "",
-        "default_value": "",
-        "component_type": "text",
-        "required_message": ""
-    },
-    {
-        "hint": "Grave um áudio",
-        "group": "false",
-        "label": "Gravador de áudio",
-        "required": "true",
-        "data_name": "audiorec_1",
-        "lenght_max": "",
-        "length_min": "",
-        "invalid_text": "",
-        "default_value": "",
-        "component_type": "audiorec",
-        "required_message": ""
-    },
-    {
-        "hint": "Use o GPS",
-        "group": "false",
-        "label": "Onde você está?",
-        "required": "true",
-        "data_name": "geoloc_1",
-        "lenght_max": "",
-        "length_min": "",
-        "invalid_text": "",
-        "default_value": "",
-        "component_type": "geoloc",
-        "required_message": ""
-    },
-    {
-        "hint": "Pesquise um veículo",
-        "group": "false",
-        "label": "Acesso a APIs e BDs externos",
-        "required": "true",
-        "data_name": "veiculo_1",
+        "data_name": "info_veiculo",
         "lenght_max": "",
         "length_min": "",
         "invalid_text": "",
         "default_value": "",
         "component_type": "veiculo",
-        "required_message": ""
-    },
-    {
-        "hint": "Lista de atividades",
-        "group": "false",
-        "label": "Lista de ToDos - Checkbox",
-        "required": "true",
-        "data_name": "checkbox_1",
-        "lenght_max": "",
-        "length_min": "",
-        "invalid_text": "",
-        "default_value": "",
-        "component_type": "checkbox",
-        "required_message": ""
-    },
-    {
-        "hint": "Componente data",
-        "group": "true",
-        "label": "Componente data",
-        "required": "true",
-        "data_name": "data_1",
-        "lenght_max": "",
-        "length_min": "",
-        "invalid_text": "",
-        "default_value": "",
-        "component_type": "date",
         "required_message": ""
     }
 ];
@@ -175,18 +56,10 @@ class StepPage extends Component {
 
         return (
             <View style={styles.container}>
-                <Header
-                    title={this.props.navigation.state.params.step.step_name}
-                    showArrow
-                    showProgress
-                    showInfo
-                    info={this.props.navigation.state.params.step.info_step}
-                    goBack={this.props.navigation.goBack}
-                />
 
                 <ScrollView>
                     {//troca step.components por COMPONENT_EXAMPLE para testar group 
-                        step.components.map((item, i) => {
+                        COMPONENT_EXAMPLE.map((item, i) => {
                             i = i + 1;
                             return (
                                 <Animated.View style={{ ...styles.coluna, top: this.state.move }}>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, AsyncStorage, Image, ScrollView, Picker, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import axios from 'axios';
+import { PickerItem } from '../../globalComponents';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -10,7 +11,6 @@ import { Creators as FormActions } from '../../store/ducks/form';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { responsividade } from '../../styles';
-
 
 
 class Veiculos extends Component {
@@ -22,7 +22,8 @@ class Veiculos extends Component {
     placa: '',
     marcas: null,
     marcaAtual: '',
-    dadosMarcas: '',
+    dadosAno: [],
+    dadosMarcas: [],
     viewDenatran: false,
     viewFipe: false,
     dadosModelos: '',
@@ -54,7 +55,21 @@ class Veiculos extends Component {
       referencia: '',
       preco: '',
       veiculo: '',
-    }
+    },
+    infopicker: [
+      {
+        name: 'Carro',
+        value: 'carro', 
+      },
+      {
+        name: 'Moto',
+        value: 'motos', 
+      },
+      {
+        name: 'Caminhão ou Microônibus',
+        value: 'caminhao', 
+      },
+    ],
   }
 
   async componentWillMount() {
@@ -138,11 +153,24 @@ class Veiculos extends Component {
       });
   }
 
-  getMarcas = async data => {
-    await this.setState({
-      dadosMarcas: data,
+  getMarcas = data => {
+    console.tron.log(this.state.dadosMarcas, data);
+    data.map(item => {
+      //console.tron.log(item)
+       this.setState({ dadosMarcas: [
+          ...this.state.dadosMarcas,
+          {
+            name: item.fipe_name,
+            value: item.id,
+          }
+        ]
+      })
+      
+    })
+    this.setState({
       renderPicker: true,
     });
+    console.tron.log(this.state.dadosMarcas);
   }
 
   pegaModelos = (value) => {
@@ -158,11 +186,24 @@ class Veiculos extends Component {
       });
   }
 
-  getModelos = async data => {
-    await this.setState({
-      dadosModelos: data,
+  getModelos = data => {
+    console.tron.log(data)
+    data.map(item => {
+      //console.tron.log(item)
+       this.setState({ dadosModelos: [
+          ...this.state.dadosModelos,
+          {
+            name: item.name,
+            value: item.id,
+          }
+        ]
+      })
+      
+    })
+    this.setState({
       renderPickerModelos: true,
     });
+    console.tron.log(this.state.dadosModelos,)
   }
 
   pegaAno = value => {
@@ -178,11 +219,25 @@ class Veiculos extends Component {
       });
   }
 
-  getAno = async data => {
+  getAno =  data => {
+    console.tron.log(['getano',data])
+    data.map(item => {
+      console.tron.log(item)
+       this.setState({ dadosAno: [
+          ...this.state.dadosAno,
+          {
+            name: item.key,
+            value: item.id,
+          }
+        ]
+      })
+      console.tron.log(['pickerano',item])
+      
+    })
     this.setState({
-      dadosAno: data,
       renderPickerAno: true,
     });
+    console.tron.log(['pickerano',this.state.dadosAno])
   }
 
   saveFormVeiculo = data => {
@@ -245,13 +300,10 @@ class Veiculos extends Component {
       erroFipeAPI,
       renderPickerAno,
       loading,
-      loadingfipe
+      loadingfipe,
+      infopicker,
     } = this.state;
-
     const  { largura_tela } = responsividade;
-
-
-
     if (saveStep) {
       this.saveFormVeiculo({ data_name, default_value });
     }
@@ -274,64 +326,38 @@ class Veiculos extends Component {
             )
           }
           <View style={styles.Picker}>
-            <Picker
-              style={styles.estiloPicker}
-              onValueChange={(tipo => this.setState({ tipo }), this.consultaMarcas)}
-              selectedValue={this.state.tipo}
-              collapsable
-            >
-              <Picker.Item label='Tipo do veículo' />
-              <Picker.Item label='Carro' value='carro' />
-              <Picker.Item label='Moto' value='motos' />
-              <Picker.Item label='Caminhão ou Microônibus' value='caminhao' />
-            </Picker>
+            <PickerItem 
+              receiveProps={(tipo => this.consultaMarcas(tipo))}
+              arrayConfig={infopicker}
+            />
           </View>
           {
             renderPicker && (
               <View style={styles.Picker}>
-                <Picker
-                  style={styles.estiloPicker}
-                  onValueChange={(marca => this.setState({ marca }), this.pegaModelos)}
-                  selectedValue={this.state.marca}
-                  collapsable
-                >
-                  <Picker.Item label='Fabricante' />
-                  {
-                    dadosMarcas.map(item => <Picker.Item label={item.name} value={item.id} />)
-                  }
-                </Picker>
+                <PickerItem 
+                  receiveProps={(tipo => this.pegaModelos(tipo))}
+                  arrayConfig={dadosMarcas}
+                />
               </View>
             )
           }
           {
             renderPickerModelos && (
               <View style={styles.Picker}>
-                <Picker
-                  style={styles.estiloPicker}
-                  selectedValue={this.state.modelo}
-                  onValueChange={(modelo => this.setState({ modelo }), this.pegaAno)}
-                >
-                  <Picker.Item label='Modelo' />
-                  {
-                    dadosModelos.map(item => <Picker.Item label={item.name} value={item.id} />)
-                  }
-                </Picker>
+                <PickerItem 
+                  receiveProps={(tipo => this.pegaAno(tipo))}
+                  arrayConfig={dadosModelos}
+                />
               </View>
             )
           }
           {
             renderPickerAno && (
               <View style={styles.Picker}>
-                <Picker
-                  style={styles.estiloPicker}
-                  selectedValue={this.state.anos}
-                  onValueChange={(anos => this.setState({ anos }))}
-                >
-                  <Picker.Item label='Ano' />
-                  {
-                    dadosAno.map(item => <Picker.Item label={item.id} value={item.id} />)
-                  }
-                </Picker>
+                <PickerItem 
+                  receiveProps={(anos => this.setState({ anos }))}
+                  arrayConfig={dadosAno}
+                />
               </View>
             )
           }

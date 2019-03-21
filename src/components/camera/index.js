@@ -55,8 +55,6 @@ class Camera extends React.Component {
   pickSingleWithCamera(cropping) {
     ImagePicker.openCamera({
       cropping: cropping,
-      width: 500,
-      height: 500,
       includeExif: false,
       includeBase64: true,
     }).then(image => {
@@ -131,8 +129,6 @@ class Camera extends React.Component {
 
   pickSingle(cropit, circular = false) {
     ImagePicker.openPicker({
-      width: 300,
-      height: 300,
       cropping: cropit,
       cropperCircleOverlay: circular,
       compressImageMaxWidth: 640,
@@ -233,6 +229,7 @@ class Camera extends React.Component {
             const form = {};
             form[info.data_name] = { key: info.data_name, value: { uri: imagePath, type: 'image/jpeg', name: `${info.data_name}.jpg` }, data: image, filled: true };
             getSaveStateForm(form);
+            console.tron.log('entrei form nao grupo')
           }
         }
       }      

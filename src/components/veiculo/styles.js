@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     height: 30,
     backgroundColor: colors.transparent,
     color: '#000000',
-    fontFamily: 'Roboto',
     fontSize: responsividade.fonts.nameSize,
     fontWeight: '400',
     lineHeight: 21,

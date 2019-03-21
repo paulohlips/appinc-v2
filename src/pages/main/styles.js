@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   token: {
-    fontFamily: "Roboto",
     fontSize: 16,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -38,7 +37,6 @@ const styles = StyleSheet.create({
     color: "#ffffff"
   },
   tokenD: {
-    fontFamily: "Roboto",
     fontSize: 16,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -75,7 +73,6 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   name: {
-    fontFamily: "Roboto",
     fontSize: 24,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -115,7 +112,6 @@ const styles = StyleSheet.create({
   },
 
   button_text2: {
-    fontFamily: "Roboto",
     fontSize: 18,
     fontWeight: "bold",
     fontStyle: "normal",
@@ -124,7 +120,6 @@ const styles = StyleSheet.create({
   },
 
   button_text: {
-    fontFamily: "Roboto",
     fontSize: responsividade.fonts.button,
     fontWeight: "bold",
     fontStyle: "normal",

@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
 
         height: 20,
         color: '#002F7F',
-        fontFamily: 'Roboto',
         fontSize:  responsividade.fonts.descriptionSize,
         fontWeight: '500',
         lineHeight: 21,
@@ -78,7 +77,6 @@ const styles = StyleSheet.create({
 
         height: 20,
         color: 'green',
-        fontFamily: 'Roboto',
         fontSize: responsividade.fonts.descriptionSize,
         fontWeight: '500',
         lineHeight: 21,
@@ -88,7 +86,6 @@ const styles = StyleSheet.create({
       },
       status1: {     
         height: 20,
-        fontFamily: 'Roboto',
         fontSize:  responsividade.fonts.nameSize,
         fontWeight: '500',
         lineHeight: 21,
@@ -121,7 +118,6 @@ const styles = StyleSheet.create({
       },
 
       errot: {
-        fontFamily: 'Roboto',
         //fontWeight: 'bold',
         color: "#B83E3E",
       },

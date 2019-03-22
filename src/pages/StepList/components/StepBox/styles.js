@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
   titulo: {
     width: responsividade.WIDTH_MAIN * 0.7,
     color: '#000000',
-    fontFamily: 'Roboto',
     fontSize: responsividade.fonts.nameSize,
     fontWeight: '500',
     lineHeight: 21,
@@ -29,7 +28,6 @@ const styles = StyleSheet.create({
     width: responsividade.WIDTH_MAIN * 0.7,
     color: '#000000',
     opacity: 0.7,
-    fontFamily: 'Roboto',
     fontSize: responsividade.fonts.descriptionSize,
     lineHeight: 19,
   },

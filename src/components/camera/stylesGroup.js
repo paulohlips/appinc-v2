@@ -86,7 +86,6 @@ const stylesGroup = StyleSheet.create({
        height: 30,
        backgroundColor: colors.transparent,
        color: '#000000',
-       fontFamily: 'Roboto',
        fontSize: 18,
        fontWeight: '400',
        lineHeight: 21,

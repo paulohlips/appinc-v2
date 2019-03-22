@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
     height: 30,
     backgroundColor: colors.transparent,
     color: '#000000',
-    fontFamily: 'Roboto',
     fontSize: 18,
     fontWeight: '400',
     lineHeight: 21,
@@ -92,7 +91,6 @@ const styles = StyleSheet.create({
   },
   code: {
     color: '#000000',
-    fontFamily: 'Roboto',
     fontWeight: 'bold',
     fontSize: 18,
     //fontWeight: '400',

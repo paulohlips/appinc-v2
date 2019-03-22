@@ -65,15 +65,6 @@ class StepPage extends Component {
                 goBack={this.props.navigation.goBack}
             />
 
-             <Header
-                title={this.props.navigation.state.params.step.step_name}
-                showArrow
-                showProgress
-                showInfo
-                info={this.props.navigation.state.params.step.info_step}
-                goBack={this.props.navigation.goBack}
-            />
-
                 <ScrollView>
                     {//troca step.components por COMPONENT_EXAMPLE para testar group 
                         step.components.map((item, i) => {

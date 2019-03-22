@@ -187,7 +187,7 @@ class Camera extends React.Component {
         resizeMode={'cover'}
         onError={e => console.log(e)}
         onLoad={load => console.log(load)}
-        repeat={true} />
+        repeat={true} /> 
     </View>);
   }
 
@@ -204,6 +204,7 @@ class Camera extends React.Component {
   }
 
   saveFormInput = info => {
+    
     const { imageData, imagePath, image } = this.state;
     const { 
       form, 
@@ -214,13 +215,16 @@ class Camera extends React.Component {
       index, //importa
       group, // importa
     } = this.props;
+    console.tron.log('entrei no save',info, imagePath, image)
 
     if (imagePath || image) {
+      console.tron.log('entrei if',data, imagePath, image)
       if (data.group === 'true') {
         group.dataGroup.map(item => {
           if (item.index === index) {
             saveDataGroup({ index, name: info.data_name, data: { uri: image.uri, type: 'image/jpeg', name: `${info.data_name}.jpg` }, type: data.component_type, extra: image })
            // saveDataGroup({ index: , name: , data: , type: , extra: })
+           console.tron.log('entrei form  grupo', image, imagePath)
           }
         });
       } else {
@@ -229,7 +233,7 @@ class Camera extends React.Component {
             const form = {};
             form[info.data_name] = { key: info.data_name, value: { uri: imagePath, type: 'image/jpeg', name: `${info.data_name}.jpg` }, data: image, filled: true };
             getSaveStateForm(form);
-            console.tron.log('entrei form nao grupo')
+            console.tron.log('entrei form nao grupo', image, imagePath)
           }
         }
       }      
@@ -239,6 +243,7 @@ class Camera extends React.Component {
           const form = {};
           form[info.data_name] = { key: info.data_name, value: { uri: '', type: '', name: '' }, data: image, filled: false };
           getSaveStateForm(form);
+          console.tron.log('sem foto', image, imagePath)
         }
       }
     }

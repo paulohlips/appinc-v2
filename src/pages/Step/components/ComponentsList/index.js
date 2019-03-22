@@ -18,7 +18,7 @@ import styles from './styles';
 
 class ComponentList extends Component {
   state = {
-    move: new Animated.Value(30),
+    move: new Animated.Value(0),
   }
 
   componentDidMount() {

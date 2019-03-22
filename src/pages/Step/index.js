@@ -30,7 +30,7 @@ var i = 1;
 
 class StepPage extends Component {
     state = {
-        move: new Animated.Value(20),
+        move: new Animated.Value(0),
     }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.saveStep);
@@ -57,9 +57,18 @@ class StepPage extends Component {
         return (
             <View style={styles.container}>
 
+             <Header
+                title={this.props.navigation.state.params.step.step_name}
+                showArrow
+                showProgress
+                showInfo
+                info={this.props.navigation.state.params.step.info_step}
+                goBack={this.props.navigation.goBack}
+            />
+
                 <ScrollView>
                     {//troca step.components por COMPONENT_EXAMPLE para testar group 
-                        COMPONENT_EXAMPLE.map((item, i) => {
+                        step.components.map((item, i) => {
                             i = i + 1;
                             return (
                                 <Animated.View style={{ ...styles.coluna, top: this.state.move }}>

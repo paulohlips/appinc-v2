@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
     width: responsividade.LARGURABOX,
     height: 22,
     color: '#000000',
-    fontFamily: 'Roboto',
     fontSize: 18,
     fontWeight: '400',
     lineHeight: 21,
@@ -34,7 +33,6 @@ const styles = StyleSheet.create({
   },
   date: {
     color: '#000000',
-    fontFamily: 'Roboto',
     fontSize: 18,
     fontWeight: '400',
     lineHeight: 21,
@@ -74,6 +72,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     elevation: 1,
+    right: responsividade.largura_tela*0.04
   },
  picker:{
   width: 10

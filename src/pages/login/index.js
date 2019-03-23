@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { ModalCheck } from '../../globalComponents';
+import { SnackBar } from '../../globalComponents';
 import {
   View,
   Text,
@@ -15,6 +16,9 @@ import {
   Alert
 } from 'react-native';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Creators as LoginActions } from '../../store/ducks/login';
 
 import axios from 'axios';
 import { responsividade } from '../../styles';
@@ -39,13 +43,21 @@ class Login extends Component {
     currentPosition: 0,
     viewModal: false,
     messageRequest: '',
+    call: false,
   }
 
   async componentWillMount() {
+    console.tron.log(this.props)
     const id = await AsyncStorage.getItem('@Id');
     this.setState({ btt: id });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.login.logged !== this.props.login.logged) {
+      this.navigateToLogged();
+    }
+  }
+  
   navigateToLogged = () => {
     const resetAction = StackActions.reset({
       index: 0,
@@ -65,7 +77,7 @@ class Login extends Component {
         NavigationActions.navigate({ routeName: 'SignUp' }),
       ]
     });
-    this.props.navigation.dispatch(resetAction);
+    this.props.navigation.dispatch(resetAction);    
   }
 
   salvarIdProv = () => {
@@ -73,32 +85,16 @@ class Login extends Component {
   }
 
   confereCadastro = () => {
-    const { password, inputSave, nome } = this.state;
-    axios({
-      method: 'post',
-      url: 'http://35.198.17.69/api/pericia/usuario/login',
-      data: { matricula: inputSave, pass: password },
-    })
-      .then((resp) => {
-        if (resp.status === 200) {
-          this.setState({ nome: resp.data.nome });
-          AsyncStorage.setItem('@AppInc:nome', this.state.nome);
-          this.navigateToLogged();
-          AsyncStorage.setItem('@AppInc:matricula', inputSave);
-        } else {
-          this.setState({ viewModal: true, messageRequest: resp.data.mensagem });
-        }
-      }).catch(err => {
-        this.setState({ viewModal: true });
-      });
+    const data = { inputSave: this.state.inputSave, password: this.state.password };
+    this.props.getLoginRequest(data)
   }
-
   onPressAnimated = async () => {
     this.animation.play(30, 1000);
   }
 
   render() {
-    const { btt, viewModal, messageRequest } = this.state;
+    const { login } = this.props;
+    const { btt, viewModal, messageRequest, call } = this.state;
     return (
       <ImageBackground source={require('../../assents/imgs/local_crime.jpg')} style={styles.backgroundImage} >
 
@@ -129,7 +125,7 @@ class Login extends Component {
               onChangeText={password => this.setState({ password })}
               value={this.state.password}
             />
-            <TouchableOpacity style={styles.testebutton} onPress={() => { this.confereCadastro(); }}>
+            <TouchableOpacity style={styles.testebutton} onPress={() => this.confereCadastro()}>
               <Text style={styles.buttonText}>
                 Entrar
                   </Text>
@@ -143,12 +139,7 @@ class Login extends Component {
         </View>
         {
           viewModal && (
-            <ModalCheck
-              message={messageRequest}
-              viewModal
-              failure
-              sourceImage={imageCheck}
-            />
+            <SnackBar inside content={this.state.messageRequest} color="white" />
           )
         }
       </ImageBackground>
@@ -156,10 +147,12 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  login: state.loginState,
+});
 
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(LoginActions, dispatch);
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
-/*
- <Image style={styles.image} source={require('../../assents/imgs/policia-federal-logo.png')} />
-*/

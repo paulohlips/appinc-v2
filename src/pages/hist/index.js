@@ -18,7 +18,7 @@ import {
 } from "react-navigation";
 import styles from "./styles";
 import Icon from "react-native-vector-icons/Ionicons";
-import api from '../../services/api';
+import Api from '../../services/api';
 import axios from "axios";
 
 import { connect } from "react-redux";
@@ -61,13 +61,25 @@ class Historico extends Component {
   }
 
   requestFroms = async () => {
+    const { login } = this.props;
     const arrayRef = await AsyncStorage.getItem('arrayRef');
     const id = await AsyncStorage.getItem("@AppInc:matricula");
     const array = JSON.parse(arrayRef);
     this.setState({ arrayRef: array, idUser: id, errorview: false });
     const idMatricula = this.state.idUser;
+    try {
+      const response =  await Api.user.getHist({ id: 123, token: login.token});
+      if (response.status === 206) {
+        this.setState({ loading: false, errorview: true });
+      } else {
+        this.setState({ loading: false, arrayEnviados: response.data });
+      }
+    } catch (error) {
+      this.setState({ loading: false, errorview: true })
+    }
+   
 
-    api.post('/pericia/formulario/recebidos', {
+    /*api.post('/pericia/formulario/recebidos', {
       matricula: idMatricula
     }).then(resp => {
       const data = JSON.stringify(resp.data);
@@ -79,7 +91,7 @@ class Historico extends Component {
 
     }).catch(err => {
       this.setState({ loading: false, errorview: true });
-    });
+    });*/
   }
   restoreForm = async name => {
     const { navigation, restoreFormState, setForm } = this.props;
@@ -115,7 +127,7 @@ class Historico extends Component {
         style={styles.box}
         onPress={() => {
           Linking.openURL(
-            "http://35.231.239.168/pericia/links.php?id_pericia=" +
+            "http://35.198.17.69/pericia/links.php?id_pericia=" +
             item.matricula
           );
         }}
@@ -201,6 +213,7 @@ class Historico extends Component {
 const mapStateToProps = state => ({
   form: state.formState,
   hist: state.histState,
+  login: state.loginState,
 });
 
 const mapDispatchToProps = dispatch =>

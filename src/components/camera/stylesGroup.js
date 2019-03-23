@@ -1,7 +1,7 @@
 import { StyleSheet, PixelRatio } from 'react-native';
 import { colors, metrics, responsividade } from '../../styles';
 
-const styles = StyleSheet.create({
+const stylesGroup = StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'center',
@@ -12,8 +12,6 @@ const styles = StyleSheet.create({
       // borderColor: 'white',
       // borderRadius: 10,
       padding: 10,
-      borderBottomWidth: 0.5,
-      borderBottomColor: 'black',
       paddingBottom: 40,
     //   width: responsividade.LARGURAFOTO,
      },
@@ -94,7 +92,7 @@ const styles = StyleSheet.create({
     },
 
     input: {
-      backgroundColor: 'white',
+      backgroundColor: colors.light,
       height: responsividade.ALTURA_INPUT,
       width: responsividade.LARGURA_INPUT,
       borderRadius: responsividade.BORDER_RADIUS_INPUT,
@@ -116,4 +114,4 @@ const styles = StyleSheet.create({
     }
   });
 
-export default styles;
+export default stylesGroup;

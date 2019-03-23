@@ -20,7 +20,7 @@ export default {
   secundary: '#f9aa33',
   secundaryTranparent: 'rgba(145, 145, 145, 0.65)',
   success: '#9DCA83',
-  danger: '#E37A7A',
+  danger: '#E8452C',
 
   transparent: 'transparent',
   darkTransparent: 'rgba(43, 43, 43, 0.89)',

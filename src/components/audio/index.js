@@ -312,7 +312,6 @@ class AudioRec extends Component {
     return (
 
       <View style={styles.container}>
-        <Text style={styles.label}>{label}:</Text>
         <View style={styles.controls}>
           {this._renderButton('GRAVAR', () => { this._record(); this.gravar() }, this.state.recording)}
           {this._renderButton('PARAR', () => { this._stop(); this.stop() })}

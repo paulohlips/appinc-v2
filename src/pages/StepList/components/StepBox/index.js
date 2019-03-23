@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { Creators as FormsActions } from '../../../../store/ducks/form'
 
 // styles
-import { View, Text, TouchableOpacity, ProgressBarAndroid } from 'react-native';
+import { View, Text, TouchableOpacity, ProgressBarAndroid, Animated } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -20,9 +20,18 @@ class StepBoxComponent extends Component {
     createdForms: null,
     arrayProgress: {},
     progress: 0,
+    countProgress: '',
+    array: '',
+
+    move: new Animated.Value(30),
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    Animated.timing(this.state.move, {
+      toValue: 0,
+      duration: 300,
+      delay: this.props.index * 150,
+    }).start();
   }
 
   createFormsSave = async () => {
@@ -95,11 +104,11 @@ class StepBoxComponent extends Component {
       }
     }
     progress = countProgress / arrayProgress.length;
-    this.setState({ progress });
+    this.setState({ progress, count: countProgress, array: arrayProgress.length });
   }
 
   render() {
-    const { steps, form, formState } = this.props;
+    const { steps, form, formState, index } = this.props;
     const { createdForms, arrayProgress, callFunction, progress } = this.state;
     const { item } = steps;
     if (!createdForms) {
@@ -110,7 +119,14 @@ class StepBoxComponent extends Component {
     }
 
     return (
-      <View style={styles.container}>
+      <Animated.View style={{
+        ...styles.container,
+        left: this.state.move,
+        opacity: this.state.move.interpolate({
+          inputRange: [0, 40],
+          outputRange: [1, 0],
+        }),
+      }}>
         <TouchableOpacity onPress={() => this.props.navigation.navigate('StepPage', { step: item })}>
           <View style={styles.card_titulo}>
             <Text style={styles.titulo}>{item.step_name}</Text>
@@ -118,17 +134,17 @@ class StepBoxComponent extends Component {
           <View style={styles.card_descricao}>
             <Text style={styles.descricao}>{item.step_description}</Text>
           </View>
-
-          <View style={styles.bar}>
-            <ProgressBarAndroid
-              styleAttr="Horizontal"
-              indeterminate={false}
-              progress={progress}
-            />
+          <View style={styles.row}>
+            <View style={styles.bar}>
+              <ProgressBarAndroid
+                styleAttr="Horizontal"
+                indeterminate={false}
+                progress={progress}
+              />
+            </View>
           </View>
-
         </TouchableOpacity>
-      </View>
+      </Animated.View>
     );
   }
 }

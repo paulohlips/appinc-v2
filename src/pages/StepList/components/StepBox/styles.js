@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 4,
     marginTop: responsividade.margin.mainMargin / 2,
+    left: 40,
   },
   viewicon: {
     justifyContent: 'center',
@@ -19,7 +20,6 @@ const styles = StyleSheet.create({
   titulo: {
     width: responsividade.WIDTH_MAIN * 0.7,
     color: '#000000',
-    fontFamily: 'Roboto',
     fontSize: responsividade.fonts.nameSize,
     fontWeight: '500',
     lineHeight: 21,
@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     width: responsividade.WIDTH_MAIN * 0.7,
     color: '#000000',
     opacity: 0.7,
-    fontFamily: 'Roboto',
     fontSize: responsividade.fonts.descriptionSize,
     lineHeight: 19,
   },
@@ -47,10 +46,25 @@ const styles = StyleSheet.create({
   },
 
   bar: {
-    width: responsividade.LARGURACARD * 0.95,   
-    padding: 10,
+    
+    width: responsividade.LARGURACARD * 0.85,   
+    padding: 5,
     marginTop: responsividade.margin.mainMargin,
   },
+
+  number: {
+    fontSize: 12,
+  },
+
+  number_view: {
+    //backgroundColor: 'pink',
+    top: responsividade.largura_tela*0.01,
+    justifyContent: 'center',
+  },
+
+  row: {
+    flexDirection: 'row',   
+  }
 
 });
 

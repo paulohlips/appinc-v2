@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     height: 30,
     backgroundColor: colors.transparent,
     color: '#000000',
-    fontFamily: 'Roboto',
     fontSize: responsividade.fonts.nameSize,
     fontWeight: '400',
     lineHeight: 21,
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
     //color: 'white',
     color: "#344955",
     fontSize: responsividade.fonts.descriptionSize,
-    fontWeight: 'bold',
+    //fontWeight: 'bold',
     marginLeft: 5,
 
   },
@@ -121,13 +120,10 @@ const styles = StyleSheet.create({
 
   Picker: {
     backgroundColor: 'white',
-    height: responsividade.ALTURA_INPUT,
     width: responsividade.LARGURA_INPUT,
     margin: responsividade.margin.mainMargin / 2,
-    borderRadius: responsividade.BORDER_RADIUS_INPUT,
-    paddingLeft: 20,
+    borderRadius: responsividade.BORDER_RADIUS_INPUT,   
     fontSize: responsividade.fonts.descriptionSize,
-
   },
 
   estiloPicker: {
@@ -183,7 +179,7 @@ const styles = StyleSheet.create({
   erro: {
     color: '#B83E3E',
     fontSize: responsividade.fonts.errorSize,
-    margin: responsividade.margin.mainMargin,
+    margin: responsividade.margin.mainMargin * 0.5,
   },
 
   errov: {
@@ -194,7 +190,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     justifyContent: 'center',
     alignItems: 'flex-start',
-    marginBottom: responsividade.margin.mainMargin / 2,
+    //marginBottom: responsividade.margin.mainMargin / 5,
 
   }
 

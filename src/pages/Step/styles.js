@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
 
     buttonText: {
       color: '#ffffff',
-      fontFamily: 'Roboto',
       fontSize: 18,
       fontWeight: '500',
       lineHeight: 28,
@@ -57,6 +56,7 @@ const styles = StyleSheet.create({
 
     coluna:{
       flexDirection: 'column',
+     
     },
 
     linha: {

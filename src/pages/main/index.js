@@ -36,21 +36,21 @@ class Main extends Component {
     }
   }
 
-  requestFroms = () => {
-    axios.get('http://35.198.17.69/api/pericia/formularios/4')
-      .then((resp) => {
-        AsyncStorage.setItem('@Form', JSON.stringify(resp.data));
-      }).catch(err => {
-      });
-  }
+  // requestFroms = () => {
+  //   axios.get('http://35.198.17.69/api/pericia/formularios/4')
+  //     .then((resp) => {
+  //       AsyncStorage.setItem('@Form', JSON.stringify(resp.data));
+  //     }).catch(err => {
+  //     });
+  // }
 
-  requestQuerry = () => {
-    axios.get('http://35.243.140.44/api/query')
-      .then((resp) => {
-        AsyncStorage.setItem('@Querry', JSON.stringify(resp.data));
-      }).catch(err => {
-      });
-  }
+  // requestQuerry = () => {
+  //   axios.get('http://35.243.140.44/api/query')
+  //     .then((resp) => {
+  //       AsyncStorage.setItem('@Querry', JSON.stringify(resp.data));
+  //     }).catch(err => {
+  //     });
+  // }
 
   state = {
     drawerStatus: null,
@@ -77,7 +77,7 @@ class Main extends Component {
     const { navigation } = this.props;
     const { nome } = this.state
     const name = navigation.getParam('nome', 'Nome não cadastrado');
-    const  { largura_tela } = responsividade;
+    const { largura_tela } = responsividade;
 
     return (
       <View style={styles.container}>
@@ -103,18 +103,18 @@ class Main extends Component {
               <Text style={styles.name}>{nome}</Text>
             </View>
           </View>
-            <View style={styles.buttons_view}>
-              <TouchableOpacity onPress={this.navigateToScreen('NewMenu')}>
-                <View style={styles.button}>
-                  <Text style={styles.button_text}> NOVA PERÍCIA</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={this.navigateToScreen('Hist')}>
-                <View style={styles.button}>
-                  <Text style={styles.button_text}>MINHAS PERÍCIAS</Text>
-                </View>
-              </TouchableOpacity>
-            </View>          
+          <View style={styles.buttons_view}>
+            <TouchableOpacity onPress={this.navigateToScreen('NewMenu')}>
+              <View style={styles.button}>
+                <Text style={styles.button_text}> NOVA PERÍCIA</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.navigateToScreen('Hist')}>
+              <View style={styles.button}>
+                <Text style={styles.button_text}>MINHAS PERÍCIAS</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );

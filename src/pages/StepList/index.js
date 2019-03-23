@@ -17,10 +17,12 @@ import { Load } from '../../components';
 import { Header } from '../../globalComponents';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import Api from '../../services/api';
 
 import { bindActionCreators } from 'redux';
 import { Creators as FormAction } from '../../store/ducks/form';
 import { Creators as HistActions } from '../../store/ducks/hist';
+import { SnackBar } from '../../globalComponents';
 
 
 class StepList extends Component {
@@ -94,6 +96,7 @@ class StepList extends Component {
   enviaForm = async () => {
     const { matriculaAsync } = this.state;
     const { reference, formulario, setUpdateHistory } = this.props;
+    this.setState({ sending: true, original: false });
 
     const matriculaProv = await AsyncStorage.getItem('@AppInc:matricula');
     const matricula = JSON.stringify(matriculaProv);
@@ -120,12 +123,14 @@ class StepList extends Component {
 
     /* for (var key in formulario.step) {
       data.append(formulario.step[key].key, formulario.step[key].value)
-    } */
-    //console.tron.log(['entrei no evia1', data]);
-    //setUpdateHistory();
-    //this.setState({ matriculaAsync: matricula });
-    console.tron.log(['entrei no evia4', data2, formulario]);
-    //
+    }
+
+    setUpdateHistory();
+    this.setState({ matriculaAsync: matricula });
+
+    //const response = await Api.form.postForm({ body: data, matricula, ref: formulario.ref });
+    //console.tron.log(response)
+
     axios({
       method: 'post',
       url: 'http://35.198.17.69/api/pericia/formularios/envio/teste',
@@ -178,6 +183,7 @@ class StepList extends Component {
     }
     const { navigation } = this.props;
     const { viewError, load, saved } = this.state;
+    let i = 0;
 
     return (
       <View style={styles.container}>
@@ -190,36 +196,32 @@ class StepList extends Component {
         />
         {
           viewError && (
-            <View style={styles.message}>
-              <Text style={styles.messageError}>Sem conexão!</Text>
-            </View>
+            <SnackBar outside content="Sem conexão!" color='#3C3C46' fontcolor="white" />
           )
         }
 
         {
           saved && (
-            <View style={styles.saved}>
-              <Text style={styles.messagesaved}>Salvo!</Text>
-            </View>
+            <SnackBar outside content="Progresso Salvo!" color='#3C3C46' fontcolor="white" />
+
           )
         }
         <ScrollView>
           <FlatList
             data={form.steps}
-            renderItem={item => <StepBox steps={item} form={form} />}
+            renderItem={item => { i = i + 1; return <StepBox steps={item} form={form} index={i} /> }}
           />
           <View style={styles.container}>
 
             <TouchableOpacity style={styles.enviarbutton} onPress={() => this.enviaForm()}>
-
               <Text style={styles.buttonText}>
-                Enviar
-              </Text>
+                ENVIAR
+                  </Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.salvarbutton} onPress={() => this.saveForm2()}>
               <Text style={styles.buttonTextsalvar}>
-                Salvar
+                SALVAR
               </Text>
             </TouchableOpacity>
           </View>

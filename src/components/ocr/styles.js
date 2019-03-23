@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
         height: 30,
         backgroundColor: colors.transparent,
         color: '#000000',
-        fontFamily: 'Roboto',
         fontSize: 18,
         fontWeight: '400',
         lineHeight: 21,
@@ -49,23 +48,51 @@ const styles = StyleSheet.create({
         fontSize: 16,
         flexDirection: 'row',
     },
-    button: {
-        backgroundColor: "#B83E3E",
-        borderRadius: 50,
-        height: responsividade.ALTURAFORM,
-        width: responsividade.LARGURAFORM,
+    square: {
+        backgroundColor: "#FAAB1A",
+        height: responsividade.ALTURA_BUTTON,
+        width: responsividade.LARGURA_INPUT * 0.3,    
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 60,
+    
+    
+      },
+    
+      parale: {
+        backgroundColor: "transparent",
+        height: responsividade.ALTURA_BUTTON,
+        width: responsividade.LARGURA_INPUT * 0.7,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 60,
+      },
+      button: {
+        //backgroundColor: "#344955",
+        //backgroundColor: "#FAAB1A",
+        backgroundColor: 'white',
+        elevation: 1,
+        //borderRadius: 50,
+        borderRadius: 60,
+        height: responsividade.ALTURA_BUTTON,
+        width: responsividade.LARGURA_INPUT,    
         margin: 10,
         paddingHorizontal: metrics.basePadding,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-    },
-    button_text: {
-        color: 'white',
-        fontSize: 15,
-        fontWeight: 'bold',
+        elevation: 1,
+      },
+      button_text:{
+    
+        //color: 'black',
+        //color: 'white',
+        color: "#344955",
+        fontSize: responsividade.fonts.descriptionSize,
+        //fontWeight: 'bold',
         marginLeft: 5,
-    },
+    
+      },
     hint: {
         fontSize: 14,
         fontWeight: 'bold',
@@ -84,7 +111,6 @@ const styles = StyleSheet.create({
     },
     code: {
         color: '#000000',
-        fontFamily: 'Roboto',
         fontWeight: 'bold',
         fontSize: 18,
         //fontWeight: '400',

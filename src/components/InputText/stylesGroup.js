@@ -1,15 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { colors, metrics, responsividade } from '../../styles';
 
-const styles = StyleSheet.create({
+const stylesGroup = StyleSheet.create({
   container: {
     flex: 1,
-    //backgroundColor: colors.light,
+    backgroundColor: 'white',
     width: responsividade.largura_tela,
     padding: 20,
     paddingBottom: 40,
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'black',
   },
    Name: {
     width: responsividade.LARGURABOX,
@@ -22,7 +20,7 @@ const styles = StyleSheet.create({
    },
 
   input: {
-     //backgroundColor: 'white',
+     backgroundColor: colors.light,
      height: responsividade.ALTURA_INPUT * 1.1,
      borderRadius: 4,
      paddingLeft: 20,
@@ -39,4 +37,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default styles;
+export default stylesGroup;

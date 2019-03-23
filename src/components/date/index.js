@@ -84,9 +84,7 @@ class MyDatePicker extends Component {
     }
     return (
       <View style={styles.container}>
-        <Text style={styles.titulo}>{label}:</Text>
         
-         
           <View style={styles.button}>
             <View style={styles.square}><Icon name="date-range" size={largura_tela< 430 ? 28 : 40} color="black" style={styles.icon} /></View>
             <View style={styles.parale}>
@@ -110,6 +108,7 @@ class MyDatePicker extends Component {
                   borderWidth: 0,
                   borderRadius: 60,
                   backgroundColor: 'white',
+                  color: 'blue'
                 },
               }}
               onDateChange={(date) => { this.setState({ date, showDate: true, call: true }); this.getDate(); }}

@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontFamily: 'Roboto',
     fontSize: responsividade.fonts.nameSize,
     fontWeight: '400',
     lineHeight: 28,
@@ -73,7 +72,6 @@ const styles = StyleSheet.create({
 
   buttonTextsalvar: {
     color: 'white',
-    fontFamily: 'Roboto',
     fontSize: responsividade.fonts.nameSize,
     fontWeight: '400',
     lineHeight: 28,
@@ -128,7 +126,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#cb1010',
     margin: 10,
   },
-
 
 });
 

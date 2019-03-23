@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ModalCheck } from '../../globalComponents';
+import  {SnackBar}  from '../../globalComponents';
 import {
   View,
   Text,
@@ -24,6 +24,8 @@ const imageCheck = require('../../assents/lottie/warning.json');
 import styles from './styles';
 import { red } from 'ansi-colors';
 import Axios from 'axios';
+import Api  from '../../services/api';
+
 
 const labels = ["ID", "PIN", "Senha"];
 const customStyles = {
@@ -93,9 +95,23 @@ class Login extends Component {
     this.props.navigation.dispatch(resetAction);
   }
 
-  confereID = () => {
+  confereID = async () => {
     const { inputSave } = this.state;
-    Axios({
+    this.setState({ viewModal: false});
+    try {
+      const response = await Api.user.postCadastroId({ matricula: inputSave })
+      console.tron.log(response)
+      if (response.status === 200) {
+        console.tron.log('navega')
+        this.navigateToHash();
+      } else {
+        this.setState({ viewModal: true, messageRequest: response.data.mensagem });
+      }
+    } catch {
+      this.setState({ viewModal: true, messageRequest: response.data.mensagem });
+    }
+    
+    /* Axios({
       method: 'post',
       url: 'http://35.198.17.69/api/pericia/usuario/cadastro',
       data: { matricula: inputSave },
@@ -108,7 +124,7 @@ class Login extends Component {
         }
       }).catch(err => {
         this.setState({ viewModal: true, messageRequest: resp.data.mensagem });
-      });
+      });*/
     AsyncStorage.setItem('@IdRegistro', inputSave);
   }
 
@@ -156,12 +172,7 @@ class Login extends Component {
         </HideWithKeyboard>
         {
           viewModal && (
-            <ModalCheck
-              message={messageRequest}
-              viewModal
-              failure
-              sourceImage={imageCheck}
-            />
+            <SnackBar inside content = {this.state.messageRequest} color = "white"/>
           )
         }
       </View>

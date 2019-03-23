@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         elevation: 1
     },
     profileName: {
-        fontSize: responsividade.fonts.titleSize,
+        fontSize: responsividade.fonts.descriptionSize*1.1,
         fontWeight: 'bold',
         color: colors.white,
     },

@@ -125,8 +125,7 @@ class StepList extends Component {
     setUpdateHistory();
     this.setState({ matriculaAsync: matricula });
 
-    //const response = await Api.form.postForm({ body: data, matricula, ref: formulario.ref });
-    //console.tron.log(response)
+    //const response = await Api.form.
 
     axios({
       method: 'post',
@@ -134,7 +133,6 @@ class StepList extends Component {
       data: data,
       headers: {
         'Content-Type': 'multipart/form-data',
-        'Accept': 'application/json',
         'matricula': login.userID,
         'referencia': '',
         'x-Token': login.token,

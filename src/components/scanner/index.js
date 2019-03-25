@@ -23,12 +23,10 @@ class Scanner extends Component {
   }
 
   componentWillMount() {
-    console.tron.log(['scanner will', this.props])
   }
 
   componentDidMount() {
     const { form, data } = this.props;
-    console.tron.log(['scanner', this.props])
 
     for (var key in form.step) {
       if (key === data.data_name) {

@@ -14,3 +14,9 @@
 
 1. correção timeout da geolocalização
 2. criação do compoente picker pra android e ios
+
+#### v2.1.2
+
+1. correção envio de arquivos
+2. implementação completa de token
+3. remoção do scanner(bug no componente)

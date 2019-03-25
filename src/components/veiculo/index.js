@@ -266,7 +266,6 @@ class Veiculos extends Component {
     });
 
     const dv = JSON.stringify(dados);
-
     if (dadosVeiculo || dadosFipe) {
       for (var key in form.step) {
         if (key === data.data_name) {
@@ -279,7 +278,7 @@ class Veiculos extends Component {
       for (var key in form.step) {
         if (key === data.data_name) {
           const form = {};
-          form[data.data_name] = { key: data.data_name, value: dadosEnvio, dadosVeiculo: null, dadosFipe: null, filled: false };
+          form[data.data_name] = { key: data.data_name, value: dv, dadosVeiculo: null, dadosFipe: null, filled: false };
           getSaveStateForm(form);
         }
       }

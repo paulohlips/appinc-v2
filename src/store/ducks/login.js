@@ -4,7 +4,8 @@ export const Types = {
   GET_USER_NAME: 'login/GET_USER_NAME',
   GET__USER_ID: 'login/GET_USER_ID',
   GET_TOKEN: 'login/GET_TOKEN',
-  GET_EXIT_USER:'login/GET_EXIT_USER',
+  GET_EXIT_USER: 'login/GET_EXIT_USER',
+  GET_FAILURE: 'login/GET_FAILURE'
 };
 
 const InitialState = {
@@ -12,6 +13,8 @@ const InitialState = {
   userID: null,
   token: null,
   logged: false,
+  error: false,
+  messageError: '',
 };
 
 
@@ -27,8 +30,15 @@ export default function LoginState(state = InitialState, action) {
         userID: action.payload.userID,
         logged: true
       };
+    case Types.GET_FAILURE:
+      return {
+        ...state,
+        logged: false,
+        error: true,
+        messageError: action.payload.messageError,
+      };
     case Types.GET_EXIT_USER:
-      return{
+      return {
         ...state,
         userName: null,
         token: null,
@@ -49,6 +59,11 @@ export const Creators = {
   getLoginSucsses: (response, userID) => ({
     type: Types.GET_SUCSSES,
     payload: { response, userID },
+  }),
+
+  getLoginFailure: messageError => ({
+    type: Types.GET_FAILURE,
+    payload: { messageError },
   }),
 
   getExitLogin: () => ({

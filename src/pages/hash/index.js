@@ -106,7 +106,7 @@ class Login extends Component {
 
     try {
       const response = await Api.user.postConferePIN({ matricula: idRegistro, pin: inputSave });
-      console.tron.log(['hash', response])
+      //console.tron.log(['hash', response])
       if (response.status === 200) {
         this.navigateToPassword();
       } else {

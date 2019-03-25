@@ -59,15 +59,15 @@ class Veiculos extends Component {
     infopicker: [
       {
         name: 'Carro',
-        value: 'carro', 
+        value: 'carro',
       },
       {
         name: 'Moto',
-        value: 'motos', 
+        value: 'motos',
       },
       {
         name: 'Caminhão ou Microônibus',
-        value: 'caminhao', 
+        value: 'caminhao',
       },
     ],
   }
@@ -124,17 +124,17 @@ class Veiculos extends Component {
       //consultafipe: false
       loadingfipe: true,
     });
-    const urlFipe = `http://fipeapi.appspot.com/api/1/${  this.state.tipo  }/veiculo/${  this.state.marca  }/${  this.state.modelo  }/${  this.state.anos  }.json`;
+    const urlFipe = `http://fipeapi.appspot.com/api/1/${this.state.tipo}/veiculo/${this.state.marca}/${this.state.modelo}/${this.state.anos}.json`;
     axios.get(urlFipe)
       .then(async resp => {
         if (resp.status === 200) {
           const dadosPuro = resp.data;
           await this.setState({ erroFipeAPI: false, dadosFipe: dadosPuro, viewFipe: true, loadingfipe: false });
         } else if (resp.status === 0) {
-          this.setState({ erroFipeAPI: true});
+          this.setState({ erroFipeAPI: true });
         }
       }).catch(err => {
-        this.setState({ erroFipeAPI: true , loadingfipe: false});
+        this.setState({ erroFipeAPI: true, loadingfipe: false });
       });
   }
 
@@ -154,10 +154,11 @@ class Veiculos extends Component {
   }
 
   getMarcas = data => {
-    console.tron.log(this.state.dadosMarcas, data);
+    //console.tron.log(this.state.dadosMarcas, data);
     data.map(item => {
       //console.tron.log(item)
-       this.setState({ dadosMarcas: [
+      this.setState({
+        dadosMarcas: [
           ...this.state.dadosMarcas,
           {
             name: item.fipe_name,
@@ -165,12 +166,12 @@ class Veiculos extends Component {
           }
         ]
       })
-      
+
     })
     this.setState({
       renderPicker: true,
     });
-    console.tron.log(this.state.dadosMarcas);
+    // console.tron.log(this.state.dadosMarcas);
   }
 
   pegaModelos = (value) => {
@@ -187,10 +188,11 @@ class Veiculos extends Component {
   }
 
   getModelos = data => {
-    console.tron.log(data)
+    // console.tron.log(data)
     data.map(item => {
       //console.tron.log(item)
-       this.setState({ dadosModelos: [
+      this.setState({
+        dadosModelos: [
           ...this.state.dadosModelos,
           {
             name: item.name,
@@ -198,12 +200,12 @@ class Veiculos extends Component {
           }
         ]
       })
-      
+
     })
     this.setState({
       renderPickerModelos: true,
     });
-    console.tron.log(this.state.dadosModelos,)
+    // console.tron.log(this.state.dadosModelos,)
   }
 
   pegaAno = value => {
@@ -219,11 +221,12 @@ class Veiculos extends Component {
       });
   }
 
-  getAno =  data => {
-    console.tron.log(['getano',data])
+  getAno = data => {
+    // console.tron.log(['getano',data])
     data.map(item => {
-      console.tron.log(item)
-       this.setState({ dadosAno: [
+      //console.tron.log(item)
+      this.setState({
+        dadosAno: [
           ...this.state.dadosAno,
           {
             name: item.key,
@@ -231,13 +234,13 @@ class Veiculos extends Component {
           }
         ]
       })
-      console.tron.log(['pickerano',item])
-      
+      //console.tron.log(['pickerano',item])
+
     })
     this.setState({
       renderPickerAno: true,
     });
-    console.tron.log(['pickerano',this.state.dadosAno])
+    //console.tron.log(['pickerano',this.state.dadosAno])
   }
 
   saveFormVeiculo = data => {
@@ -284,7 +287,7 @@ class Veiculos extends Component {
     startControlArray();
   }
 
-  
+
 
   render() {
     const { data_name, label, hint, default_value, newState } = this.props.data;
@@ -303,7 +306,7 @@ class Veiculos extends Component {
       loadingfipe,
       infopicker,
     } = this.state;
-    const  { largura_tela } = responsividade;
+    const { largura_tela } = responsividade;
     if (saveStep) {
       this.saveFormVeiculo({ data_name, default_value });
     }
@@ -326,7 +329,7 @@ class Veiculos extends Component {
             )
           }
           <View style={styles.Picker}>
-            <PickerItem 
+            <PickerItem
               receiveProps={(tipo => this.consultaMarcas(tipo))}
               arrayConfig={infopicker}
             />
@@ -334,7 +337,7 @@ class Veiculos extends Component {
           {
             renderPicker && (
               <View style={styles.Picker}>
-                <PickerItem 
+                <PickerItem
                   receiveProps={(tipo => this.pegaModelos(tipo))}
                   arrayConfig={dadosMarcas}
                 />
@@ -344,7 +347,7 @@ class Veiculos extends Component {
           {
             renderPickerModelos && (
               <View style={styles.Picker}>
-                <PickerItem 
+                <PickerItem
                   receiveProps={(tipo => this.pegaAno(tipo))}
                   arrayConfig={dadosModelos}
                 />
@@ -354,7 +357,7 @@ class Veiculos extends Component {
           {
             renderPickerAno && (
               <View style={styles.Picker}>
-                <PickerItem 
+                <PickerItem
                   receiveProps={(anos => this.setState({ anos }))}
                   arrayConfig={dadosAno}
                 />
@@ -402,20 +405,20 @@ class Veiculos extends Component {
           }
         </View>
         <View styles={styles.main}>
-        <TouchableOpacity onPress={this.consultaFipe} style={styles.button}>
-           
-           <View style={styles.button}><View style={styles.square}>
-         { loadingfipe
-           ? <ActivityIndicator size={largura_tela< 430 ? "small" : "large"} color="#FFF" />
-           : <Icon name="ios-car" size={largura_tela< 430 ? 28 : 40} color="black" style={styles.icon}/>
+          <TouchableOpacity onPress={this.consultaFipe} style={styles.button}>
 
-         }
-            
-             </View>
+            <View style={styles.button}><View style={styles.square}>
+              {loadingfipe
+                ? <ActivityIndicator size={largura_tela < 430 ? "small" : "large"} color="#FFF" />
+                : <Icon name="ios-car" size={largura_tela < 430 ? 28 : 40} color="black" style={styles.icon} />
 
-             <View style={styles.parale}><Text style={styles.button_text}>CONSULTAR FIPE</Text></View></View>
-    
-        </TouchableOpacity>
+              }
+
+            </View>
+
+              <View style={styles.parale}><Text style={styles.button_text}>CONSULTAR FIPE</Text></View></View>
+
+          </TouchableOpacity>
         </View>
         <View style={styles.hint_title}>
           <View style={styles.miniball}>
@@ -456,20 +459,20 @@ class Veiculos extends Component {
           </View>
         </View>
         <View styles={styles.main}>
-        <TouchableOpacity onPress={this.consultaPlaca} style={styles.button}>
-           
-           <View style={styles.button}><View style={styles.square}>
-         { loading
-           ? <ActivityIndicator size={largura_tela< 430 ? "small" : "large"} color="#FFF" />
-           : <Icon name="ios-car" size={largura_tela< 430 ? 28 : 40} color="black" style={styles.icon}/>
+          <TouchableOpacity onPress={this.consultaPlaca} style={styles.button}>
 
-         }
-            
-             </View>
+            <View style={styles.button}><View style={styles.square}>
+              {loading
+                ? <ActivityIndicator size={largura_tela < 430 ? "small" : "large"} color="#FFF" />
+                : <Icon name="ios-car" size={largura_tela < 430 ? 28 : 40} color="black" style={styles.icon} />
 
-             <View style={styles.parale}><Text style={styles.button_text}>CONSULTAR "DENATRAN"</Text></View></View>
-    
-   </TouchableOpacity>
+              }
+
+            </View>
+
+              <View style={styles.parale}><Text style={styles.button_text}>CONSULTAR "DENATRAN"</Text></View></View>
+
+          </TouchableOpacity>
 
         </View>
         {

@@ -10,6 +10,5 @@ export default function* rootSaga() {
   return yield all([
     takeLatest(NewActions.GET_REQUEST, getNewRequest),
     takeLatest(LoginActions.GET_REQUEST_LOGIN, getLoginRequest),
-
   ]);
 }

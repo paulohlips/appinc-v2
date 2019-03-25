@@ -102,7 +102,7 @@ class Login extends Component {
     if (inputSave1 == inputSave2) {
       try {
         const response = await Api.user.createPassword({ matricula: idRegistro, pin: pinRegistro, pass: inputSave2 });
-        console.tron.log('pasword', response)
+        //console.tron.log('pasword', response)
         if (response.status === 200) {
           this.setState({ viewModals: true })
         } else {

@@ -8,48 +8,48 @@ const api = axios.create({
 const tokenAuth = null;
 
 const setToken = (token, matricula) => {
-  console.tron.log(['peuei', token, matricula])
-  axios.defaults.headers.common['X-Token']=`${token}`;
-  axios.defaults.headers.common['matricula']=`${matricula}`;
+  //console.tron.log(['peuei', token, matricula])
+  axios.defaults.headers.common['X-Token'] = `${token}`;
+  axios.defaults.headers.common['matricula'] = `${matricula}`;
 }
 
 const user = {
   // realiza o login do usuario
   loginUser: data => {
     return api.post('/pericia/usuario/login', data, {
-        headers: {}
-      },
+      headers: {}
+    },
     )
   },
   // envia matricula pra receber codigo por email
   postCadastroId: data => {
     return api.post('/pericia/usuario/cadastro', data, {
-        headers: {}
-      },
+      headers: {}
+    },
     )
   },
   //confirma o pin recebido por email para validação do usuario
   postConferePIN: data => {
     return api.post('/pericia/usuario/validaPin', data, {
-        headers: {}
-      },
+      headers: {}
+    },
     )
   },
 
   createPassword: data => {
-      return api.post('/pericia/usuario/geraSenha', data, {
-        headers: {}
-      },
+    return api.post('/pericia/usuario/geraSenha', data, {
+      headers: {}
+    },
     )
   },
   // requisição para ter historico de pericias
   getHist: data => {
     return api.post('/pericia/formulario/recebidos', null, {
-        headers: {
-          'matricula': data.id,
-          // 'token': data.token,
-        }
-      },
+      headers: {
+        'matricula': data.id,
+        // 'token': data.token,
+      }
+    },
     )
   },
 }
@@ -57,7 +57,7 @@ const user = {
 const form = {
   // requisiçao para obter um novo pop atraves de um numero identificador
   getNewForm: number => {
-    console.tron.log(['api ', LoginToken])
+    //console.tron.log(['api ', LoginToken])
     return api.get(`/pericia/formularios/${number}`)
   },
   // requisição para enviar um formulario

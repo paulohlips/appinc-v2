@@ -48,7 +48,7 @@ class Camera extends React.Component {
           }
         }
       }
-    }    
+    }
 
   }
 
@@ -187,7 +187,7 @@ class Camera extends React.Component {
         resizeMode={'cover'}
         onError={e => console.log(e)}
         onLoad={load => console.log(load)}
-        repeat={true} /> 
+        repeat={true} />
     </View>);
   }
 
@@ -204,27 +204,27 @@ class Camera extends React.Component {
   }
 
   saveFormInput = info => {
-    
+
     const { imageData, imagePath, image } = this.state;
-    const { 
-      form, 
-      getSaveStateForm, 
-      startControlArray, 
+    const {
+      form,
+      getSaveStateForm,
+      startControlArray,
       saveDataGroup, //importa
       data, // importa
       index, //importa
       group, // importa
     } = this.props;
-    console.tron.log('entrei no save',info, imagePath, image)
+    //console.tron.log('entrei no save',info, imagePath, image)
 
     if (imagePath || image) {
-      console.tron.log('entrei if',data, imagePath, image)
+      //console.tron.log('entrei if',data, imagePath, image)
       if (data.group === 'true') {
         group.dataGroup.map(item => {
           if (item.index === index) {
             saveDataGroup({ index, name: info.data_name, data: { uri: image.uri, type: 'image/jpeg', name: `${info.data_name}.jpg` }, type: data.component_type, extra: image })
-           // saveDataGroup({ index: , name: , data: , type: , extra: })
-           console.tron.log('entrei form  grupo', image, imagePath)
+            // saveDataGroup({ index: , name: , data: , type: , extra: })
+            //console.tron.log('entrei form  grupo', image, imagePath)
           }
         });
       } else {
@@ -233,17 +233,17 @@ class Camera extends React.Component {
             const form = {};
             form[info.data_name] = { key: info.data_name, value: { uri: imagePath, type: 'image/jpeg', name: `${info.data_name}.jpg` }, data: image, filled: true };
             getSaveStateForm(form);
-            console.tron.log('entrei form nao grupo', image, imagePath)
+            //console.tron.log('entrei form nao grupo', image, imagePath)
           }
         }
-      }      
+      }
     } else {
       for (var key in form.step) {
         if (key === info.data_name && info.data_name.filled === false) {
           const form = {};
           form[info.data_name] = { key: info.data_name, value: { uri: '', type: '', name: '' }, data: image, filled: false };
           getSaveStateForm(form);
-          console.tron.log('sem foto', image, imagePath)
+          //console.tron.log('sem foto', image, imagePath)
         }
       }
     }
@@ -253,7 +253,7 @@ class Camera extends React.Component {
   render() {
     const { data_name, label, hint, default_value, newState, group } = this.props.data;
     const { saveStep } = this.props.form;
-    const  { largura_tela } = responsividade;
+    const { largura_tela } = responsividade;
 
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });
@@ -269,7 +269,7 @@ class Camera extends React.Component {
           <TouchableOpacity onPress={() => this.pickSingleWithCamera(true)}>
             <View style={styles.avatarContainer}>
               <View style={styles.avatarContainer2}>
-                <Icon name="add-a-photo" color = "black" size={largura_tela< 430 ? 20 : 30} style={styles.icon} />
+                <Icon name="add-a-photo" color="black" size={largura_tela < 430 ? 20 : 30} style={styles.icon} />
                 <View style={styles.text_foto}>
                   <Text style={styles.text1}>Tirar foto</Text>
                 </View>
@@ -280,7 +280,7 @@ class Camera extends React.Component {
           <TouchableOpacity onPress={() => this.pickSingle(false)} style={styles.button}>
             <View style={styles.avatarContainer1}>
               <View style={styles.avatarContainer2}>
-                <Icon name="photo-library" color = "white" size={largura_tela< 430 ? 20 : 30} style={styles.icon} />
+                <Icon name="photo-library" color="white" size={largura_tela < 430 ? 20 : 30} style={styles.icon} />
                 <View style={styles.text_foto}>
                   <Text style={styles.text}>Abrir galeria</Text>
                 </View>

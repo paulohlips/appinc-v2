@@ -47,7 +47,7 @@ class Login extends Component {
   }
 
   async componentWillMount() {
-    console.tron.log(this.props)
+    //console.tron.log(this.props)
     const id = await AsyncStorage.getItem('@Id');
     this.setState({ btt: id });
   }
@@ -57,7 +57,7 @@ class Login extends Component {
       this.navigateToLogged();
     }
   }
-  
+
   navigateToLogged = () => {
     const resetAction = StackActions.reset({
       index: 0,
@@ -77,7 +77,7 @@ class Login extends Component {
         NavigationActions.navigate({ routeName: 'SignUp' }),
       ]
     });
-    this.props.navigation.dispatch(resetAction);    
+    this.props.navigation.dispatch(resetAction);
   }
 
   salvarIdProv = () => {
@@ -138,8 +138,8 @@ class Login extends Component {
           </View>
         </View>
         {
-          viewModal && (
-            <SnackBar inside content={this.state.messageRequest} color="white" />
+          login.error && (
+            <SnackBar inside content='Erro no login' color="white" />
           )
         }
       </ImageBackground>

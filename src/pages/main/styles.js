@@ -1,11 +1,15 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { colors, metrics, responsividade } from '../../styles';
 
 const styles = StyleSheet.create({
+
+  
+
   container: {
     flex: 1,
     backgroundColor: '#344955',
     //alignItems: 'center',
+    //paddingTop: Platform.OS === 'ios' ? 30 : 0,
   },
   bodyS: {
     flex: 1,
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
     height: responsividade.largura_tela < 430 ? 150 : 250,
     borderColor: 'white',
     borderWidth: 3,
-    borderRadius: responsividade.largura_tela < 430 ? 100 : 300,
+    borderRadius: Platform.OS === 'ios' ? responsividade.largura_tela < 430 ? 75 : 300 : responsividade.largura_tela < 430 ? 100 : 300,
   },
 
   name_view:{

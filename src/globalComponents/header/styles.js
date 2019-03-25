@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { colors, metric, responsividade } from '../../styles';
 
 const styles = StyleSheet.create({
@@ -8,9 +8,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: responsividade.ALTURA_HEADER,
+    height: Platform.OS === 'ios' ? 85 : responsividade.ALTURA_HEADER,
+    //height: 80,
     //position: 'absolute',
-    zIndex: 2
+    zIndex: 2,
+    paddingTop: Platform.OS === 'ios' ? 30 : 0,
   },
 
   iconMenu: {

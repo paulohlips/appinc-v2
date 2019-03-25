@@ -80,10 +80,6 @@ class Login extends Component {
     this.props.navigation.dispatch(resetAction);
   }
 
-  salvarIdProv = () => {
-    AsyncStorage.setItem('@IdProv', this.state.inputSave);
-  }
-
   confereCadastro = () => {
     const data = { inputSave: this.state.inputSave, password: this.state.password };
     this.props.getLoginRequest(data)
@@ -130,7 +126,7 @@ class Login extends Component {
                 Entrar
                   </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cadastrobutton} onPress={() => { this.navigateToSignUp(); this.salvarIdProv(); }}>
+            <TouchableOpacity style={styles.cadastrobutton} onPress={() => { this.navigateToSignUp(); }}>
               <Text style={styles.buttonText}>
                 Cadastrar
                   </Text>

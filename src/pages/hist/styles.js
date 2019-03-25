@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { colors, responsividade } from '../../styles';
 const styles = StyleSheet.create({
     container: { 
         flex: 1,   
         paddingBottom: 60, 
-        
+        //paddingTop: Platform.OS === 'ios' ? 30 : 0
     },
     main: {
         padding: 10,   

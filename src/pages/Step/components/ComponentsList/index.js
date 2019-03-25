@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Animated } from 'react-native';
-import { 
-  InputText, 
-  AudioRec, 
-  Camera, 
-  MyDatePicker, 
-  GeoLocation, 
-  Veiculos, 
-  Check, 
-  Scanner, 
-  Sketch, 
-  Vestigios, 
+import {
+  InputText,
+  AudioRec,
+  Camera,
+  MyDatePicker,
+  GeoLocation,
+  Veiculos,
+  Check,
+  Scanner,
+  Sketch,
+  Vestigios,
   OCR,
   Group,
 } from '../../../../components';
@@ -18,7 +18,7 @@ import styles from './styles';
 
 class ComponentList extends Component {
   state = {
-    move: new Animated.Value(0),
+    move: new Animated.Value(5),
   }
 
   componentDidMount() {
@@ -29,9 +29,11 @@ class ComponentList extends Component {
     }).start();
   }
   render() {
+    // console.tron.log(['componentlist', this.props])
     return (
-      <Animated.View style={{ ...styles.container, 
-        right: this.state.move, 
+      <Animated.View style={{
+        ...styles.container,
+        right: this.state.move,
         opacity: this.state.move.interpolate({
           inputRange: [0, 20],
           outputRange: [1, 0],
@@ -48,26 +50,26 @@ class ComponentList extends Component {
           {
             this.props.data.component_type === 'ocr' && (
               <View style={styles.component}>
-                <OCR data={this.props.data} index={this.props.data.group ? this.props.index : null}/>
+                <OCR data={this.props.data} index={this.props.data.group ? this.props.index : null} />
               </View>
             )
           }
           {
             this.props.data.component_type === 'scanner' && (
               <View style={styles.component}>
-                <Scanner data={this.props.data} index={this.props.data.group ? this.props.index : null}/>
+                <Scanner data={this.props.data} index={this.props.data.group ? this.props.index : null} />
               </View>
             )
           }
-    
+
           {
             this.props.data.component_type === 'croqui' && (
               <View style={styles.component}>
-                <Sketch data={this.props.data} index={this.props.data.group ? this.props.index : null}/>
+                <Sketch data={this.props.data} />
               </View>
             )
           }
-    
+
           {
             this.props.data.component_type === 'vestigio' && (
               <View style={styles.component}>
@@ -75,46 +77,46 @@ class ComponentList extends Component {
               </View>
             )
           }
-    
+
           {
             this.props.data.component_type === 'camera' && (
               <View style={styles.component}>
-                <Camera data={this.props.data} index={this.props.data.group ? this.props.index : null}/>
+                <Camera data={this.props.data} index={this.props.data.group ? this.props.index : null} />
               </View>
             )
           }
           {
             this.props.data.component_type === 'text' && (
               <View style={styles.component}>
-                <InputText data={this.props.data} index={this.props.data.group ? this.props.index : null}/>
+                <InputText data={this.props.data} index={this.props.data.group ? this.props.index : null} />
               </View>
             )
           }
           {
             this.props.data.component_type === 'audiorec' && (
               <View style={styles.component}>
-                <AudioRec data={this.props.data} index={this.props.data.group ? this.props.index : null}/>
+                <AudioRec data={this.props.data} index={this.props.data.group ? this.props.index : null} />
               </View>
             )
           }
           {
             this.props.data.component_type === 'date' && (
               <View style={styles.component}>
-                <MyDatePicker data={this.props.data} index={this.props.data.group ? this.props.index : null}/>
+                <MyDatePicker data={this.props.data} index={this.props.data.group ? this.props.index : null} />
               </View>
             )
           }
           {
             this.props.data.component_type === 'geoloc' && (
               <View style={styles.component}>
-                <GeoLocation data={this.props.data} index={this.props.data.group ? this.props.index : null}/>
+                <GeoLocation data={this.props.data} index={this.props.data.group ? this.props.index : null} />
               </View>
             )
           }
           {
             this.props.data.component_type === 'veiculo' && (
               <View style={styles.component}>
-                <Veiculos data={this.props.data} index={this.props.data.group ? this.props.index : null}/>
+                <Veiculos data={this.props.data} index={this.props.data.group ? this.props.index : null} />
               </View>
             )
           }
@@ -125,7 +127,7 @@ class ComponentList extends Component {
               </View>
             )
           }
-    
+
         </ScrollView>
       </Animated.View>
     );

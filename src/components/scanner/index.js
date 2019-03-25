@@ -22,6 +22,9 @@ class Scanner extends Component {
     showCode: false,
   }
 
+  componentWillMount() {
+  }
+
   componentDidMount() {
     const { form, data } = this.props;
 
@@ -47,7 +50,7 @@ class Scanner extends Component {
       if (data.group === 'true') {
         group.dataGroup.map(item => {
           if (item.index === index) {
-            saveDataGroup({ index, name: dataScanner.data_name, data:{ key: dataScanner.data_name, value: infoScanner, filled: true }, type: dataScanner.component_type, extra: null })
+            saveDataGroup({ index, name: dataScanner.data_name, data: { key: dataScanner.data_name, value: infoScanner, filled: true }, type: dataScanner.component_type, extra: null })
           }
         });
       } else {
@@ -58,7 +61,7 @@ class Scanner extends Component {
             getSaveStateForm(form);
           }
         }
-      }      
+      }
     } else {
       for (var key in form.step) {
         if (key === dataScanner.data_name) {
@@ -80,7 +83,7 @@ class Scanner extends Component {
     if (saveStep) {
       this.saveFormScanner({ data_name, default_value });
     }
-    
+
     return (
       <View style={{ justifyContent: 'center', alignItem: 'center' }}>
         {

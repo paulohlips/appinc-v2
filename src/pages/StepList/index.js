@@ -95,7 +95,7 @@ class StepList extends Component {
 
   enviaForm = async () => {
     const { matriculaAsync } = this.state;
-    const { reference, formulario, setUpdateHistory } = this.props;
+    const { reference, formulario, setUpdateHistory, login } = this.props;
     this.setState({ sending: true, original: false });
 
     const matriculaProv = await AsyncStorage.getItem('@AppInc:matricula');
@@ -135,8 +135,9 @@ class StepList extends Component {
       headers: {
         'Content-Type': 'multipart/form-data',
         'Accept': 'application/json',
-        'matricula': matricula,
-        'referencia': formulario.ref,
+        'matricula': login.userID,
+        'referencia': '',
+        'x-Token': login.token,
       }
     })
       .then(function (response) {
@@ -209,6 +210,7 @@ const mapStateToProps = state => ({
   form: state.newState.data,
   reference: state.newState.reference,
   formulario: state.formState,
+  login: state.loginState
 });
 
 const mapDispatchToProps = dispatch =>

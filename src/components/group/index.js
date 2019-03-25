@@ -17,26 +17,27 @@ class Group extends Component {
   }
 
   componentWillMount() {
+    // console.tron.log(['entrei grupo', this.props])
     const { group } = this.props;
     if (!group.flag) {
       this.readGroup();
     }
-    
+
     //this.decrementDataGroup();
   }
 
   renderOneGroup = index => this.props.data.components_group.map(item => <ComponentList data={item} index={index} />);
 
   increment = () => {
-      const { group } = this.props;
-      const { dataGroup, prototype } = this.state;
-      const size = group.dataGroup.length;
-      var prototypeVar = prototype;
-      prototypeVar = {
-          ...prototype,
-          index: Math.random(),
-      }
-      this.props.incrementDataGroup(prototypeVar)
+    const { group } = this.props;
+    const { dataGroup, prototype } = this.state;
+    const size = group.dataGroup.length;
+    var prototypeVar = prototype;
+    prototypeVar = {
+      ...prototype,
+      index: Math.random(),
+    }
+    this.props.incrementDataGroup(prototypeVar)
   }
 
   readGroup = () => {
@@ -70,14 +71,15 @@ class Group extends Component {
   render() {
     const { group } = this.props
     const { dataGroup } = this.state;
+    // console.tron.log(['group', this.props, this.state])
     return (
       <View style={styles.container}>
         <ScrollView
           horizontal
-          pagingEnabled    
+          pagingEnabled
           ref={ref => this.scrollView = ref}
-          onContentSizeChange={(contentWidth, contentHeight)=>{        
-            this.scrollView.scrollToEnd({animated: true, duration: 3000});
+          onContentSizeChange={(contentWidth, contentHeight) => {
+            this.scrollView.scrollToEnd({ animated: true, duration: 3000 });
           }}
         >
           {
@@ -93,12 +95,12 @@ class Group extends Component {
         </ScrollView>
         <View style={styles.viewIndicator}>
           {
-              group.dataGroup.map(item =>  <View style={styles.indicator} />)
-          }          
+            group.dataGroup.map(item => <View style={styles.indicator} />)
+          }
         </View>
         <TouchableOpacity style={styles.viewPlus} onPress={() => this.increment()}>
           <Icons name="plus" size={18} color="#232f34" />
-        </TouchableOpacity>        
+        </TouchableOpacity>
       </View>
     );
   }

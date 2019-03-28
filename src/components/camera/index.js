@@ -29,13 +29,11 @@ class Camera extends React.Component {
 
 
   componentWillMount() {
-    const { form, data, group, index } = this.props;
-
-    if (data.group === 'true') {
-      group.dataGroup.map(item => {
-        //console.log(['map array', data.group, item])
-        if (item.index === index) {
-          if (item[data.data_name] !== null) {
+    const { form, data, group, index } = this.props;    
+    if (data.group === 'true' && group.flag === true) {
+      group.dataGroup.map(item => {        
+        if (item.index === index) {          
+          if (item[data.data_name] !== null && item[data.data_name] !== undefined) {            
             this.setState({ image: item[data.data_name].extra, imagePath: item[data.data_name].value.uri });
           }
         }

@@ -24,7 +24,7 @@ class InputText extends Component {
       group.dataGroup.map(item => {
         //console.log(['map array', data.group, item])
         if (item.index === index) {
-          if (item[data.data_name] !== null) {
+          if (item[data.data_name] !== null && item[data.data_name] !== undefined) {
             this.setState({ inputSave: item[data.data_name].value });
           }
         }

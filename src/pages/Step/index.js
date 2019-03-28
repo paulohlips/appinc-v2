@@ -21,7 +21,7 @@ const COMPONENT_EXAMPLE = [
         "length_min": "",
         "invalid_text": "",
         "default_value": "",
-        "component_type": "veiculo",
+        "component_type": "scanner",
         "required_message": ""
     }
 ];

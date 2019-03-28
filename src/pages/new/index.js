@@ -59,7 +59,7 @@ class New extends Component {
       },
       {
         name: 'Genética Forense',
-        value: 33,
+        value: 34,
       },
       {
         name: 'Arrombamento de Caixa',

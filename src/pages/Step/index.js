@@ -40,14 +40,20 @@ class StepPage extends Component {
             delay: 250,
         }).start()
     }
-
-    componentWillMount() {
+      componentWillMount() {
         BackHandler.removeEventListener('hardwareBackPress', this.saveStep);
-    }
-
-    componentWillUnmount() {
+      }
+    
+      componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.saveStep);
-    }
+      }
+
+      saveStep = () => {
+        this.props.saveStepState();
+        this.props.startUpdateProgress();
+        this.props.navigation.navigate('StepList');
+        return true;
+      }
 
     render() {
         const { navigation } = this.props;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StatusBar, Image, AsyncStorage } from 'react-native';
+import { View, Text, TouchableOpacity, StatusBar, Image, AsyncStorage, BackHandler } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from './styles';
 import axios from 'axios';
@@ -7,7 +7,7 @@ import { Header } from '../../globalComponents';
 import { Sketch } from '../../components';
 import { responsividade } from '../../styles';
 
-import { NavigationActions, withNavigation } from 'react-navigation';
+import { NavigationActions, withNavigation, StackActions } from 'react-navigation';
 
 const dias = 23;
 class Main extends Component {
@@ -67,7 +67,22 @@ class Main extends Component {
   }
 
   componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.navigateToLogin);
+  }
 
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress');
+  }
+
+  navigateToLogin = async () => {
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [
+        // Logged
+        NavigationActions.navigate({ routeName: 'Login' }),
+      ]
+    });
+    this.props.navigation.dispatch(resetAction);
   }
 
   renderSketch = () => { };

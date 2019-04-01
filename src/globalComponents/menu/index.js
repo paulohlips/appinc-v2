@@ -60,6 +60,12 @@ class MenuClass extends Component {
                             <Text style={styles.textButton}>Minhas perícias</Text>
                         </View>
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={this.navigateToScreen('UpdatePops')}>
+                        <View style={styles.buttonBox}>
+                            <Icon name="download" size={largura_tela < 430 ? 19 : 29} color="#fff" style={styles.icon} />
+                            <Text style={styles.textButton}>Baixar POPs</Text>
+                        </View>
+                    </TouchableOpacity>
                     <TouchableOpacity>
                         <View style={styles.buttonBox}>
                             <Icon name="key-variant" size={largura_tela < 430 ? 19 : 29} color="#fff" style={styles.icon} />

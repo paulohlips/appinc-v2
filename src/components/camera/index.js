@@ -29,11 +29,11 @@ class Camera extends React.Component {
 
 
   componentWillMount() {
-    const { form, data, group, index } = this.props;    
+    const { form, data, group, index } = this.props;
     if (data.group === 'true' && group.flag === true) {
-      group.dataGroup.map(item => {        
-        if (item.index === index) {          
-          if (item[data.data_name] !== null && item[data.data_name] !== undefined) {            
+      group.dataGroup.map(item => {
+        if (item.index === index) {
+          if (item[data.data_name] !== null && item[data.data_name] !== undefined) {
             this.setState({ image: item[data.data_name].extra, imagePath: item[data.data_name].value.uri });
           }
         }
@@ -56,14 +56,31 @@ class Camera extends React.Component {
       includeExif: false,
       includeBase64: true,
     }).then(image => {
-
       this.setState({
         image: { uri: image.path, width: image.width, height: image.height },
         images: null,
         imagePath: image.path
       });
-
+      console.tron.log('ESTADO', image);
     }).catch();
+  }
+
+  pickSingle(cropit, circular = false) {
+    ImagePicker.openPicker({
+      cropping: cropping,
+      includeExif: false,
+      includeBase64: true,
+    }).then(image => {
+      this.setState({
+        image: { uri: image.path, width: image.width, height: image.height },
+        images: null,
+        imagePath: image.path
+      });
+      console.tron.log('ESTADO', image);
+    }).catch(e => {
+      console.log(e);
+      //Alert.alert(e.message ? e.message : e);
+    });
   }
 
 
@@ -135,12 +152,13 @@ class Camera extends React.Component {
       compressVideoPreset: 'MediumQuality',
       includeExif: true,
     }).then(image => {
-      console.log('received image', image);
       this.setState({
-        image: { uri: image.path, width: image.width, height: image.height, mime: image.mime },
+        image: { uri: image.path, width: image.width, height: image.height },
         images: null,
-        imagesPath: image.path,
+        imagePath: image.path
       });
+      console.tron.log('ESTADO', image);
+
     }).catch(e => {
       console.log(e);
       //Alert.alert(e.message ? e.message : e);

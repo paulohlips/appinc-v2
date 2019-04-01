@@ -82,7 +82,7 @@ class Login extends Component {
 
   confereCadastro = () => {
     const data = { inputSave: this.state.inputSave, password: this.state.password };
-    this.props.getLoginRequest(data)
+    this.props.getLoginRequest(data);
   }
   onPressAnimated = async () => {
     this.animation.play(30, 1000);
@@ -93,11 +93,8 @@ class Login extends Component {
     const { btt, viewModal, messageRequest, call } = this.state;
     return (
       <ImageBackground source={require('../../assents/imgs/local_crime.jpg')} style={styles.backgroundImage} >
-
         <View style={styles.container}>
-
           <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
-
           <Text style={styles.title}>Bem-Vindo</Text>
           <Text style={styles.descript}>Por favor, digite suas credenciais</Text>
           <View style={styles.forms}>
@@ -124,18 +121,18 @@ class Login extends Component {
             <TouchableOpacity style={styles.testebutton} onPress={() => this.confereCadastro()}>
               <Text style={styles.buttonText}>
                 Entrar
-                  </Text>
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.cadastrobutton} onPress={() => { this.navigateToSignUp(); }}>
               <Text style={styles.buttonText}>
                 Cadastrar
-                  </Text>
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
         {
           login.error && (
-            <SnackBar inside content='Erro no login' color="white" />
+            <SnackBar inside content={login.messageError} color="white" />
           )
         }
       </ImageBackground>

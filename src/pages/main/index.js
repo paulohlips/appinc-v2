@@ -57,13 +57,12 @@ class Main extends Component {
   }
 
   async componentWillMount() {
-    this.requestFroms();
-    this.requestQuerry();
     const arrayRef = await AsyncStorage.getItem('teste2');
     const name = await AsyncStorage.getItem('@AppInc:nome');
     this.setState({
       nome: name
     });
+    //console.tron.log(['Nome', this.state.nome])
   }
 
   componentDidMount() {

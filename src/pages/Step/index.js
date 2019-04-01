@@ -79,7 +79,7 @@ class StepPage extends Component {
                                 <Animated.View style={{ ...styles.coluna, top: this.state.move }}>
                                     <View style={styles.linha}>
                                         <View style={styles.ball}>
-                                            <Text style={styles.numberType}>{i + 1}</Text>
+                                            <Text style={styles.numberType}>{i}</Text>
                                         </View>
                                         <Text style={styles.textType}> {item.label}: </Text>
                                     </View>

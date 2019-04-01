@@ -147,7 +147,6 @@ android {
 dependencies {
     implementation project(':react-native-fetch-blob')
     implementation project(':react-native-vector-icons')
-    implementation project(':react-native-spinkit')
     implementation project(':react-native-sound')
     implementation project(':react-native-image-resizer')
     implementation project(':react-native-image-crop-picker')

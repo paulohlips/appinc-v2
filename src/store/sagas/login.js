@@ -5,12 +5,16 @@ import { Creators as LoginActions } from '../ducks/login';
 
 export function* getLoginRequest(action) {
   try {
-    const response = yield call(Api.user.loginUser, { matricula: action.payload.data.inputSave, pass: action.payload.data.password });
-    // console.tron.log(response)
-    yield put(LoginActions.getLoginSucsses(response.data, action.payload.data.inputSave));
+    const response = yield call(Api.user.loginUser,
+      { matricula: action.payload.data.inputSave, pass: action.payload.data.password });
+
+    if (response.status === 206) {
+      yield put(LoginActions.getLoginFailure(response.data.mensagem));
+    } else {
+      yield put(LoginActions.getLoginSucsses(response.data, action.payload.data.inputSave));
+    }    
   } catch (err) {
     //console.tron.log(err)
     yield put(LoginActions.getLoginFailure(err));
-  }
+  } 
 }
-

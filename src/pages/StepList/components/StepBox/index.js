@@ -142,6 +142,11 @@ class StepBoxComponent extends Component {
                 progress={progress}
               />
             </View>
+            <View style = {styles.number_view}>
+            <Text style = {styles.number}>
+            { this.state.count + "/" + this.state.array }
+            </Text>
+            </View>
           </View>
         </TouchableOpacity>
       </Animated.View>

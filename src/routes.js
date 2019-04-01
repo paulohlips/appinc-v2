@@ -14,6 +14,7 @@ import Offline from './pages/offline';
 import Singup from './pages/email';
 import Hash from './pages/hash';
 import Password from './pages/password';
+import UpdatePops from './pages/UpdatePops';
 
 // Componentes
 import GeoLoc from './pages/components/geoloc';
@@ -42,6 +43,7 @@ const Routes = StackNavigator(
         Main: { screen: Main },
         NewMenu: { screen: New },
         Hist: { screen: Hist },
+        UpdatePops: { screen: UpdatePops },
         Offline: { screen: Offline },
         Exit: { screen: Login },
       },

@@ -60,6 +60,9 @@ const form = {
     //console.tron.log(['api ', LoginToken])
     return api.get(`/pericia/formularios/${number}`)
   },
+  getAllPops: () => {
+    return api.get('/pericia/formularios')
+  },
   // requisição para enviar um formulario
   postForm: data => {
     return api.post('/pericia/formulario/envio', data.body,

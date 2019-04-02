@@ -1,11 +1,10 @@
-
-
 # Historico de versão
-[Link de verões](https://drive.google.com/drive/u/0/folders/1BvWLOoRFLh2ooxVWk4sFbciwF0QQhkaV)
+[Link de versões](https://drive.google.com/drive/u/0/folders/1BvWLOoRFLh2ooxVWk4sFbciwF0QQhkaV)
+
 ## v2.1.x
 #### **NEWS**
 1. implentação de grupo no frontend
-2. responsivida para tablets
+2. responsividade para tablets
 3. implementação do componente OCR
 4. versão IOS
 
@@ -13,15 +12,16 @@
 ##### v2.1.1
 
 1. correção timeout da geolocalização
-2. criação do compoente picker pra android e ios
+2. criação do componente picker pra android e ios
 
 ##### v2.1.2
 
-1. correção envio de arquivos
+1. correção no envio de arquivos
 2. implementação completa de token
-3. remoção do scanner(bug no componente)
+3. centralização das requisiçoes
+4. remoção do scanner(bug no componente)
 
-##### v2.1.3
+##### v2.1.3 - commit 'be18fd2'
 
 1. Retorno do componente scanner
 2. Correção no envio de arquivos

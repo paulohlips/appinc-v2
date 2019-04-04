@@ -29,7 +29,7 @@ class ComponentList extends Component {
     }).start();
   }
   render() {
-    // console.tron.log(['componentlist', this.props])
+     console.tron.log(['componentlist', this.props])
     return (
       <Animated.View style={{
         ...styles.container,
@@ -50,14 +50,14 @@ class ComponentList extends Component {
           {
             this.props.data.component_type === 'ocr' && (
               <View style={styles.component}>
-                <OCR data={this.props.data} index={this.props.data.group ? this.props.index : null} />
+                <OCR data={this.props.data} />
               </View>
             )
           }
           {
             this.props.data.component_type === 'scanner' && (
               <View style={styles.component}>
-                <Scanner data={this.props.data} index={this.props.data.group ? this.props.index : null} />
+                <Scanner data={this.props.data}  />
               </View>
             )
           }
@@ -81,14 +81,14 @@ class ComponentList extends Component {
           {
             this.props.data.component_type === 'camera' && (
               <View style={styles.component}>
-                <Camera data={this.props.data} index={this.props.data.group ? this.props.index : null} />
+                <Camera data={this.props.data}  />
               </View>
             )
           }
           {
             this.props.data.component_type === 'text' && (
               <View style={styles.component}>
-                <InputText data={this.props.data} index={this.props.data.group ? this.props.index : null} />
+                <InputText data={this.props.data}  />
               </View>
             )
           }

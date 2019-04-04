@@ -3,6 +3,7 @@ const Types = {
     DECREMENT_DATA_GROUP: 'group/DECREMENT_DATA_GROUP',
     SAVE_DATA_GROUP: 'group/SAVE_DATA_GROUP',
     FLAG_DATA_GROUP: 'group/FLAG_DATA_GROUP',
+    CREATE_DATA_GROUP: 'group/CREATE_DATA_GROUP',
 }
 
 const INITIAL_STATE = {
@@ -12,6 +13,18 @@ const INITIAL_STATE = {
 
 export default function groupState(state = INITIAL_STATE, action) {
     switch (action.type) {
+        case Types.CREATE_DATA_GROUP: 
+            return {
+                dataGroup: [ ...state.dataGroup,
+                    {
+                        key: action.payload.key,
+                        prototype: action.payload.prototype,
+                        value: [
+                            action.payload.prototype,
+                        ],
+                    }
+                ]
+            }
         case Types.ICREMENT_DATA_GROUP:
             return {
                 ...state,
@@ -25,9 +38,9 @@ export default function groupState(state = INITIAL_STATE, action) {
             return { ...state, dataGroup: array };
         }
         case Types.SAVE_DATA_GROUP: {
-            console.log(['action save', action.payload.data]);
+            // console.log(['action save', action.payload.data]);
             const array = saveData(action.payload.data, state);
-            console.log(['return function', array]);
+            // console.log(['return function', array]);
             return { ...state, dataGroup: array };
         }
         case Types.FLAG_DATA_GROUP: 
@@ -38,20 +51,24 @@ export default function groupState(state = INITIAL_STATE, action) {
 }
 
 export const Creators = {
+    createDataGroup: (key, prototype)=> ({
+        type: Types.CREATE_DATA_GROUP,
+        payload: { key, prototype }
+    }),
     incrementDataGroup: prototype => ({
-        type: Types.ICREMENT_DATA_GROUP,
+        type: '',//Types.ICREMENT_DATA_GROUP,
         payload: { prototype },
     }),
     decrementDataGroup: id => ({
-        type: Types.DECREMENT_DATA_GROUP,
+        type: '',//Types.DECREMENT_DATA_GROUP,
         payload: { id },
     }),
     saveDataGroup: data => ({
-        type: Types.SAVE_DATA_GROUP,
+        type: '',//Types.SAVE_DATA_GROUP,
         payload: { data },
     }),
     activeFlag: () => ({
-        type: Types.FLAG_DATA_GROUP,
+        type: '',//Types.FLAG_DATA_GROUP,
     }),
 }
 

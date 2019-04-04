@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as FormsActions } from '../../../../store/ducks/form'
+import { Creators as GroupActions } from '../../../../store/ducks/group'
 
 // styles
 import { View, Text, TouchableOpacity, ProgressBarAndroid, Animated } from 'react-native';
@@ -35,7 +36,13 @@ class StepBoxComponent extends Component {
   }
 
   createFormsSave = async () => {
-    const { getCreateForm, steps, formState } = this.props;
+    const { 
+      getCreateForm, 
+      steps, 
+      formState, 
+      createDataGroup, 
+    } = this.props;
+    console.tron.log(['steps', steps, formState]);
 
     this.setState({ createdForms: true });
     const arrayProgress = {
@@ -45,17 +52,16 @@ class StepBoxComponent extends Component {
     };
 
     if (formState.formEdit) {
-      steps.item.components.forEach(component => {
+      steps.item.components.forEach(component => {    
 
         const form = {};
-        if (component.component_type === 'date') {
 
+        if (component.component_type === 'date') {
           for (var key1 in formState.step) {
             if (component.data_name === key1.key) {
               form[component.data_name] = key1;
             }
           }
-
         } else {
           for (var key in formState.step) {
             if (component.data_name === key.key) {
@@ -71,12 +77,27 @@ class StepBoxComponent extends Component {
       });
     } else {
       steps.item.components.forEach(component => {
+
         const form = {};
+        let group = {};
+        let prototype = {};
+
         if (component.component_type === 'date') {
           form[component.data_name] = { key: component.data_name, value: '1980-01-21', filled: null };
-        } else {
+        }  else if (component.component_type === 'group') {         
+          component.components_group.map(item => {            
+            prototype[item.data_name] = {
+              key: item.data_name,
+              value: item,              
+            }; 
+          })
+          // prototype['index'] = null;
+          console.tron.log(['fasdfas', component, component.data_name])
+          createDataGroup(component.data_name, prototype);
+        }  else {
           form[component.data_name] = { key: component.data_name, value: component.default_value, filled: null };
         }
+        
         getCreateForm(form);
         arrayProgress.array.push(component.data_name);
         const lengthArray = arrayProgress.array.length;
@@ -111,6 +132,7 @@ class StepBoxComponent extends Component {
     const { steps, form, formState, index } = this.props;
     const { createdForms, arrayProgress, callFunction, progress } = this.state;
     const { item } = steps;
+    // console.tron.log(['props', this.props])
     if (!createdForms) {
       this.createFormsSave();
     }
@@ -159,7 +181,7 @@ const mapStateToProps = state => ({
   form: state.formState,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(FormsActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({...FormsActions, ...GroupActions }, dispatch);
 
 const StepBox = connect(mapStateToProps, mapDispatchToProps)(StepBoxComponent);
 

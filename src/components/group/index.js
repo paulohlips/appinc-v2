@@ -10,10 +10,45 @@ import { View, TextInput, Text, ScrollView, TouchableOpacity } from 'react-nativ
 import styles from './style';
 import Icons from 'react-native-vector-icons/FontAwesome5';
 
+const TEST = [
+  {
+    key: 'data_ref1',
+    value: {
+      hint:'data_amostra',
+      group:true,
+      label:'Identificação de material',
+      required:true,
+      data_name:'data_ref1',
+      lenght_max:60,
+      length_min:3,
+      invalid_text:"",
+      default_value:'Fulano',
+      component_type:'date',
+      required_message:'O campo é obrigatório',
+    }
+  },
+  {
+    key: 'data_ref1',
+    value: {
+      hint:'data_amostra',
+      group:true,
+      label:'Identificação de material',
+      required:true,
+      data_name:'data_ref1',
+      lenght_max:60,
+      length_min:3,
+      invalid_text:"",
+      default_value:'Fulano',
+      component_type:'text',
+      required_message:'O campo é obrigatório',
+    }
+  }
+]
 class Group extends Component {
   state = {
     prototype: [],
     dataGroup: [],
+    arrayGroup: [],
   }
 
   componentWillMount() {
@@ -26,7 +61,35 @@ class Group extends Component {
     //this.decrementDataGroup();
   }
 
-  renderOneGroup = index => this.props.data.components_group.map(item => <ComponentList data={item} index={index} />);
+  renderOneGroupTest = group => {    
+    // array = Object.values(group)
+    //array.map(item => <ComponentList data={item.value} />)
+    //console.tron.log(['group params', group, array])
+    Object.keys(group).map(item => {return <ComponentList data={group[item].value} />})
+    
+  };
+
+  renderOneGroup = group => {    
+    const array = Object.values(group)
+    this.setState({ arrayGroup: array })
+    //array.map(item => <ComponentList data={item.value} />)
+    //console.tron.log(['group params', group, array])
+    // Object.keys(group).map(item => {return <ComponentList data={group[item].value} />})
+    
+  };
+  
+  rederCard = item => {
+    item.value.map(gp => 
+      //this.renderOneGroupTest(gp)
+     
+        <View style={styles.boxGroup}>                     
+          <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrement(item.index)}>
+            <Icons name="minus" size={18} color="#FFF" />
+          </TouchableOpacity>
+        </View>
+      
+    )
+  }
 
   increment = () => {
     const { group } = this.props;
@@ -69,9 +132,9 @@ class Group extends Component {
   };
 
   render() {
-    const { group } = this.props
-    const { dataGroup } = this.state;
-    // console.tron.log(['group', this.props, this.state])
+    const { group, data } = this.props
+    const { dataGroup, arrayGroup } = this.state;
+    console.tron.log(['group component', this.props, this.state, data])
     return (
       <View style={styles.container}>
         <ScrollView
@@ -83,14 +146,14 @@ class Group extends Component {
           }}
         >
           {
-            group.dataGroup.map(item =>
-              <View style={styles.boxGroup}>
-                {this.renderOneGroup(item.index)}
-                <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrement(item.index)}>
-                  <Icons name="minus" size={18} color="#FFF" />
-                </TouchableOpacity>
-              </View>
-            )
+            group.dataGroup.map(item => {
+              console.tron.log(['dataGroup', item.key, data.data_name])
+              
+              if (item.key === data.data_name) {
+                
+                this.rederCard(item);
+              }              
+            })
           }
         </ScrollView>
         <View style={styles.viewIndicator}>

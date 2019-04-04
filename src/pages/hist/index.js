@@ -68,7 +68,7 @@ class Historico extends Component {
     this.setState({ arrayRef: array, idUser: id, errorview: false });
     const idMatricula = this.state.idUser;
     try {
-      const response =  await Api.user.getHist({ id: 123, token: login.token});
+      const response =  await Api.user.getHist({ id: userID, token: login.token});
       if (response.status === 206) {
         this.setState({ loading: false, errorview: true });
       } else {

@@ -60,6 +60,7 @@ const form = {
     //console.tron.log(['api ', LoginToken])
     return api.get(`/pericia/formularios/${number}`)
   },
+  //requisita todos os POPs para montar o banco de POPs Offline
   getAllPops: () => {
     return api.get('/pericia/formularios')
   },

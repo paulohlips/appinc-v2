@@ -18,7 +18,7 @@ class InputText extends Component {
   }
 
   componentDidMount() {
-    const { form, data, group, index } = this.props;
+    const { form, data, group, index } = this.props;    
 
     if (data.group === 'true') {
       group.dataGroup.map(item => {
@@ -35,25 +35,29 @@ class InputText extends Component {
           if (form.step[key].filled === true) {
             this.setState({ inputSave: form.step[key].value });
           }
-        }
+        } 
       }
     }
-
-
   }
 
   saveFormInput = info => {
     const { inputSave } = this.state;
-    const { form, getSaveStateForm, startControlArray, data, index, saveDataGroup, group } = this.props;
-
+    const { 
+      form, 
+      getSaveStateForm, 
+      startControlArray, 
+      data, 
+      index, 
+      saveDataGroup, 
+      group,
+      groupMother,
+    } = this.props;
+    console.tron.log('cheguei no saveinput', index, groupMother)
     if (inputSave) {
+      console.tron.log(['input', data.group, info.data_name])
       if (data.group === 'true') {
-        //console.log(['group save', data.group, info.data_name])
-        group.dataGroup.map(item => {
-          if (item.index === index) {
-            saveDataGroup({ index, name: info.data_name, data: inputSave })
-          }
-        });
+        console.tron.log(['group save', data.group, info.data_name])
+        saveDataGroup({ index, groupMother, name: info.data_name, data: inputSave })
       } else {
         for (var key in form.step) {
           if (key === info.data_name) {
@@ -80,7 +84,7 @@ class InputText extends Component {
   render() {
     const { data_name, label, hint, default_value, newState, group } = this.props.data;
     const { saveStep, step } = this.props.form;
-    //console.log([group, this.props]);
+    //console.tron.log(['input text', group, this.props]);
 
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });

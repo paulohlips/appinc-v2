@@ -24,12 +24,12 @@ class ComponentList extends Component {
   componentDidMount() {
     Animated.timing(this.state.move, {
       toValue: 0,
-      duration: 200,
+      duration: 200, 
       delay: 300
     }).start();
   }
   render() {
-     console.tron.log(['componentlist', this.props])
+    //console.tron.log(['componentlist', this.props])
     return (
       <Animated.View style={{
         ...styles.container,
@@ -50,14 +50,14 @@ class ComponentList extends Component {
           {
             this.props.data.component_type === 'ocr' && (
               <View style={styles.component}>
-                <OCR data={this.props.data} />
+                <OCR data={this.props.data} index={this.props.data.group ? this.props.index : null} />
               </View>
             )
           }
           {
             this.props.data.component_type === 'scanner' && (
               <View style={styles.component}>
-                <Scanner data={this.props.data}  />
+                <Scanner data={this.props.data} index={this.props.data.group ? this.props.index : null} />
               </View>
             )
           }
@@ -81,14 +81,22 @@ class ComponentList extends Component {
           {
             this.props.data.component_type === 'camera' && (
               <View style={styles.component}>
-                <Camera data={this.props.data}  />
+                <Camera 
+                  data={this.props.data} 
+                  index={this.props.data.group ? this.props.index : null} 
+                  groupMother={this.props.data.group ? this.props.groupName : null}
+                />
               </View>
             )
           }
           {
             this.props.data.component_type === 'text' && (
               <View style={styles.component}>
-                <InputText data={this.props.data}  />
+                <InputText 
+                  data={this.props.data} 
+                  index={this.props.data.group ? this.props.index : null} 
+                  groupMother={this.props.data.group ? this.props.groupName : null}
+                />
               </View>
             )
           }

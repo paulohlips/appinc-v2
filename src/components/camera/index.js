@@ -270,7 +270,7 @@ class Camera extends React.Component {
     const { data_name, label, hint, default_value, newState, group } = this.props.data;
     const { saveStep } = this.props.form;
     const { largura_tela } = responsividade;
-
+    //console.tron.log('camera', this.props)
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });
     }

@@ -88,7 +88,8 @@ class StepBoxComponent extends Component {
           component.components_group.map(item => {            
             prototype[item.data_name] = {
               key: item.data_name,
-              value: null,              
+              value: null,
+              filled: false,              
             }; 
           })          
           //console.tron.log(['fasdfas', component, component.data_name])

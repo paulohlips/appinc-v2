@@ -9,6 +9,7 @@ import Alert from '../alert';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as FormActions } from '../../store/ducks/form';
+import { Creators as GroupActions } from '../../store/ducks/group';
 import { responsividade } from '../../styles';
 
 class HeaderRedux extends Component {
@@ -52,6 +53,7 @@ class HeaderRedux extends Component {
       startUpdateProgress,
       showProgress,
       saveStepState,
+      activeFlag,
     } = this.props;
     const { showModalInfo, showAlert } = this.state;
     const { largura_tela } = responsividade;
@@ -72,8 +74,9 @@ class HeaderRedux extends Component {
               showArrow && (
                 <TouchableOpacity onPress={() => {
                     if(showProgress){
+                      activeFlag();
                       startUpdateProgress();
-                      saveStepState();
+                      saveStepState();                     
                     }
                     goBack();
                   }}
@@ -131,7 +134,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(FormActions, dispatch);
+  bindActionCreators({...FormActions, ...GroupActions}, dispatch);
 
 const Header = connect(mapStateToProps, mapDispatchToProps)(HeaderRedux)
 export default withNavigation(Header);

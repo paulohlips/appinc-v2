@@ -3,18 +3,20 @@ const Types = {
   DECREMENT_DATA_GROUP: "group/DECREMENT_DATA_GROUP",
   SAVE_DATA_GROUP: "group/SAVE_DATA_GROUP",
   FLAG_DATA_GROUP: "group/FLAG_DATA_GROUP",
-  CREATE_DATA_GROUP: "group/CREATE_DATA_GROUP"
+  CREATE_DATA_GROUP: "group/CREATE_DATA_GROUP",
+  CONTROLL_ARRAY_GROUP: "group/CONTROLL_ARRAY_GROUP",
 };
 
 const INITIAL_STATE = {
   dataGroup: [],
-  flag: false
+  flagGroup: null,
 };
 
 export default function groupState(state = INITIAL_STATE, action) {
   switch (action.type) {
     case Types.CREATE_DATA_GROUP:
       return {
+          ...state,
         dataGroup: [
           ...state.dataGroup,
           {
@@ -46,8 +48,17 @@ export default function groupState(state = INITIAL_STATE, action) {
       // console.log(['return function', array]);
       return { ...state, dataGroup: array };
     }
-    case Types.FLAG_DATA_GROUP:
-      return { ...state, flag: true };
+    case Types.FLAG_DATA_GROUP: {
+        const size = controlArray(state);
+        console.tron.log('size group', size)
+        return { ...state, flagGroup: size };
+    }
+    case Types.CONTROLL_ARRAY_GROUP: {
+        return {
+            ...state,
+            flagGroup: state.flagGroup === 0 ? null : state.flagGroup - 1,
+        }
+    }     
     default:
       return state;
   }
@@ -71,8 +82,11 @@ export const Creators = {
     payload: { data }
   }),
   activeFlag: () => ({
-    type: "" //Types.FLAG_DATA_GROUP,
-  })
+    type: Types.FLAG_DATA_GROUP,
+  }),
+  startControlArrayGroup: () => ({
+    type: Types.CONTROLL_ARRAY_GROUP,
+  }),
 };
 
 
@@ -121,7 +135,8 @@ const saveData = (info, state) => {
                         if(keyName === name) {
                             itemGroup[keyName] = {
                                 key: keyName,
-                                value: data
+                                value: data,
+                                filled: true,
                             }
                         }
                     })
@@ -129,10 +144,29 @@ const saveData = (info, state) => {
             })
         }
     })
-    console.tron.log('arrayState for group', arrayState)
+    //console.tron.log('arrayState for group', arrayState)
   return arrayState;
 };
 
+const controlArray = state => {
+    const arrayGroup = state.flagGroup;
+    let count = 0;
+    if(!arrayGroup) {
+        const dataGroup = state.dataGroup;
+        dataGroup.map( item => {
+            console.tron.log('item', item)
+            item.value.map(item2 => {
+                console.tron.log('item2', item2)
+                Object.keys(item2).map(key => {                   
+                    if (key !== 'index') {
+                        count += 1;
+                    }
+                })
+            })
+        })
+    }
+    return count;
+}
 /*
 const saveData = (data, state) => {
   var arrayState = state.dataGroup;

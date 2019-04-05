@@ -40,7 +40,7 @@ class InputText extends Component {
     }
   }
 
-  saveFormInput = info => {
+  saveGroupInput = info => {
     const { inputSave } = this.state;
     const { 
       form, 
@@ -51,6 +51,28 @@ class InputText extends Component {
       saveDataGroup, 
       group,
       groupMother,
+      startControlArrayGroup,
+    } = this.props;
+
+    if (inputSave) {     
+        console.tron.log(['group save', data.group, info.data_name])
+        saveDataGroup({ index, groupMother, name: info.data_name, data: inputSave })
+    }
+    startControlArrayGroup()
+  }
+
+  saveFormInput = async info => {
+    const { inputSave } = this.state;
+    const { 
+      form, 
+      getSaveStateForm, 
+      startControlArray, 
+      data, 
+      index, 
+      saveDataGroup, 
+      group,
+      groupMother,
+      startControlArrayGroup,
     } = this.props;
     console.tron.log('cheguei no saveinput', index, groupMother)
     if (inputSave) {
@@ -78,7 +100,8 @@ class InputText extends Component {
         }
       }
     }
-    startControlArray();
+    await startControlArray();
+    await startControlArrayGroup();
   }
 
   render() {

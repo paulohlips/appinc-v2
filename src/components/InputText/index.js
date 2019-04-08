@@ -22,12 +22,20 @@ class InputText extends Component {
 
     if (data.group === 'true') {
       group.dataGroup.map(item => {
-        //console.log(['map array', data.group, item])
-        if (item.index === index) {
-          if (item[data.data_name] !== null && item[data.data_name] !== undefined) {
-            this.setState({ inputSave: item[data.data_name].value });
-          }
-        }
+        console.tron.log(['map array', item])
+        item.value.map(components => {
+          console.tron.log(['map array components', components])
+          if (components.index === index) {
+            console.tron.log('deucerteo', index)
+            Object.keys(components).map(key => {
+              console.tron.log('object map', components, key, data.data_name)
+              if (key === data.data_name) {
+                console.tron.log('deu input', components[key].value)
+                this.setState({ inputSave: components[key].value })
+              }
+            })
+          }          
+        })       
       });
     } else {
       for (var key in form.step) {
@@ -53,15 +61,23 @@ class InputText extends Component {
       groupMother,
       startControlArrayGroup,
     } = this.props;
-
+    console.tron.log(['group save input', data.group, info.data_name])
     if (inputSave) {     
         console.tron.log(['group save', data.group, info.data_name])
-        saveDataGroup({ index, groupMother, name: info.data_name, data: inputSave })
+        saveDataGroup({ 
+          index, 
+          groupMother, 
+          name: info.data_name, 
+          data: inputSave,
+          extra: null,
+          type: data.component_type
+        })
     }
-    startControlArrayGroup()
+    //console.tron.log('antes de ', info.data_name)
+    startControlArrayGroup(info.data_name)
   }
 
-  saveFormInput = async info => {
+  saveFormInput = info => {
     const { inputSave } = this.state;
     const { 
       form, 
@@ -74,11 +90,11 @@ class InputText extends Component {
       groupMother,
       startControlArrayGroup,
     } = this.props;
-    console.tron.log('cheguei no saveinput', index, groupMother)
+    //console.tron.log('cheguei no saveinput', index, groupMother)
     if (inputSave) {
-      console.tron.log(['input', data.group, info.data_name])
-      if (data.group === 'true') {
-        console.tron.log(['group save', data.group, info.data_name])
+      //console.tron.log(['input', data.group, info.data_name])
+      if (data.group === 'jhg') {
+        // console.tron.log(['group save', data.group, info.data_name])
         saveDataGroup({ index, groupMother, name: info.data_name, data: inputSave })
       } else {
         for (var key in form.step) {
@@ -100,23 +116,28 @@ class InputText extends Component {
         }
       }
     }
-    await startControlArray();
-    await startControlArrayGroup();
+    startControlArray();
+    // await startControlArrayGroup();
   }
 
   render() {
-    const { data_name, label, hint, default_value, newState, group } = this.props.data;
+    const { data_name, label, hint, default_value, newState, groupFlag } = this.props.data;
+    const { group } = this.props
     const { saveStep, step } = this.props.form;
-    //console.tron.log(['input text', group, this.props]);
+    //console.tron.log(['input group test', group, this.props]); 
 
     if (saveStep) {
-      this.saveFormInput({ data_name, default_value });
+      this.saveFormInput({ data_name, default_value });      
+    }
+    if (group.flagGroup) {
+      console.tron.log('numero de flag gorup input', group.groupFlag)
+      this.saveGroupInput({ data_name, default_value })
     }
     return (
-      <View style={{ ...styles.container, backgroundColor: (group === true ? 'white' : null) }}>
+      <View style={{ ...styles.container, backgroundColor: (groupFlag === true ? 'white' : null) }}>
         <Text style={styles.hint}>{hint}</Text>
         <TextInput
-          style={{ ...styles.input, backgroundColor: (group === true ? colors.light : 'white') }}
+          style={{ ...styles.input, backgroundColor: (groupFlag === true ? colors.light : 'white') }}
           autoCapitalize="sentences"
           autoCorrect={false}
           placeholder={"Digite aqui..."}

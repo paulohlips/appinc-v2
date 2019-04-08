@@ -89,7 +89,8 @@ class StepBoxComponent extends Component {
             prototype[item.data_name] = {
               key: item.data_name,
               value: null,
-              filled: false,              
+              filled: false,
+              extra: null,              
             }; 
           })          
           //console.tron.log(['fasdfas', component, component.data_name])

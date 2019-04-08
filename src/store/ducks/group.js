@@ -4,19 +4,20 @@ const Types = {
   SAVE_DATA_GROUP: "group/SAVE_DATA_GROUP",
   FLAG_DATA_GROUP: "group/FLAG_DATA_GROUP",
   CREATE_DATA_GROUP: "group/CREATE_DATA_GROUP",
-  CONTROLL_ARRAY_GROUP: "group/CONTROLL_ARRAY_GROUP",
+  CONTROLL_ARRAY_GROUP: "group/CONTROLL_ARRAY_GROUP"
 };
 
 const INITIAL_STATE = {
   dataGroup: [],
   flagGroup: null,
+  arrayGroupSize: 0,
 };
 
 export default function groupState(state = INITIAL_STATE, action) {
   switch (action.type) {
     case Types.CREATE_DATA_GROUP:
       return {
-          ...state,
+        ...state,
         dataGroup: [
           ...state.dataGroup,
           {
@@ -32,11 +33,11 @@ export default function groupState(state = INITIAL_STATE, action) {
         ]
       };
     case Types.ICREMENT_DATA_GROUP: {
-        const arrayDataGroup = increment(action.payload.groupName, state)
-        return {
-            ...state,
-            dataGroup: arrayDataGroup,
-        };
+      const arrayDataGroup = increment(action.payload.groupName, state);
+      return {
+        ...state,
+        dataGroup: arrayDataGroup
+      };
     }
     case Types.DECREMENT_DATA_GROUP: {
       const array = decrement(action.payload.id, state);
@@ -49,16 +50,17 @@ export default function groupState(state = INITIAL_STATE, action) {
       return { ...state, dataGroup: array };
     }
     case Types.FLAG_DATA_GROUP: {
-        const size = controlArray(state);
-        console.tron.log('size group', size)
-        return { ...state, flagGroup: size };
+      //const size = controlArray(state);
+      //console.tron.log("size group", size);
+      return { ...state, flagGroup: true };
     }
     case Types.CONTROLL_ARRAY_GROUP: {
-        return {
-            ...state,
-            flagGroup: state.flagGroup === 0 ? null : state.flagGroup - 1,
+        const status = controlArray(state, action.payload.data_name);
+        if (!state.flagGroup) {
+            return { ...state, flagGroup: status };
         }
-    }     
+        return { ...state, flagGroup: status };
+    }
     default:
       return state;
   }
@@ -82,27 +84,27 @@ export const Creators = {
     payload: { data }
   }),
   activeFlag: () => ({
-    type: Types.FLAG_DATA_GROUP,
+    type: Types.FLAG_DATA_GROUP
   }),
-  startControlArrayGroup: () => ({
+  startControlArrayGroup: data_name => ({
     type: Types.CONTROLL_ARRAY_GROUP,
-  }),
+    payload: { data_name}
+  })
 };
 
-
 const increment = (groupName, state) => {
-    var arrayState = state.dataGroup
-    arrayState.map(group => {
-        if(group.key === groupName) {
-            group.value.push({
-                ...group.prototype,
-                index: Math.random(),
-            })
-        }
-    })
+  var arrayState = state.dataGroup;
+  arrayState.map(group => {
+    if (group.key === groupName) {
+      group.value.push({
+        ...group.prototype,
+        index: Math.random()
+      });
+    }
+  });
 
-    return arrayState;
-}
+  return arrayState;
+};
 
 const decrement = (id, state) => {
   var arrayState = state.dataGroup;
@@ -118,55 +120,66 @@ const decrement = (id, state) => {
 };
 
 const saveData = (info, state) => {
-    const {
-        index, 
-        groupMother,
-        name,
-        data,
-    } = info;
+  const { index, groupMother, name, data, extra } = info;
+    console.tron.log(index, groupMother, name, data, extra)
+  var arrayState = state.dataGroup;
 
-    var arrayState = state.dataGroup;
-
-    arrayState.map(group => {
-        if (group.key === groupMother) {
-            group.value.map(itemGroup => {
-                if(itemGroup.index === index) {
-                    Object.keys(itemGroup).map(keyName => {
-                        if(keyName === name) {
-                            itemGroup[keyName] = {
-                                key: keyName,
-                                value: data,
-                                filled: true,
-                            }
-                        }
-                    })
-                }
-            })
+  arrayState.map(group => {
+    if (group.key === groupMother) {
+      group.value.map(itemGroup => {
+        if (itemGroup.index === index) {
+          Object.keys(itemGroup).map(keyName => {
+            if (keyName === name) {
+              itemGroup[keyName] = {
+                key: keyName,
+                value: data,
+                filled: true,
+                extra, 
+              };
+            }
+          });
         }
-    })
-    //console.tron.log('arrayState for group', arrayState)
+      });
+    }
+  }); 
+  //console.tron.log('arrayState for group', arrayState)
   return arrayState;
 };
 
-const controlArray = state => {
-    const arrayGroup = state.flagGroup;
+const controlArray = (state, name) => {
+  const arrayGroup = state.flagGroup;
+  //console.tron.log("entri control array", state, name);
+
+  if (arrayGroup === true) {
     let count = 0;
-    if(!arrayGroup) {
-        const dataGroup = state.dataGroup;
-        dataGroup.map( item => {
-            console.tron.log('item', item)
-            item.value.map(item2 => {
-                console.tron.log('item2', item2)
-                Object.keys(item2).map(key => {                   
-                    if (key !== 'index') {
-                        count += 1;
-                    }
-                })
-            })
-        })
-    }
-    return count;
-}
+    //console.tron.log("entri control array if", state, name);
+    const dataGroup = state.dataGroup;
+    dataGroup.map(item => {
+      //console.tron.log("item", item);
+      item.value.map(item2 => {
+        //console.tron.log("item2", item2, name);
+        Object.keys(item2).map(key => {
+            count += 1;
+            //console.tron.log('count', count)
+         // if (key === 'jdkfhas') {
+           
+         // }
+        });
+      });
+    });
+    //console.tron.log('return count', count)
+    return 2 * count;
+  }
+
+  const size2 = arrayGroup - 1;
+
+  if(size2 === 0) {
+      return false;
+  }
+
+  return size2;
+  
+};
 /*
 const saveData = (data, state) => {
   var arrayState = state.dataGroup;

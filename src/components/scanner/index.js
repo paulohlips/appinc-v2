@@ -90,7 +90,7 @@ class Scanner extends Component {
           showButton && (
             <TouchableOpacity onPress={() => this.setState({ showScanner: true, showButton: false })} style={styles.button}>
               <View style={styles.square}><Icon name="qrcode" size={largura_tela < 430 ? 28 : 40} color="black" style={styles.icon} /></View>
-              <View style={styles.parale}><Text style={styles.button_text}>ESCANEAR CÓDIGO</Text></View>
+              <View style={styles.parale}><Text style={styles.button_text}>LER {label}</Text></View>
             </TouchableOpacity>
           )}
 
@@ -119,7 +119,7 @@ class Scanner extends Component {
         {
           showButton2 && (
             <TouchableOpacity onPress={() => this.setState({ showScanner: true, showCode: false })} style={styles.button}>
-              <Text style={styles.button_text}>Escanear código</Text>
+              <Text style={styles.button_text}>LER {label}</Text>
             </TouchableOpacity>
           )}
 

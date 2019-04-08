@@ -47,7 +47,7 @@ const user = {
     return api.post('/pericia/formulario/recebidos', null, {
       headers: {
         'matricula': data.id,
-        // 'token': data.token,
+        'token': data.token,
       }
     },
     )

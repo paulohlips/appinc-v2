@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-native-datepicker';
-import { View, Image, Text, TouchableOpacity, AsyncStorage, NativeModules } from 'react-native';
+import { View, Image, Text, TouchableOpacity, AsyncStorage, NativeModules, Alert } from 'react-native';
 import styles from './styles';
 
 import { connect } from 'react-redux';
@@ -38,7 +38,24 @@ class MyDatePicker extends Component {
 
   }
 
+  // verificaData = () => {
+  //   const { form } = this.props;
+  //   const dataInicio = new Date(form.step.data_inicio.value);
+  //   const dataFinal = new Date(form.step.data_final.value);
+
+  //   if (dataInicio > dataFinal) {
+  //     console.tron.log("DEEEEEEEEEEEEEEEEEEEEEU RUIM")
+  //     console.tron.log(dataFinal)
+  //     Alert.alert('Data de término não pode ser anterior a data de início.')
+  //   } else {
+  //     console.tron.log("Tudo ok", dataInicio, dataFinal)
+  //   }
+
+  // }
+
   getNewDate = () => {
+    const { form } = this.props;
+
     const oldDate = new Date(this.state.date);
     const newDate = moment.utc(oldDate).format("DD/MM/YYYY");
 
@@ -46,6 +63,7 @@ class MyDatePicker extends Component {
       this.state.formattedDate = newDate;
       this.setState({ formattedDate: newDate, call: false });
     }
+
   }
 
   saveFormInput = data => {
@@ -64,7 +82,7 @@ class MyDatePicker extends Component {
       for (var key in form.step) {
         if (key === data.data_name) {
           const form = {};
-          form[data.data_name] = { key: data.data_name, value: '1980-01-21', filled: false };
+          form[data.data_name] = { key: data.data_name, value: '2100-01-21', filled: false };
           getSaveStateForm(form);
         }
       }
@@ -77,17 +95,17 @@ class MyDatePicker extends Component {
     const { data_name, label, hint, default_value, newState } = this.props.data
     const { saveStep } = this.props.form;
     const { showDate } = this.state;
-    const  { largura_tela } = responsividade;
+    const { largura_tela } = responsividade;
 
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });
     }
     return (
       <View style={styles.container}>
-        
-          <View style={styles.button}>
-            <View style={styles.square}><Icon name="date-range" size={largura_tela< 430 ? 28 : 40} color="black" style={styles.icon} /></View>
-            <View style={styles.parale}>
+
+        <View style={styles.button}>
+          <View style={styles.square}><Icon name="date-range" size={largura_tela < 430 ? 28 : 40} color="black" style={styles.icon} /></View>
+          <View style={styles.parale}>
             <DatePicker
               mode="date"
               placeholder={this.state.formattedDate}
@@ -98,7 +116,7 @@ class MyDatePicker extends Component {
               cancelBtnText="Cancel"
               onDateChange={(date) => { this.props.submitDATE({ date }); this.setState({ date, call: true }); }}
               customStyles={{
-                dateIcon: {                  
+                dateIcon: {
                   width: 0,
                   height: 0,
                 },
@@ -113,23 +131,19 @@ class MyDatePicker extends Component {
               }}
               onDateChange={(date) => { this.setState({ date, showDate: true, call: true }); this.getDate(); }}
             />
-                    
 
-            </View>
-            
-        </View>  
-          {
-            this.state.date && (
 
-             
-                this.getNewDate()
-               
-
-            )
-          }
-          
+          </View>
 
         </View>
+        {
+          this.state.date && (
+            this.getNewDate()
+          )
+        }
+
+
+      </View>
     );
   }
 }

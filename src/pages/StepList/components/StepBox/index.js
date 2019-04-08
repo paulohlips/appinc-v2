@@ -75,7 +75,7 @@ class StepBoxComponent extends Component {
       steps.item.components.forEach(component => {
         const form = {};
         if (component.component_type === 'date') {
-          form[component.data_name] = { key: component.data_name, value: '1980-01-21', filled: null };
+          form[component.data_name] = { key: component.data_name, value: '2100-01-21', filled: null };
         } else {
           form[component.data_name] = { key: component.data_name, value: component.default_value, filled: null };
         }
@@ -145,10 +145,10 @@ class StepBoxComponent extends Component {
             <View style={styles.bar}>
             <ProgressBar progress = { paolo }/>
             </View>
-            <View style = {styles.number_view}>
-            <Text style = {styles.number}>
-            { this.state.count + "/" + this.state.array }
-            </Text>
+            <View style={styles.number_view}>
+              <Text style={styles.number}>
+                {this.state.count + "/" + this.state.array}
+              </Text>
             </View>
           </View>
           

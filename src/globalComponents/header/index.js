@@ -27,21 +27,21 @@ class HeaderRedux extends Component {
     AsyncStorage.clear();
   }
 
-  verificaData = async () => {
-    const { form, goBack } = this.props;
-    const dataInicio = new Date(form.step.data_inicio.value);
-    const dataFinal = await new Date(form.step.data_final.value);
+  // verificaData = async () => {
+  //   const { form, goBack } = this.props;
+  //   const dataInicio = new Date(form.step.data_inicio.value);
+  //   const dataFinal = await new Date(form.step.data_final.value);
 
-    if (dataInicio > dataFinal) {
-      console.tron.log("DEEEEEEEEEEEEEEEEEEEEEU RUIM")
-      console.tron.log(dataFinal)
-      Alert.alert('Data de término não pode ser anterior a data de início.')
-    } else {
-      console.tron.log("Tudo ok", dataInicio, dataFinal)
-      goBack();
-    }
+  //   if (dataInicio > dataFinal) {
+  //     console.tron.log("DEEEEEEEEEEEEEEEEEEEEEU RUIM")
+  //     console.tron.log(dataFinal)
+  //     Alert.alert('Data de término não pode ser anterior a data de início.')
+  //   } else {
+  //     console.tron.log("Tudo ok", dataInicio, dataFinal)
+  //     goBack();
+  //   }
 
-  }
+  // }
 
   render() {
     const {
@@ -78,7 +78,7 @@ class HeaderRedux extends Component {
                   startUpdateProgress();
                   saveStepState();
                 }
-                this.verificaData();
+                //this.verificaData();
 
               }}
               >

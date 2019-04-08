@@ -158,17 +158,16 @@ const controlArray = (state, name) => {
       //console.tron.log("item", item);
       item.value.map(item2 => {
         //console.tron.log("item2", item2, name);
-        Object.keys(item2).map(key => {
-            count += 1;
+        Object.keys(item2).map(key => {            
             //console.tron.log('count', count)
-         // if (key === 'jdkfhas') {
-           
-         // }
+            if (key !== 'index') {
+                count += 1;
+            }
         });
       });
     });
     //console.tron.log('return count', count)
-    return 2 * count;
+    return count;
   }
 
   const size2 = arrayGroup - 1;

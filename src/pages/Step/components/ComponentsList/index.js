@@ -57,7 +57,11 @@ class ComponentList extends Component {
           {
             this.props.data.component_type === 'scanner' && (
               <View style={styles.component}>
-                <Scanner data={this.props.data} index={this.props.data.group ? this.props.index : null} />
+                <Scanner 
+                  data={this.props.data} 
+                  index={this.props.data.group ? this.props.index : null}
+                  groupMother={this.props.data.group ? this.props.groupName : null}
+                />
               </View>
             )
           }
@@ -110,7 +114,11 @@ class ComponentList extends Component {
           {
             this.props.data.component_type === 'date' && (
               <View style={styles.component}>
-                <MyDatePicker data={this.props.data} index={this.props.data.group ? this.props.index : null} />
+                <MyDatePicker 
+                  data={this.props.data} 
+                  index={this.props.data.group ? this.props.index : null}
+                  groupMother={this.props.data.group ? this.props.groupName : null} 
+                />
               </View>
             )
           }

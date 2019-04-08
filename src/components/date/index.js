@@ -6,6 +6,7 @@ import styles from './styles';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as FormActions } from '../../store/ducks/form';
+import { Creators as GroupActions } from '../../store/ducks/group';
 import moment from 'moment';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -26,16 +27,34 @@ class MyDatePicker extends Component {
 
 
   componentDidMount() {
-    const { form, data } = this.props;
+    const { form, data, group, index } = this.props;
 
-    for (var key in form.step) {
-      if (key === data.data_name) {
-        if (form.step[key].filled === true) {
-          this.setState({ date: form.step[key].value });
+    if (data.group === 'true') {
+      group.dataGroup.map(item => {
+        console.tron.log(['map array', item])
+        item.value.map(components => {
+          console.tron.log(['map array components', components])
+          if (components.index === index) {
+            console.tron.log('deucerteo', index)
+            Object.keys(components).map(key => {
+              console.tron.log('object map', components, key, data.data_name)
+              if (key === data.data_name) {
+                console.tron.log('deu input', components[key].value)
+                this.setState({ date: components[key].value })
+              }
+            })
+          }
+        })       
+      });
+    } else {
+      for (var key in form.step) {
+        if (key === data.data_name) {
+          if (form.step[key].filled === true) {
+            this.setState({ date: form.step[key].value });
+          }
         }
       }
     }
-
   }
 
   getNewDate = () => {
@@ -47,6 +66,36 @@ class MyDatePicker extends Component {
       this.setState({ formattedDate: newDate, call: false });
     }
   }
+
+  saveGroupDate = info => {
+    const { dataAtual, date } = this.state;
+    const { 
+      form, 
+      getSaveStateForm, 
+      startControlArray, 
+      data, 
+      index, 
+      saveDataGroup, 
+      group,
+      groupMother,
+      startControlArrayGroup,
+    } = this.props;
+    console.tron.log(['group save input', data.group, info.data_name])
+    if (date) {     
+        console.tron.log(['group save', data.group, info.data_name])
+        saveDataGroup({ 
+          index, 
+          groupMother, 
+          name: info.data_name, 
+          data: date,
+          extra: null,
+          type: data.component_type
+        })
+    }
+    //console.tron.log('antes de ', info.data_name)
+    startControlArrayGroup(info.data_name)
+  }
+
 
   saveFormInput = data => {
     const { dataAtual, date } = this.state;
@@ -76,11 +125,16 @@ class MyDatePicker extends Component {
   render() {
     const { data_name, label, hint, default_value, newState } = this.props.data
     const { saveStep } = this.props.form;
+    const { group } = this.props
     const { showDate } = this.state;
     const  { largura_tela } = responsividade;
 
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });
+    }
+    if (group.flagGroup) {
+      console.tron.log('numero de flag gorup input', group.groupFlag)
+      this.saveGroupDate({ data_name, default_value })
     }
     return (
       <View style={styles.container}>
@@ -112,23 +166,14 @@ class MyDatePicker extends Component {
                 },
               }}
               onDateChange={(date) => { this.setState({ date, showDate: true, call: true }); this.getDate(); }}
-            />
-                    
-
-            </View>
-            
+            /> 
+            </View>            
         </View>  
           {
             this.state.date && (
-
-             
                 this.getNewDate()
-               
-
             )
           }
-          
-
         </View>
     );
   }
@@ -136,9 +181,10 @@ class MyDatePicker extends Component {
 
 const mapStateToProps = state => ({
   form: state.formState,
+  group: state.groupState,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(FormActions, dispatch);
+  bindActionCreators({...FormActions, ...GroupActions}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyDatePicker);

@@ -26,20 +26,69 @@ class Scanner extends Component {
   }
 
   componentDidMount() {
-    const { form, data } = this.props;
+    const { form, data, group, index } = this.props;
 
-    for (var key in form.step) {
-      if (key === data.data_name) {
-        if (form.step[key].filled === true) {
-          this.setState({ infoScanner: form.step[key].value });
+    if (data.group === 'true') {
+      group.dataGroup.map(item => {
+        console.tron.log(['map array', item])
+        item.value.map(components => {
+          console.tron.log(['map array components', components])
+          if (components.index === index) {
+            console.tron.log('deucerteo', index)
+            Object.keys(components).map(key => {
+              console.tron.log('object map', components, key, data.data_name)
+              if (key === data.data_name) {
+                if (components[key].value !== null && components[key].filled === true) {
+                  console.tron.log('deu input', components[key].value)
+                  this.setState({ infoScanner: components[key].value, showCode: true })
+                }               
+              }
+            })
+          }
+        })       
+      });
+    } else {
+      for (var key in form.step) {
+        if (key === data.data_name) {
+          if (form.step[key].filled === true) {
+            this.setState({ infoScanner: form.step[key].value });
+          }
         }
       }
     }
   }
 
-
   onPress = () => {
     const { vetor } = this.state;
+  }
+
+  saveGroupScanner = info => {
+    const { infoScanner } = this.state;
+    const { 
+      form, 
+      getSaveStateForm, 
+      startControlArray, 
+      data, 
+      index, 
+      saveDataGroup, 
+      group,
+      groupMother,
+      startControlArrayGroup,
+    } = this.props;
+    console.tron.log(['group save ', data.group, info.data_name])
+    if (infoScanner) {     
+        console.tron.log(['group save2', data.group, info.data_name])
+        saveDataGroup({ 
+          index, 
+          groupMother, 
+          name: info.data_name, 
+          data: infoScanner, 
+          extra: null, 
+          type: data.component_type 
+        })
+    }
+    console.tron.log('antes de ', info.data_name)
+    startControlArrayGroup(info.data_name)
   }
 
   saveFormScanner = dataScanner => {
@@ -47,7 +96,7 @@ class Scanner extends Component {
     const { form, getSaveStateForm, startControlArray, index, group, saveDataGroup, data } = this.props;
 
     if (infoScanner) {
-      if (data.group === 'true') {
+      if (data.group === 'sdfsd') {
         group.dataGroup.map(item => {
           if (item.index === index) {
             saveDataGroup({ index, name: dataScanner.data_name, data: { key: dataScanner.data_name, value: infoScanner, filled: true }, type: dataScanner.component_type, extra: null })
@@ -79,11 +128,15 @@ class Scanner extends Component {
     const { showScanner, showButton, showButton2, infoScanner } = this.state;
     const { saveStep, step } = this.props.form;
     const { largura_tela } = responsividade;
+    const { group } = this.props;
 
     if (saveStep) {
       this.saveFormScanner({ data_name, default_value });
     }
-
+    if (group.flagGroup) {
+      console.tron.log('numero de flag gorup camera', group.groupFlag)
+      this.saveGroupScanner({ data_name, default_value })
+    }
     return (
       <View style={{ justifyContent: 'center', alignItem: 'center' }}>
         {

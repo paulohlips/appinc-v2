@@ -118,14 +118,8 @@ class Group extends Component {
   }
 
   decrement = (id) => {
-    var arrayState = this.state.dataGroup;
-    arrayState.map(item => {
-      if (item.index === id) {
-        arrayState.splice(item.index, 1);
-      }
-    });
-    this.setState({ dataGroup: arrayState })
-    this.props.decrementDataGroup(id);
+    const { groupName } = this.state;
+    this.props.decrementDataGroup(id, groupName);
   };
 
   render() {

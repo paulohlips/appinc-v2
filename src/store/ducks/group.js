@@ -40,7 +40,7 @@ export default function groupState(state = INITIAL_STATE, action) {
       };
     }
     case Types.DECREMENT_DATA_GROUP: {
-      const array = decrement(action.payload.id, state);
+      const array = decrement(action.payload.id, action.payload.groupName, state);
       return { ...state, dataGroup: array };
     }
     case Types.SAVE_DATA_GROUP: {
@@ -75,9 +75,9 @@ export const Creators = {
     type: Types.ICREMENT_DATA_GROUP,
     payload: { groupName }
   }),
-  decrementDataGroup: id => ({
-    type: "", //Types.DECREMENT_DATA_GROUP,
-    payload: { id }
+  decrementDataGroup: (id, groupName) => ({
+    type: Types.DECREMENT_DATA_GROUP,
+    payload: { id, groupName }
   }),
   saveDataGroup: data => ({
     type: Types.SAVE_DATA_GROUP,
@@ -106,16 +106,21 @@ const increment = (groupName, state) => {
   return arrayState;
 };
 
-const decrement = (id, state) => {
+const decrement = (id, groupMother, state) => {
   var arrayState = state.dataGroup;
   let count = 0;
-  arrayState.map(item => {
-    if (item.index === id) {
-      arrayState.splice(count, 1);
-    }
-    count += 1;
+
+  arrayState.map(group => {
+    if (group.key === groupMother) {
+        group.value.map(item => {
+            if(item.index === id) {
+                group.value.splice(count, 1)
+            }
+            count += 1;
+        })
+    }   
   });
-  console.log(arrayState);
+  console.log(arrayState); 
   return arrayState;
 };
 

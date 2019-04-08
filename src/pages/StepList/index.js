@@ -116,36 +116,10 @@ class StepList extends Component {
     await AsyncStorage.setItem('arrayRef', JSON.stringify(array));
 
     const data = new FormData();
+    const data2 = new FormData();
     data.append('form_name', formulario.form.form_name);
-
-    for (var key in formulario.step) {
-      data.append(formulario.step[key].key, formulario.step[key].value)
-    }
-
-    setUpdateHistory();
-    this.setState({ matriculaAsync: matricula });
-
-    //const response = await Api.form.
-
-    axios({
-      method: 'post',
-      url: 'http://35.198.17.69/api/pericia/formulario/envio',
-      data: data,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'matricula': login.userID,
-        'referencia': '',
-        'x-Token': login.token,
-      }
-    })
-      .then(function (response) {
-        AsyncStorage.setItem('@IDlaudo', response.data.number);
-        Alert.alert('ID do laudo', 'O número do seu laudo é ' + response.data.number);
-      })
-      .catch(error => {
-        this.errorMessage();
-      });
-  }
+    console.tron.log(['entrei no evia3', data, formulario]);
+    data2.append('imagem_frontal', formulario.step[imagem_frontal].value)
 
   render() {
     const { formRedux } = this.state;

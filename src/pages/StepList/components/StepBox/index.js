@@ -11,6 +11,7 @@ import { withNavigation } from 'react-navigation';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { responsividade } from '../../../../styles';
+import ProgressBar from './../../../../components/progressbar'
 
 
 class StepBoxComponent extends Component {
@@ -22,6 +23,7 @@ class StepBoxComponent extends Component {
     progress: 0,
     countProgress: '',
     array: '',
+    paolo: 2,
 
     move: new Animated.Value(30),
   }
@@ -93,6 +95,7 @@ class StepBoxComponent extends Component {
     const { arrayProgress } = this.state;
     var progress = 0;
     var countProgress = 0;
+    var variable = 0;
 
     if (arrayProgress.length > 0) {
       for (var key in step) {
@@ -104,12 +107,16 @@ class StepBoxComponent extends Component {
       }
     }
     progress = countProgress / arrayProgress.length;
-    this.setState({ progress, count: countProgress, array: arrayProgress.length });
+
+    variable = (responsividade.LARGURACARD * 0.82) * progress;
+    
+    
+    this.setState({ progress, count: countProgress, array: arrayProgress.length, paolo: variable });
   }
 
   render() {
     const { steps, form, formState, index } = this.props;
-    const { createdForms, arrayProgress, callFunction, progress } = this.state;
+    const { createdForms, arrayProgress, callFunction, progress, paolo } = this.state;
     const { item } = steps;
     if (!createdForms) {
       this.createFormsSave();
@@ -136,11 +143,7 @@ class StepBoxComponent extends Component {
           </View>
           <View style={styles.row}>
             <View style={styles.bar}>
-              <ProgressBarAndroid
-                styleAttr="Horizontal"
-                indeterminate={false}
-                progress={progress}
-              />
+            <ProgressBar progress = { paolo }/>
             </View>
             <View style = {styles.number_view}>
             <Text style = {styles.number}>
@@ -148,6 +151,7 @@ class StepBoxComponent extends Component {
             </Text>
             </View>
           </View>
+          
         </TouchableOpacity>
       </Animated.View>
     );

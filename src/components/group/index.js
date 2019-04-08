@@ -80,7 +80,14 @@ class Group extends Component {
     
   };
 
-  renderOneGroup = (index, groupName) => this.props.data.components_group.map(item => <ComponentList data={item} index={index} groupName={groupName} />);
+  renderOneGroup = (index, groupName) => {
+    const { group, resetUpdateView } = this.props;
+    if (group.updateViewGroup) {
+      //resetUpdateView();
+      return this.props.data.components_group.map(item => { return <ComponentList data={item} index={index} groupName={groupName} />});
+     
+    }
+  }
     
   
 
@@ -123,7 +130,7 @@ class Group extends Component {
   };
 
   render() {
-    const { group, data } = this.props
+    const { group, data, resetUpdateView } = this.props
     const { dataGroup, arrayGroup, groupName } = this.state;
     //console.tron.log(['group component', this.props, this.state, data])
     return (
@@ -145,6 +152,7 @@ class Group extends Component {
                 </TouchableOpacity>
               </View>
             )
+            
           }
         </ScrollView>
         

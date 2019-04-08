@@ -4,13 +4,15 @@ const Types = {
   SAVE_DATA_GROUP: "group/SAVE_DATA_GROUP",
   FLAG_DATA_GROUP: "group/FLAG_DATA_GROUP",
   CREATE_DATA_GROUP: "group/CREATE_DATA_GROUP",
-  CONTROLL_ARRAY_GROUP: "group/CONTROLL_ARRAY_GROUP"
+  CONTROLL_ARRAY_GROUP: "group/CONTROLL_ARRAY_GROUP",
+  RESET_UPDATE_VIEW: "group/RESET_UPDATE_VIEW",
 };
 
 const INITIAL_STATE = {
   dataGroup: [],
   flagGroup: null,
   arrayGroupSize: 0,
+  updateViewGroup: true,
 };
 
 export default function groupState(state = INITIAL_STATE, action) {
@@ -41,7 +43,7 @@ export default function groupState(state = INITIAL_STATE, action) {
     }
     case Types.DECREMENT_DATA_GROUP: {
       const array = decrement(action.payload.id, action.payload.groupName, state);
-      return { ...state, dataGroup: array };
+      return { ...state, dataGroup: array, updateViewGroup: true };
     }
     case Types.SAVE_DATA_GROUP: {
       // console.log(['action save', action.payload.data]);
@@ -60,6 +62,9 @@ export default function groupState(state = INITIAL_STATE, action) {
             return { ...state, flagGroup: status };
         }
         return { ...state, flagGroup: status };
+    }
+    case Types.RESET_UPDATE_VIEW: {
+        return { ...state, updateViewGroup: false }
     }
     default:
       return state;
@@ -89,7 +94,10 @@ export const Creators = {
   startControlArrayGroup: data_name => ({
     type: Types.CONTROLL_ARRAY_GROUP,
     payload: { data_name}
-  })
+  }),
+  resetUpdateView: () => ({
+    type: Types.RESET_UPDATE_VIEW,  
+  }),
 };
 
 const increment = (groupName, state) => {

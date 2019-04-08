@@ -8,7 +8,8 @@ import {
   ScrollView,
   Linking,
   BackHandler,
-  ActivityIndicator
+  ActivityIndicator,
+  RefreshControl
 } from "react-native";
 import { Header } from "../../globalComponents";
 import {
@@ -20,6 +21,7 @@ import styles from "./styles";
 import Icon from "react-native-vector-icons/Ionicons";
 import Api from '../../services/api';
 import axios from "axios";
+import { SnackBar } from '../../globalComponents';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -37,6 +39,7 @@ class Historico extends Component {
     loading: true,
     errorview: false,
     callFuction: true,
+    refreshing: false,
   };
 
   componentDidMount() {
@@ -143,6 +146,12 @@ class Historico extends Component {
     );
   }
 
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    this.requestFroms();
+    this.setState({refreshing: false});
+  }
+
   render() {
     const { arrayRef, modalVisible, form, arrayEnviados, callFuction } = this.state;
     const { navigation, hist, resetUpdateHistory } = this.props;
@@ -154,6 +163,7 @@ class Historico extends Component {
 
     return (
       <View style={styles.container}>
+      
         <Header
           showMenu
           showClear
@@ -181,8 +191,15 @@ class Historico extends Component {
             </ScrollView>
           </View>
         </Modal>
+        {this.state.errorview && (
+             <SnackBar outside content="Sem conexão!" color='#3C3C46' fontcolor="white" />
+        )}
         <View style={styles.main}>
-          <ScrollView>
+          <ScrollView  refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh}
+          />}>
             {arrayRef ? arrayRef.map(item => this.renderOffline(item)) : null}
 
             {this.state.loading && (
@@ -191,13 +208,6 @@ class Historico extends Component {
               </View>
             )}
 
-            {this.state.errorview && (
-              <View style={styles.erro}>
-                <Text style={styles.errot}>
-                  Não foi possível recuperar as perícias enviadas
-                </Text>
-              </View>
-            )}
 
             {
               arrayEnviados

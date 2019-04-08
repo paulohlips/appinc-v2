@@ -167,10 +167,10 @@ class StepBoxComponent extends Component {
             <View style={styles.bar}>
             <ProgressBar progress = { paolo }/>
             </View>
-            <View style = {styles.number_view}>
-            <Text style = {styles.number}>
-            { this.state.count + "/" + this.state.array }
-            </Text>
+            <View style={styles.number_view}>
+              <Text style={styles.number}>
+                {this.state.count + "/" + this.state.array}
+              </Text>
             </View>
           </View>
           

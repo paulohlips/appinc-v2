@@ -71,7 +71,7 @@ class Historico extends Component {
     this.setState({ arrayRef: array, idUser: id, errorview: false });
     const idMatricula = this.state.idUser;
     try {
-      const response =  await Api.user.getHist({ id: 123, token: login.token});
+      const response = await Api.user.getHist({ id: login.userID, token: login.token });
       if (response.status === 206) {
         this.setState({ loading: false, errorview: true });
       } else {
@@ -80,7 +80,7 @@ class Historico extends Component {
     } catch (error) {
       this.setState({ loading: false, errorview: true })
     }
-   
+
 
     /*api.post('/pericia/formulario/recebidos', {
       matricula: idMatricula

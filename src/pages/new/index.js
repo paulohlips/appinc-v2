@@ -164,10 +164,10 @@ class New extends Component {
               <Text style={styles.textType}> Perícia: </Text>
             </View>
             <View style={styles.Picker}>
-              <PickerItem 
+              <PickerItem
                 receiveProps={(params => this.receiveParams(params))}
                 arrayConfig={infopicker}
-              />             
+              />
             </View>
           </View>
 

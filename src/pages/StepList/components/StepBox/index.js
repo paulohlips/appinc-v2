@@ -44,7 +44,7 @@ class StepBoxComponent extends Component {
       formState, 
       createDataGroup, 
     } = this.props;
-    console.tron.log(['steps', steps, formState]);
+    //console.tron.log(['steps', steps, formState]);
 
     this.setState({ createdForms: true });
     const arrayProgress = {
@@ -90,11 +90,13 @@ class StepBoxComponent extends Component {
           component.components_group.map(item => {            
             prototype[item.data_name] = {
               key: item.data_name,
-              value: item,              
+              value: null,
+              filled: false,
+              extra: null,              
             }; 
-          })
-          // prototype['index'] = null;
-          console.tron.log(['fasdfas', component, component.data_name])
+          })          
+          //console.tron.log(['fasdfas', component, component.data_name])
+          form[component.data_name] = { key: component.data_name, value: component.default_value, filled: null };
           createDataGroup(component.data_name, prototype);
         }  else {
           form[component.data_name] = { key: component.data_name, value: component.default_value, filled: null };

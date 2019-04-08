@@ -30,14 +30,27 @@ class Camera extends React.Component {
 
   componentWillMount() {
     const { form, data, group, index } = this.props;
-    if (data.group === 'true' && group.flag === true) {
+
+    if (data.group === 'true') {
+      
       group.dataGroup.map(item => {
-        if (item.index === index) {
-          if (item[data.data_name] !== null && item[data.data_name] !== undefined) {
-            this.setState({ image: item[data.data_name].extra, imagePath: item[data.data_name].value.uri });
-          }
-        }
+        console.tron.log(['map array', item])
+        item.value.map(components => {
+          console.tron.log(['map array components', components])
+          if (components.index === index) {
+            console.tron.log('deucerteo', index)
+            Object.keys(components).map(key => {
+              console.tron.log('object map', components, key, data.data_name)
+              if (key === data.data_name) {
+                if (components[key].value !== null && components[key].value !== undefined) {
+                  this.setState({ image: components[key].extra, imagePath: components[key].value.uri });
+                }
+              }
+            })
+          }          
+        })       
       });
+      
     } else {
       for (var key in form.step) {
         if (key === data.data_name) {
@@ -219,6 +232,39 @@ class Camera extends React.Component {
     return this.renderImage(image);
   }
 
+  saveGroupCamera = info => {
+    const { imageData, imagePath, image } = this.state;
+    const { 
+      form, 
+      getSaveStateForm, 
+      startControlArray, 
+      data, 
+      index, 
+      saveDataGroup, 
+      group,
+      groupMother,
+      startControlArrayGroup,
+    } = this.props;
+    console.tron.log(['group save ', data.group, info.data_name])
+    if (imagePath || image) {     
+        console.tron.log(['group save2', data.group, info.data_name])
+        saveDataGroup({ 
+          index, 
+          groupMother, 
+          name: info.data_name, 
+          data: { 
+            uri: image.uri, 
+            type: 'image/jpeg', 
+            name: `${info.data_name}.jpg` 
+          }, 
+          extra: image, 
+          type: data.component_type 
+        })
+    }
+    console.tron.log('antes de ', info.data_name)
+    startControlArrayGroup(info.data_name)
+  }
+
   saveFormInput = info => {
 
     const { imageData, imagePath, image } = this.state;
@@ -235,7 +281,7 @@ class Camera extends React.Component {
 
     if (imagePath || image) {
       //console.tron.log('entrei if',data, imagePath, image)
-      if (data.group === 'true') {
+      if (data.group === 'dasd') {
         group.dataGroup.map(item => {
           if (item.index === index) {
             saveDataGroup({ index, name: info.data_name, data: { uri: image.uri, type: 'image/jpeg', name: `${info.data_name}.jpg` }, type: data.component_type, extra: image })
@@ -267,15 +313,20 @@ class Camera extends React.Component {
   }
 
   render() {
-    const { data_name, label, hint, default_value, newState, group } = this.props.data;
+    const { data_name, label, hint, default_value, newState, groupFlag } = this.props.data;
     const { saveStep } = this.props.form;
+    const { group } = this.props;
     const { largura_tela } = responsividade;
-
+    //console.tron.log('camera', this.props)
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });
     }
+    if (group.flagGroup) {
+      console.tron.log('numero de flag gorup camera', group.groupFlag)
+      this.saveGroupCamera({ data_name, default_value })
+    }
     return (
-      <View style={group ? stylesGroup.container : styles.container}>
+      <View style={groupFlag ? stylesGroup.container : styles.container}>
 
         <ScrollView>
           {this.state.image ? this.renderAsset(this.state.image) : null}
@@ -306,7 +357,7 @@ class Camera extends React.Component {
         </View>
         <View style={styles.containerText}>
           <TextInput
-            style={group ? stylesGroup.input : styles.input}
+            style={groupFlag ? stylesGroup.input : styles.input}
             autoCapitalize="none"
             autoCorrect={false}
             multiline

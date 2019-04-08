@@ -49,13 +49,24 @@ class Group extends Component {
     prototype: [],
     dataGroup: [],
     arrayGroup: [],
+    groupName: '',
   }
 
   componentWillMount() {
     // console.tron.log(['entrei grupo', this.props])
-    const { group } = this.props;
+    const { group, data } = this.props;
+
+    group.dataGroup.map(item => {
+      //console.tron.log(['dataGroup', item.key, data.data_name])
+        if (item.key === data.data_name) {
+          const array = Object.values(item.value);
+          this.setState({ arrayGroup: item.value, groupName: item.key })
+        }
+      }
+    )
+
     if (!group.flag) {
-      this.readGroup();
+      //this.readGroup();
     }
 
     //this.decrementDataGroup();
@@ -69,30 +80,23 @@ class Group extends Component {
     
   };
 
-  renderOneGroup = group => {    
-    const array = Object.values(group)
-    this.setState({ arrayGroup: array })
-    //array.map(item => <ComponentList data={item.value} />)
-    //console.tron.log(['group params', group, array])
-    // Object.keys(group).map(item => {return <ComponentList data={group[item].value} />})
-    
-  };
-  
-  rederCard = item => {
-    item.value.map(gp => 
-      //this.renderOneGroupTest(gp)
+  renderOneGroup = (index, groupName) => {
+    const { group, resetUpdateView } = this.props;
+    if (group.updateViewGroup) {
+      //resetUpdateView();
+      return this.props.data.components_group.map(item => { return <ComponentList data={item} index={index} groupName={groupName} />});
      
-        <View style={styles.boxGroup}>                     
-          <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrement(item.index)}>
-            <Icons name="minus" size={18} color="#FFF" />
-          </TouchableOpacity>
-        </View>
-      
-    )
+    }
   }
+    
+  
 
   increment = () => {
-    const { group } = this.props;
+    const { groupName } = this.state;
+    // console.tron.log('increment group', groupName, this.props)
+    this.props.incrementDataGroup(groupName);
+
+    /*const { group } = this.props;
     const { dataGroup, prototype } = this.state;
     const size = group.dataGroup.length;
     var prototypeVar = prototype;
@@ -100,7 +104,7 @@ class Group extends Component {
       ...prototype,
       index: Math.random(),
     }
-    this.props.incrementDataGroup(prototypeVar)
+    this.props.incrementDataGroup(prototypeVar)*/
   }
 
   readGroup = () => {
@@ -121,20 +125,14 @@ class Group extends Component {
   }
 
   decrement = (id) => {
-    var arrayState = this.state.dataGroup;
-    arrayState.map(item => {
-      if (item.index === id) {
-        arrayState.splice(item.index, 1);
-      }
-    });
-    this.setState({ dataGroup: arrayState })
-    this.props.decrementDataGroup(id);
+    const { groupName } = this.state;
+    this.props.decrementDataGroup(id, groupName);
   };
 
   render() {
-    const { group, data } = this.props
-    const { dataGroup, arrayGroup } = this.state;
-    console.tron.log(['group component', this.props, this.state, data])
+    const { group, data, resetUpdateView } = this.props
+    const { dataGroup, arrayGroup, groupName } = this.state;
+    //console.tron.log(['group component', this.props, this.state, data])
     return (
       <View style={styles.container}>
         <ScrollView
@@ -146,21 +144,18 @@ class Group extends Component {
           }}
         >
           {
-            group.dataGroup.map(item => {
-              console.tron.log(['dataGroup', item.key, data.data_name])
-              
-              if (item.key === data.data_name) {
-                
-                this.rederCard(item);
-              }              
-            })
+            arrayGroup.map(item => 
+              <View style={styles.boxGroup}>
+                {this.renderOneGroup(item.index, groupName)}
+                <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrement(item.index)}>
+                  <Icons name="minus" size={18} color="#FFF" />
+                </TouchableOpacity>
+              </View>
+            )
+            
           }
         </ScrollView>
-        <View style={styles.viewIndicator}>
-          {
-            group.dataGroup.map(item => <View style={styles.indicator} />)
-          }
-        </View>
+        
         <TouchableOpacity style={styles.viewPlus} onPress={() => this.increment()}>
           <Icons name="plus" size={18} color="#232f34" />
         </TouchableOpacity>
@@ -177,3 +172,11 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(GroupActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Group);
+
+/*
+<View style={styles.viewIndicator}>
+          {
+            group.dataGroup.map(item => <View style={styles.indicator} />)
+          }
+        </View>
+*/

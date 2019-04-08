@@ -78,7 +78,7 @@ class HeaderRedux extends Component {
                   startUpdateProgress();
                   saveStepState();
                 }
-                this.verificaData();
+                //this.verificaData();
 
               }}
               >

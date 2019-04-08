@@ -47,15 +47,17 @@ class HeaderRedux extends Component {
   render() {
     const {
       showClear,
+      showModalInfo,
       showArrow,
       showMenu,
+      showInfo,
       goBack,
       openMenu,
       title,
       startUpdateProgress,
       showProgress,
       saveStepState,
-      form
+      form,
       activeFlag,
     } = this.props;
     const { showAlert } = this.state;

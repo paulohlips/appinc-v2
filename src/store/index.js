@@ -8,7 +8,7 @@ import Api from '../services/api';
 
 
 const saveAuthToken = store => next => action => {
-  if(action.type === 'login/GET_SUCSSES') {
+  if (action.type === 'login/GET_SUCSSES') {
     // after a successful login, update the token in the API
     Api.setToken(action.payload.response.token, action.payload.userID);
   }

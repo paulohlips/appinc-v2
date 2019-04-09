@@ -30,16 +30,16 @@ class Scanner extends Component {
 
     if (data.group === 'true') {
       group.dataGroup.map(item => {
-        console.tron.log(['map array', item])
+        //console.tron.log(['map array', item])
         item.value.map(components => {
-          console.tron.log(['map array components', components])
+          //console.tron.log(['map array components', components])
           if (components.index === index) {
-            console.tron.log('deucerteo', index)
+            //console.tron.log('deucerteo', index)
             Object.keys(components).map(key => {
-              console.tron.log('object map', components, key, data.data_name)
+              //console.tron.log('object map', components, key, data.data_name)
               if (key === data.data_name) {
                 if (components[key].value !== null && components[key].filled === true) {
-                  console.tron.log('deu input', components[key].value)
+                  //console.tron.log('deu input', components[key].value)
                   this.setState({ infoScanner: components[key].value, showCode: true })
                 }               
               }

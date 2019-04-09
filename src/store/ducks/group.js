@@ -128,13 +128,13 @@ const decrement = (id, groupMother, state) => {
         })
     }   
   });
-  console.log(arrayState); 
+  // console.log(arrayState); 
   return arrayState;
 };
 
 const saveData = (info, state) => {
   const { index, groupMother, name, data, extra } = info;
-    console.tron.log(index, groupMother, name, data, extra)
+    // console.tron.log(index, groupMother, name, data, extra)
   var arrayState = state.dataGroup;
 
   arrayState.map(group => {

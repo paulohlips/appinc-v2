@@ -34,13 +34,13 @@ class Camera extends React.Component {
     if (data.group === 'true') {
       
       group.dataGroup.map(item => {
-        console.tron.log(['map array', item])
+        //console.tron.log(['map array', item])
         item.value.map(components => {
-          console.tron.log(['map array components', components])
+          //console.tron.log(['map array components', components])
           if (components.index === index) {
-            console.tron.log('deucerteo', index)
+            c//onsole.tron.log('deucerteo', index)
             Object.keys(components).map(key => {
-              console.tron.log('object map', components, key, data.data_name)
+              //console.tron.log('object map', components, key, data.data_name)
               if (key === data.data_name) {
                 if (components[key].value !== null && components[key].value !== undefined) {
                   this.setState({ image: components[key].extra, imagePath: components[key].value.uri });

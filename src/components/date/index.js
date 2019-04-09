@@ -183,7 +183,7 @@ class MyDatePicker extends Component {
                   color: 'blue'
                 },
               }}
-              onDateChange={(date) => { this.setState({ date, showDate: true, call: true }); this.getDate(); }}
+              onDateChange={(date) => { this.setState({ date, showDate: true, call: true });}}
             /> 
             </View>            
         </View>  

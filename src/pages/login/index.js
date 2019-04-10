@@ -95,7 +95,7 @@ class Login extends Component {
       <ImageBackground source={require('../../assents/imgs/local_crime.jpg')} style={styles.backgroundImage} >
         <View style={styles.container}>
           <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
-          <Text style={styles.title}>Bem-Vindo</Text>
+          <Text style={styles.title}>Bem-Vindo Test Develop</Text>
           <Text style={styles.descript}>Por favor, digite suas credenciais</Text>
           <View style={styles.forms}>
             <TextInput

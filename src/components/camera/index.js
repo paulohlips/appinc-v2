@@ -25,6 +25,7 @@ class Camera extends React.Component {
     imagePath: null,
     image: null,
     images: null,
+    inputSave: '',
   };
 
 
@@ -55,7 +56,11 @@ class Camera extends React.Component {
       for (var key in form.step) {
         if (key === data.data_name) {
           if (form.step[key].filled === true) {
-            this.setState({ image: form.step[key].data, imagePath: form.step[key].value.uri });
+            this.setState({ 
+              image: form.step[key].data, 
+              imagePath: form.step[key].value.uri,
+              inputSave: form.step[`leg_${key}`].value,
+            });
           }
         }
       }
@@ -267,7 +272,7 @@ class Camera extends React.Component {
 
   saveFormInput = info => {
 
-    const { imageData, imagePath, image } = this.state;
+    const { imageData, imagePath, image, inputSave } = this.state;
     const {
       form,
       getSaveStateForm,
@@ -277,33 +282,31 @@ class Camera extends React.Component {
       index, //importa
       group, // importa
     } = this.props;
-    //console.tron.log('entrei no save',info, imagePath, image)
+    console.tron.log('entrei no save',info, imagePath, image, inputSave)
 
-    if (imagePath || image) {
-      //console.tron.log('entrei if',data, imagePath, image)
-      if (data.group === 'dasd') {
-        group.dataGroup.map(item => {
-          if (item.index === index) {
-            saveDataGroup({ index, name: info.data_name, data: { uri: image.uri, type: 'image/jpeg', name: `${info.data_name}.jpg` }, type: data.component_type, extra: image })
-            // saveDataGroup({ index: , name: , data: , type: , extra: })
-            //console.tron.log('entrei form  grupo', image, imagePath)
-          }
-        });
-      } else {
+    if (imagePath || image) {     
         for (var key in form.step) {
           if (key === info.data_name) {
             const form = {};
             form[info.data_name] = { key: info.data_name, value: { uri: imagePath, type: 'image/jpeg', name: `${info.data_name}.jpg` }, data: image, filled: true };
+            console.tron.log('dados1',form)
+            getSaveStateForm(form);
+            form[`leg_${info.data_name}`] = { key: `leg_${info.data_name}`, value: inputSave, data: null, filled: true };
+            console.tron.log('dados2',form)
+
             getSaveStateForm(form);
             //console.tron.log('entrei form nao grupo', image, imagePath)
           }
         }
-      }
+      
     } else {
       for (var key in form.step) {
         if (key === info.data_name && info.data_name.filled === false) {
           const form = {};
           form[info.data_name] = { key: info.data_name, value: { uri: '', type: '', name: '' }, data: image, filled: false };
+          getSaveStateForm(form);
+          form[`leg_${info.data_name}`] = { key: `leg_${info.data_name}`, value: inputSave, data: null, filled: true };
+          console.tron.log('dados2',form)
           getSaveStateForm(form);
           //console.tron.log('sem foto', image, imagePath)
         }
@@ -364,6 +367,7 @@ class Camera extends React.Component {
             placeholder={"Suas notas..."}
             maxLength={100}
             underlineColorAndroid="rgba(0,0,0,0)"
+            value={this.state.inputSave}
             onChangeText={inputSave => this.setState({ inputSave })}
           />
         </View>

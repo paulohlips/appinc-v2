@@ -18,7 +18,7 @@ class InputText extends Component {
   }
 
   componentDidMount() {
-    const { form, data, group, index } = this.props;    
+    const { form, data, group, index } = this.props;
 
     if (data.group === 'true') {
       group.dataGroup.map(item => {
@@ -34,8 +34,8 @@ class InputText extends Component {
                 this.setState({ inputSave: components[key].value })
               }
             })
-          }          
-        })       
+          }
+        })
       });
     } else {
       for (var key in form.step) {
@@ -43,35 +43,35 @@ class InputText extends Component {
           if (form.step[key].filled === true) {
             this.setState({ inputSave: form.step[key].value });
           }
-        } 
+        }
       }
     }
   }
 
   saveGroupInput = info => {
     const { inputSave } = this.state;
-    const { 
-      form, 
-      getSaveStateForm, 
-      startControlArray, 
-      data, 
-      index, 
-      saveDataGroup, 
+    const {
+      form,
+      getSaveStateForm,
+      startControlArray,
+      data,
+      index,
+      saveDataGroup,
       group,
       groupMother,
       startControlArrayGroup,
     } = this.props;
-    console.tron.log(['group save input', data.group, info.data_name])
-    if (inputSave) {     
-        console.tron.log(['group save', data.group, info.data_name])
-        saveDataGroup({ 
-          index, 
-          groupMother, 
-          name: info.data_name, 
-          data: inputSave,
-          extra: null,
-          type: data.component_type
-        })
+    //console.tron.log(['group save input', data.group, info.data_name])
+    if (inputSave) {
+      //console.tron.log(['group save', data.group, info.data_name])
+      saveDataGroup({
+        index,
+        groupMother,
+        name: info.data_name,
+        data: inputSave,
+        extra: null,
+        type: data.component_type
+      })
     }
     //console.tron.log('antes de ', info.data_name)
     startControlArrayGroup(info.data_name)
@@ -79,13 +79,13 @@ class InputText extends Component {
 
   saveFormInput = info => {
     const { inputSave } = this.state;
-    const { 
-      form, 
-      getSaveStateForm, 
-      startControlArray, 
-      data, 
-      index, 
-      saveDataGroup, 
+    const {
+      form,
+      getSaveStateForm,
+      startControlArray,
+      data,
+      index,
+      saveDataGroup,
       group,
       groupMother,
       startControlArrayGroup,
@@ -127,10 +127,10 @@ class InputText extends Component {
     //console.tron.log(['input group test', group, this.props]); 
 
     if (saveStep) {
-      this.saveFormInput({ data_name, default_value });      
+      this.saveFormInput({ data_name, default_value });
     }
     if (group.flagGroup) {
-      console.tron.log('numero de flag gorup input', group.groupFlag)
+      //console.tron.log('numero de flag gorup input', group.groupFlag)
       this.saveGroupInput({ data_name, default_value })
     }
     return (

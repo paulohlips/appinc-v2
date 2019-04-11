@@ -14,33 +14,33 @@ const TEST = [
   {
     key: 'data_ref1',
     value: {
-      hint:'data_amostra',
-      group:true,
-      label:'Identificação de material',
-      required:true,
-      data_name:'data_ref1',
-      lenght_max:60,
-      length_min:3,
-      invalid_text:"",
-      default_value:'Fulano',
-      component_type:'date',
-      required_message:'O campo é obrigatório',
+      hint: 'data_amostra',
+      group: true,
+      label: 'Identificação de material',
+      required: true,
+      data_name: 'data_ref1',
+      lenght_max: 60,
+      length_min: 3,
+      invalid_text: "",
+      default_value: 'Fulano',
+      component_type: 'date',
+      required_message: 'O campo é obrigatório',
     }
   },
   {
     key: 'data_ref1',
     value: {
-      hint:'data_amostra',
-      group:true,
-      label:'Identificação de material',
-      required:true,
-      data_name:'data_ref1',
-      lenght_max:60,
-      length_min:3,
-      invalid_text:"",
-      default_value:'Fulano',
-      component_type:'text',
-      required_message:'O campo é obrigatório',
+      hint: 'data_amostra',
+      group: true,
+      label: 'Identificação de material',
+      required: true,
+      data_name: 'data_ref1',
+      lenght_max: 60,
+      length_min: 3,
+      invalid_text: "",
+      default_value: 'Fulano',
+      component_type: 'text',
+      required_message: 'O campo é obrigatório',
     }
   }
 ]
@@ -53,31 +53,31 @@ class Group extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.tron.log('testando nexxtProps', nextProps.group.dataGroup, this.props.group.dataGroup)
+    //console.tron.log('testando nexxtProps', nextProps.group.dataGroup, this.props.group.dataGroup)
     const { group, data } = this.props;
 
     group.dataGroup.map(item => {
       //console.tron.log(['dataGroup', item.key, data.data_name])
-        if (item.key === data.data_name) {
-          const array = Object.values(item.value);
-          this.setState({ arrayGroup: item.value, groupName: item.key })
-        }
+      if (item.key === data.data_name) {
+        const array = Object.values(item.value);
+        this.setState({ arrayGroup: item.value, groupName: item.key })
       }
+    }
     )
   }
 
-  
+
   componentWillMount() {
-    console.tron.log(['entrei grupo', this.props.group]) 
+    //console.tron.log(['entrei grupo', this.props.group]) 
     const { group, data } = this.props;
 
     group.dataGroup.map(item => {
       //console.tron.log(['dataGroup', item.key, data.data_name])
-        if (item.key === data.data_name) {
-          const array = Object.values(item.value);
-          this.setState({ arrayGroup: item.value, groupName: item.key })
-        }
+      if (item.key === data.data_name) {
+        const array = Object.values(item.value);
+        this.setState({ arrayGroup: item.value, groupName: item.key })
       }
+    }
     )
 
     if (!group.flag) {
@@ -86,27 +86,27 @@ class Group extends Component {
 
     //this.decrementDataGroup();
   }
-  
-  
 
-  renderOneGroupTest = group => {    
+
+
+  renderOneGroupTest = group => {
     // array = Object.values(group)
     //array.map(item => <ComponentList data={item.value} />)
     //console.tron.log(['group params', group, array])
-    Object.keys(group).map(item => {return <ComponentList data={group[item].value} />})
-    
+    Object.keys(group).map(item => { return <ComponentList data={group[item].value} /> })
+
   };
 
   renderOneGroup = (index, groupName) => {
     const { group, resetUpdateView } = this.props;
     if (group.updateViewGroup) {
       //resetUpdateView();
-      return this.props.data.components_group.map(item => { return <ComponentList data={item} index={index} groupName={groupName} />});
-     
+      return this.props.data.components_group.map(item => { return <ComponentList data={item} index={index} groupName={groupName} /> });
+
     }
   }
-    
-  
+
+
 
   increment = () => {
     const { groupName } = this.state;
@@ -163,7 +163,7 @@ class Group extends Component {
           {
             group.dataGroup.map(item => {
               if (item.key === data.data_name) {
-                item.value.map(item2 => 
+                item.value.map(item2 =>
                   <View style={styles.boxGroup}>
                     {this.renderOneGroup(item2.index, groupName)}
                     <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrement(item.index)}>
@@ -173,11 +173,11 @@ class Group extends Component {
                 )
               }
             })
-           
-            
+
+
           }
         </ScrollView>
-        
+
         <TouchableOpacity style={styles.viewPlus} onPress={() => this.increment()}>
           <Icons name="plus" size={18} color="#232f34" />
         </TouchableOpacity>

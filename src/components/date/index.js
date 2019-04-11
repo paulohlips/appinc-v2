@@ -44,7 +44,7 @@ class MyDatePicker extends Component {
               }
             })
           }
-        })       
+        })
       });
     } else {
       for (var key in form.step) {
@@ -87,28 +87,28 @@ class MyDatePicker extends Component {
 
   saveGroupDate = info => {
     const { dataAtual, date } = this.state;
-    const { 
-      form, 
-      getSaveStateForm, 
-      startControlArray, 
-      data, 
-      index, 
-      saveDataGroup, 
+    const {
+      form,
+      getSaveStateForm,
+      startControlArray,
+      data,
+      index,
+      saveDataGroup,
       group,
       groupMother,
       startControlArrayGroup,
     } = this.props;
-    console.tron.log(['group save input', data.group, info.data_name])
-    if (date) {     
-        console.tron.log(['group save', data.group, info.data_name])
-        saveDataGroup({ 
-          index, 
-          groupMother, 
-          name: info.data_name, 
-          data: date,
-          extra: null,
-          type: data.component_type
-        })
+    //console.tron.log(['group save input', data.group, info.data_name])
+    if (date) {
+      //console.tron.log(['group save', data.group, info.data_name])
+      saveDataGroup({
+        index,
+        groupMother,
+        name: info.data_name,
+        data: date,
+        extra: null,
+        type: data.component_type
+      })
     }
     //console.tron.log('antes de ', info.data_name)
     startControlArrayGroup(info.data_name)
@@ -151,7 +151,7 @@ class MyDatePicker extends Component {
       this.saveFormInput({ data_name, default_value });
     }
     if (group.flagGroup) {
-      console.tron.log('numero de flag gorup input', group.groupFlag)
+      //console.tron.log('numero de flag gorup input', group.groupFlag)
       this.saveGroupDate({ data_name, default_value })
     }
     return (
@@ -183,16 +183,16 @@ class MyDatePicker extends Component {
                   color: 'blue'
                 },
               }}
-              onDateChange={(date) => { this.setState({ date, showDate: true, call: true });}}
-            /> 
-            </View>            
-        </View>  
-          {
-            this.state.date && (
-                this.getNewDate()
-            )
-          }
+              onDateChange={(date) => { this.setState({ date, showDate: true, call: true }); }}
+            />
+          </View>
         </View>
+        {
+          this.state.date && (
+            this.getNewDate()
+          )
+        }
+      </View>
     );
   }
 }
@@ -203,6 +203,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({...FormActions, ...GroupActions}, dispatch);
+  bindActionCreators({ ...FormActions, ...GroupActions }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyDatePicker);

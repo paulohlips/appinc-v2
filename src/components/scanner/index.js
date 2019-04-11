@@ -41,11 +41,11 @@ class Scanner extends Component {
                 if (components[key].value !== null && components[key].filled === true) {
                   //console.tron.log('deu input', components[key].value)
                   this.setState({ infoScanner: components[key].value, showCode: true })
-                }               
+                }
               }
             })
           }
-        })       
+        })
       });
     } else {
       for (var key in form.step) {
@@ -64,28 +64,28 @@ class Scanner extends Component {
 
   saveGroupScanner = info => {
     const { infoScanner } = this.state;
-    const { 
-      form, 
-      getSaveStateForm, 
-      startControlArray, 
-      data, 
-      index, 
-      saveDataGroup, 
+    const {
+      form,
+      getSaveStateForm,
+      startControlArray,
+      data,
+      index,
+      saveDataGroup,
       group,
       groupMother,
       startControlArrayGroup,
     } = this.props;
-    console.tron.log(['group save ', data.group, info.data_name])
-    if (infoScanner) {     
-        console.tron.log(['group save2', data.group, info.data_name])
-        saveDataGroup({ 
-          index, 
-          groupMother, 
-          name: info.data_name, 
-          data: infoScanner, 
-          extra: null, 
-          type: data.component_type 
-        })
+    //console.tron.log(['group save ', data.group, info.data_name])
+    if (infoScanner) {
+      //console.tron.log(['group save2', data.group, info.data_name])
+      saveDataGroup({
+        index,
+        groupMother,
+        name: info.data_name,
+        data: infoScanner,
+        extra: null,
+        type: data.component_type
+      })
     }
     console.tron.log('antes de ', info.data_name)
     startControlArrayGroup(info.data_name)
@@ -134,7 +134,7 @@ class Scanner extends Component {
       this.saveFormScanner({ data_name, default_value });
     }
     if (group.flagGroup) {
-      console.tron.log('numero de flag gorup camera', group.groupFlag)
+      //console.tron.log('numero de flag gorup camera', group.groupFlag)
       this.saveGroupScanner({ data_name, default_value })
     }
     return (

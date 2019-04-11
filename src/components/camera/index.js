@@ -32,7 +32,7 @@ class Camera extends React.Component {
     const { form, data, group, index } = this.props;
 
     if (data.group === 'true') {
-      
+
       group.dataGroup.map(item => {
         //console.tron.log(['map array', item])
         item.value.map(components => {
@@ -47,10 +47,10 @@ class Camera extends React.Component {
                 }
               }
             })
-          }          
-        })       
+          }
+        })
       });
-      
+
     } else {
       for (var key in form.step) {
         if (key === data.data_name) {
@@ -74,7 +74,7 @@ class Camera extends React.Component {
         images: null,
         imagePath: image.path
       });
-      console.tron.log('ESTADO', image);
+      //console.tron.log('ESTADO', image);
     }).catch();
   }
 
@@ -89,7 +89,7 @@ class Camera extends React.Component {
         images: null,
         imagePath: image.path
       });
-      console.tron.log('ESTADO', image);
+      //console.tron.log('ESTADO', image);
     }).catch(e => {
       console.log(e);
       //Alert.alert(e.message ? e.message : e);
@@ -170,7 +170,7 @@ class Camera extends React.Component {
         images: null,
         imagePath: image.path
       });
-      console.tron.log('ESTADO', image);
+      //console.tron.log('ESTADO', image);
 
     }).catch(e => {
       console.log(e);
@@ -234,34 +234,34 @@ class Camera extends React.Component {
 
   saveGroupCamera = info => {
     const { imageData, imagePath, image } = this.state;
-    const { 
-      form, 
-      getSaveStateForm, 
-      startControlArray, 
-      data, 
-      index, 
-      saveDataGroup, 
+    const {
+      form,
+      getSaveStateForm,
+      startControlArray,
+      data,
+      index,
+      saveDataGroup,
       group,
       groupMother,
       startControlArrayGroup,
     } = this.props;
-    console.tron.log(['group save ', data.group, info.data_name])
-    if (imagePath || image) {     
-        console.tron.log(['group save2', data.group, info.data_name])
-        saveDataGroup({ 
-          index, 
-          groupMother, 
-          name: info.data_name, 
-          data: { 
-            uri: image.uri, 
-            type: 'image/jpeg', 
-            name: `${info.data_name}.jpg` 
-          }, 
-          extra: image, 
-          type: data.component_type 
-        })
+    //console.tron.log(['group save ', data.group, info.data_name])
+    if (imagePath || image) {
+      //console.tron.log(['group save2', data.group, info.data_name])
+      saveDataGroup({
+        index,
+        groupMother,
+        name: info.data_name,
+        data: {
+          uri: image.uri,
+          type: 'image/jpeg',
+          name: `${info.data_name}.jpg`
+        },
+        extra: image,
+        type: data.component_type
+      })
     }
-    console.tron.log('antes de ', info.data_name)
+    //console.tron.log('antes de ', info.data_name)
     startControlArrayGroup(info.data_name)
   }
 
@@ -322,7 +322,7 @@ class Camera extends React.Component {
       this.saveFormInput({ data_name, default_value });
     }
     if (group.flagGroup) {
-      console.tron.log('numero de flag gorup camera', group.groupFlag)
+      //console.tron.log('numero de flag gorup camera', group.groupFlag)
       this.saveGroupCamera({ data_name, default_value })
     }
     return (

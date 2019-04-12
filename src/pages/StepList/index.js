@@ -115,12 +115,21 @@ class StepList extends Component {
 
     await AsyncStorage.setItem('arrayRef', JSON.stringify(array));
 
-    const data = new FormData();
+    const data = new FormData();   
+   
     data.append('form_name', formulario.form.form_name);
 
-    for (var key in formulario.step) {
-      data.append(formulario.step[key].key, formulario.step[key].value)
+    for (var key in formulario.step) { 
+      if(formulario.step[key].type === 'camera') {
+        formulario.step[key].value.map(item => {
+          data.append(`${key}[]`, item);
+        })       
+      } else {
+        data.append(formulario.step[key].key, formulario.step[key].value)
+      }      
     }
+
+    console.tron.log('test', data)
 
     setUpdateHistory();
     this.setState({ matriculaAsync: matricula });

@@ -98,8 +98,28 @@ class StepBoxComponent extends Component {
           //console.tron.log(['fasdfas', component, component.data_name])
           form[component.data_name] = { key: component.data_name, value: component.default_value, filled: null };
           createDataGroup(component.data_name, prototype);
-        }  else {
-          form[component.data_name] = { key: component.data_name, value: component.default_value, filled: null };
+        } else if(component.component_type === 'camera'){
+          form[`leg_${component.data_name}`] = { 
+            key: component.data_name, 
+            value: component.default_value, 
+            filled: null, 
+            type: 'text',
+          };
+          getCreateForm(form);
+          form[component.data_name] = { 
+            key: component.data_name, 
+            value: [], 
+            filled: null,
+            type: component.component_type,
+          };
+          getCreateForm(form);
+        } else {
+          form[component.data_name] = { 
+            key: component.data_name, 
+            value: component.default_value, 
+            filled: null,
+            type: component.component_type
+          };
         }
         
         getCreateForm(form);

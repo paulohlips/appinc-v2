@@ -24,7 +24,9 @@ class Camera extends React.Component {
     videoSource: null,
     imagePath: null,
     image: null,
-    images: null,
+    images: [],
+    inputSave: '',
+    arrayCamera: [],
   };
 
 
@@ -38,7 +40,7 @@ class Camera extends React.Component {
         item.value.map(components => {
           //console.tron.log(['map array components', components])
           if (components.index === index) {
-            c//onsole.tron.log('deucerteo', index)
+            //onsole.tron.log('deucerteo', index)
             Object.keys(components).map(key => {
               //console.tron.log('object map', components, key, data.data_name)
               if (key === data.data_name) {
@@ -55,7 +57,12 @@ class Camera extends React.Component {
       for (var key in form.step) {
         if (key === data.data_name) {
           if (form.step[key].filled === true) {
-            this.setState({ image: form.step[key].data, imagePath: form.step[key].value.uri });
+            console.tron.log('recupera colecao', key, form.step[key])
+            this.setState({ 
+              images: form.step[key].data, 
+              imagePath: form.step[key].value.uri,
+              inputSave: form.step[`leg_${key}`].value,
+            });
           }
         }
       }
@@ -64,20 +71,44 @@ class Camera extends React.Component {
   }
 
   pickSingleWithCamera(cropping) {
+    const { data } = this.props;
     ImagePicker.openCamera({
       cropping: cropping,
       includeExif: false,
       includeBase64: true,
+      width: 600,
+      height: 600,
     }).then(image => {
+      console.tron.log('ESTADO1', image);
       this.setState({
-        image: { uri: image.path, width: image.width, height: image.height },
-        images: null,
+        image: { 
+          uri: image.path, 
+          width: image.width, 
+          height: image.height 
+        },
+        images: [
+           ...this.state.images,
+          { 
+            uri: image.path, 
+            width: image.width, 
+            height: image.height,
+            mine: image.mime,
+          }
+        ],
+        arrayCamera: [
+          ...this.state.arrayCamera,
+          {
+            uri: image.path,
+            type: 'image/jpeg',
+            name: `${data.data_name}.jpg`,
+          }
+        ],
         imagePath: image.path
-      });
-      //console.tron.log('ESTADO', image);
+      });     
+      console.tron.log('ESTADO', this.state);
     }).catch();
   }
-
+ 
   pickSingle(cropit, circular = false) {
     ImagePicker.openPicker({
       cropping: cropping,
@@ -233,7 +264,7 @@ class Camera extends React.Component {
   }
 
   saveGroupCamera = info => {
-    const { imageData, imagePath, image } = this.state;
+    const { imageData, imagePath, image, arrayCamera } = this.state;
     const {
       form,
       getSaveStateForm,
@@ -243,8 +274,8 @@ class Camera extends React.Component {
       saveDataGroup,
       group,
       groupMother,
-      startControlArrayGroup,
-    } = this.props;
+      startControlArrayGroup,      
+    } = this.props;    
     //console.tron.log(['group save ', data.group, info.data_name])
     if (imagePath || image) {
       //console.tron.log(['group save2', data.group, info.data_name])
@@ -267,7 +298,7 @@ class Camera extends React.Component {
 
   saveFormInput = info => {
 
-    const { imageData, imagePath, image } = this.state;
+    const { imageData, imagePath, image, inputSave, images, arrayCamera } = this.state;
     const {
       form,
       getSaveStateForm,
@@ -277,33 +308,52 @@ class Camera extends React.Component {
       index, //importa
       group, // importa
     } = this.props;
-    //console.tron.log('entrei no save',info, imagePath, image)
+    const size = arrayCamera.length;
+    console.tron.log('entrei no save',info, imagePath, image, inputSave, size)
 
-    if (imagePath || image) {
-      //console.tron.log('entrei if',data, imagePath, image)
-      if (data.group === 'dasd') {
-        group.dataGroup.map(item => {
-          if (item.index === index) {
-            saveDataGroup({ index, name: info.data_name, data: { uri: image.uri, type: 'image/jpeg', name: `${info.data_name}.jpg` }, type: data.component_type, extra: image })
-            // saveDataGroup({ index: , name: , data: , type: , extra: })
-            //console.tron.log('entrei form  grupo', image, imagePath)
-          }
-        });
-      } else {
+    if (size > 0) {     
         for (var key in form.step) {
           if (key === info.data_name) {
             const form = {};
-            form[info.data_name] = { key: info.data_name, value: { uri: imagePath, type: 'image/jpeg', name: `${info.data_name}.jpg` }, data: image, filled: true };
+            form[info.data_name] = { 
+              key: info.data_name, 
+              value: arrayCamera, 
+              data: images, 
+              filled: true,
+              type: info.component_type,
+            };
+            console.tron.log('dados1',form)
+            getSaveStateForm(form);
+            form[`leg_${info.data_name}`] = { 
+              key: `leg_${info.data_name}`, 
+              value: inputSave, data: null, 
+              filled: true,
+              type: 'text', 
+            };
+            console.tron.log('dados2',form)
+
             getSaveStateForm(form);
             //console.tron.log('entrei form nao grupo', image, imagePath)
           }
         }
-      }
+      
     } else {
       for (var key in form.step) {
         if (key === info.data_name && info.data_name.filled === false) {
           const form = {};
-          form[info.data_name] = { key: info.data_name, value: { uri: '', type: '', name: '' }, data: image, filled: false };
+          form[info.data_name] = { 
+            key: info.data_name, 
+            value: { 
+              uri: '', 
+              type: '', 
+              name: '' 
+            }, 
+            data: image, 
+            filled: false 
+          };
+          getSaveStateForm(form);
+          form[`leg_${info.data_name}`] = { key: `leg_${info.data_name}`, value: inputSave, data: null, filled: true };
+          console.tron.log('dados2',form)
           getSaveStateForm(form);
           //console.tron.log('sem foto', image, imagePath)
         }
@@ -313,23 +363,39 @@ class Camera extends React.Component {
   }
 
   render() {
-    const { data_name, label, hint, default_value, newState, groupFlag } = this.props.data;
+    const { 
+      data_name, 
+      label, 
+      hint, 
+      default_value, 
+      newState, 
+      groupFlag, 
+      component_type 
+    } = this.props.data;
     const { saveStep } = this.props.form;
     const { group } = this.props;
     const { largura_tela } = responsividade;
-    //console.tron.log('camera', this.props)
+    console.tron.log('camera', this.state)
     if (saveStep) {
-      this.saveFormInput({ data_name, default_value });
+      this.saveFormInput({ data_name, default_value, component_type });
     }
     if (group.flagGroup) {
       //console.tron.log('numero de flag gorup camera', group.groupFlag)
       this.saveGroupCamera({ data_name, default_value })
     }
     return (
+      
       <View style={groupFlag ? stylesGroup.container : styles.container}>
 
-        <ScrollView>
-          {this.state.image ? this.renderAsset(this.state.image) : null}
+        <ScrollView 
+          horizontal
+          pagingEnabled
+          ref={ref => this.scrollView = ref}
+          onContentSizeChange={(contentWidth, contentHeight) => {
+            this.scrollView.scrollToEnd({ animated: true, duration: 3000 });
+          }}
+        >
+          {/*this.state.image ? this.renderAsset(this.state.image) : null*/}
           {this.state.images ? this.state.images.map(i => <View key={i.uri}>{this.renderAsset(i)}</View>) : null}
         </ScrollView>
         <View style={styles.buttonsView}>
@@ -344,7 +410,7 @@ class Camera extends React.Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => this.pickSingle(false)} style={styles.button}>
+          <TouchableOpacity onPress={() => this.pickMultiple(false)} style={styles.button}>
             <View style={styles.avatarContainer1}>
               <View style={styles.avatarContainer2}>
                 <Icon name="photo-library" color="white" size={largura_tela < 430 ? 20 : 30} style={styles.icon} />
@@ -361,13 +427,13 @@ class Camera extends React.Component {
             autoCapitalize="none"
             autoCorrect={false}
             multiline
-            placeholder={"Suas notas..."}
+            placeholder={"Descrição..."}
             maxLength={100}
             underlineColorAndroid="rgba(0,0,0,0)"
+            value={this.state.inputSave}
             onChangeText={inputSave => this.setState({ inputSave })}
           />
         </View>
-
       </View>
     );
   }

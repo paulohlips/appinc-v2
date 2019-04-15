@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     avatar: {
       width: responsividade.LARGURA_BUTTON,
       height: responsividade.LARGURA_BUTTON,
+      margin: 10,
     },
 
     buttonsView: {

@@ -101,7 +101,7 @@ class Group extends Component {
     const { group, resetUpdateView } = this.props;
     if (group.updateViewGroup) {
       //resetUpdateView();
-      return this.props.data.components_group.map(item => { return <ComponentList data={item} index={index} groupName={groupName} /> });
+      return this.props.data.components_group.map(item => <ComponentList data={item} index={index} groupName={groupName} />);
 
     }
   }
@@ -161,20 +161,14 @@ class Group extends Component {
           }}
         >
           {
-            group.dataGroup.map(item => {
-              if (item.key === data.data_name) {
-                item.value.map(item2 =>
-                  <View style={styles.boxGroup}>
-                    {this.renderOneGroup(item2.index, groupName)}
-                    <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrement(item.index)}>
-                      <Icons name="minus" size={18} color="#FFF" />
-                    </TouchableOpacity>
-                  </View>
-                )
-              }
-            })
-
-
+            arrayGroup.map(item2 =>
+              <View style={styles.boxGroup}>
+                {this.renderOneGroup(item2.index, groupName)}
+                <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrement(item.index)}>
+                  <Icons name="minus" size={18} color="#FFF" />
+                </TouchableOpacity>
+              </View>
+            )
           }
         </ScrollView>
 

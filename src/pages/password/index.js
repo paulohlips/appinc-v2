@@ -102,7 +102,6 @@ class Login extends Component {
     if (inputSave1 == inputSave2) {
       try {
         const response = await Api.user.createPassword({ matricula: idRegistro, pin: pinRegistro, pass: inputSave2 });
-        //console.tron.log('pasword', response)
         if (response.status === 200) {
           this.setState({ viewModals: true })
         } else {
@@ -115,26 +114,9 @@ class Login extends Component {
       this.setState({ viewModal: true , messageRequest: 'Senhas diferentes' });
     }
    
-    
-    /*if (inputSave1 == inputSave2){
-      Axios({
-        method: 'post',
-        url: 'http://35.198.17.69/api/pericia/usuario/geraSenha',
-        data: { matricula: idRegistro, pin: pinRegistro, pass: inputSave2 },
-      })
-      .then((resp) => {
-        if (resp.status === 200) {
-          this.setState({ viewModals: true })
-        } else {
-          Alert.alert(resp.data.mensagem);
-        }
-      }).catch(err => {
-        this.setState({ viewModal: true , messageRequest: 'Erro de conexão' });
-      });
-    } else {
-      this.setState({ viewModal: true , messageRequest: 'Senhas diferentes' });
-    }*/
+    if(id){
     AsyncStorage.setItem('@Id', id);
+    }
   }
 
   closeModal = () => {
@@ -220,7 +202,3 @@ class Login extends Component {
 
 
 export default Login;
-
-/*
- <Image style={styles.image} source={require('../../assents/imgs/policia-federal-logo.png')} />
-*/

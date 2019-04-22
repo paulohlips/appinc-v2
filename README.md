@@ -29,3 +29,12 @@
 - Transforma objeto das requisições (FIPE e DENATRAN) em um JSON para envio
 3. Solucionado problema na autenticação do login
 4. Conserto na requisição da FIPE
+
+
+## v2.2.x
+#### **NEWS**
+1. implementação do coleçao
+    1. Foto
+2. envio de coleção para o servidor
+3. bug e melhorias no Group
+4. novo component scanner(IOS)

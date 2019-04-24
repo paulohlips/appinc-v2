@@ -1,8 +1,15 @@
 import axios from 'axios';
 import { LoginToken } from '../store/ducks/login';
+import store from '../store';
 
+var URL = '';
+
+const changeBaseURL = (baseUrl) => {
+  URL = baseUrl;
+  console.log('console do URL', URL)
+}
 const api = axios.create({
-  baseURL: 'http://35.198.17.69/api',
+  baseURL: URL,
 });
 
 const tokenAuth = null;
@@ -15,7 +22,8 @@ const setToken = (token, matricula) => {
 const user = {
   // realiza o login do usuario
   loginUser: data => {
-    return api.post('/pericia/usuario/login', data, {
+    console.log('user request', URL)
+    return axios.post(`${URL}/pericia/usuario/login`, data, {
       headers: {}
     },
     )
@@ -43,7 +51,7 @@ const user = {
   },
   // requisição para ter historico de pericias
   getHist: data => {
-    return api.post('/pericia/formulario/recebidos', null, {
+    return axios.post(`${URL}/pericia/formulario/recebidos`, null, {
       headers: {
         'matricula': data.id,
         'token': data.token,
@@ -56,7 +64,7 @@ const user = {
 const form = {
   // requisiçao para obter um novo pop atraves de um numero identificador
   getNewForm: number => {
-    return api.get(`/pericia/formularios/${number}`)
+    return axios.get(`${URL}/pericia/formularios/${number}`)
   },
   getAllPops: () => {
     return api.get('/pericia/formularios')
@@ -81,4 +89,5 @@ export default Api = {
   user,
   form,
   setToken,
+  changeBaseURL,
 };

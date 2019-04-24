@@ -15,6 +15,7 @@ import Singup from './pages/email';
 import Hash from './pages/hash';
 import Password from './pages/password';
 import UpdatePops from './pages/UpdatePops';
+import ChangeService from './pages/changeService';
 
 // Componentes
 import GeoLoc from './pages/components/geoloc';
@@ -38,6 +39,7 @@ const Routes = StackNavigator(
     Hash: { screen: Hash },
     Password: { screen: Password },
     StepPage: { screen: StepPage },
+    ChangeService: { screen: ChangeService },
     Logged: DrawerNavigator(
       {
         Main: { screen: Main },
@@ -52,6 +54,7 @@ const Routes = StackNavigator(
         drawerWidth: responsividade.LARGURA_MENU,
       }
     ),
+
     StepList: { screen: StepList },
     Testes: { screen: Testes },
     Audio: { screen: Audio },

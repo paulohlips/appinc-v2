@@ -80,6 +80,9 @@ class Login extends Component {
     this.props.navigation.dispatch(resetAction);
   }
 
+  navigateToChangeService = () => {
+    this.props.navigation.navigate('ChangeService')
+  }
   confereCadastro = () => {
     const data = { inputSave: this.state.inputSave, password: this.state.password };
     this.props.getLoginRequest(data);
@@ -126,6 +129,11 @@ class Login extends Component {
             <TouchableOpacity style={styles.cadastrobutton} onPress={() => { this.navigateToSignUp(); }}>
               <Text style={styles.buttonText}>
                 Cadastrar
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.cadastrobutton} onPress={() => { this.navigateToChangeService(); }}>
+              <Text style={styles.buttonText}>
+                Servidor
               </Text>
             </TouchableOpacity>
           </View>

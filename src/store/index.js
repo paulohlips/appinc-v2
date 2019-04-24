@@ -16,7 +16,7 @@ const saveAuthToken = store => next => action => {
   return next(action);
 }
 
-const sagaMonitor = __DEV__ ? console.tron.createSagaMiddleware : null;
+const sagaMonitor = !__DEV__ ? console.tron.createSagaMiddleware : null;
 const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
 
 const middleware = [
@@ -24,7 +24,7 @@ const middleware = [
   saveAuthToken,
 ];
 
-const createAppropriateStore = __DEV__ ? console.tron.createStore : createStore;
+const createAppropriateStore = !__DEV__ ? console.tron.createStore : createStore;
 const store = createAppropriateStore(reducers, applyMiddleware(...middleware));
 
 sagaMiddleware.run(sagas);

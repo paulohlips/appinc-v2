@@ -183,7 +183,7 @@ class New extends Component {
                   </View>
                   <TextInput
                     style={styles.input}
-                    autoCapitalize="none"
+                    autoCapitalize="words"
                     autoCorrect={false}
                     maxLength={72}
                     underlineColorAndroid="rgba(0,0,0,0)"

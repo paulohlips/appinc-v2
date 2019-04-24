@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
 
   backgroundImage: {
     flex: 1,
+    //alignItems: 'center',
   },
 
   container: {

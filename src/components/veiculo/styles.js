@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   numberType: {
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: responsividade.fonts.descriptionSize,
+    fontSize: responsividade.fonts.descriptionSize * 0.8,
     color: 'black',
     fontWeight: 'bold',
     width: responsividade.LARGURABOLA * 0.53,

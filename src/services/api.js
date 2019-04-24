@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { LoginToken } from '../store/ducks/login';
-import store from '../store';
+// import { LoginToken } from '../store/ducks/login';
+// import store from '../store';
 
 var URL = '';
 

@@ -129,12 +129,8 @@ class StepList extends Component {
       }      
     }
 
-    console.tron.log('test', data)
-
     setUpdateHistory();
     this.setState({ matriculaAsync: matricula });
-
-    //const response = await Api.form.
 
     axios({
       method: 'post',

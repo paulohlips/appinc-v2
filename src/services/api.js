@@ -8,7 +8,6 @@ const api = axios.create({
 const tokenAuth = null;
 
 const setToken = (token, matricula) => {
-  //console.tron.log(['peuei', token, matricula])
   axios.defaults.headers.common['X-Token'] = `${token}`;
   axios.defaults.headers.common['matricula'] = `${matricula}`;
 }
@@ -57,7 +56,6 @@ const user = {
 const form = {
   // requisiçao para obter um novo pop atraves de um numero identificador
   getNewForm: number => {
-    //console.tron.log(['api ', LoginToken])
     return api.get(`/pericia/formularios/${number}`)
   },
   getAllPops: () => {

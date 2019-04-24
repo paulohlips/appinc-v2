@@ -1642,8 +1642,7 @@
 					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)..\node_modules@terrylinla\neact-native-sketch-canvasiosRNSketchCanvas/**",
+					"$(SRCROOT)/../node_modules/react-native/React\node_modules@terrylinla\neact-native-sketch-canvasiosRNSketchCanvas/**",
 					"$(SRCROOT)..\node_moduleslottie-react-nativesrciosLottieReactNative",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",
@@ -1690,8 +1689,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = WG8546JSSS;
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)..\node_modules@terrylinla\neact-native-sketch-canvasiosRNSketchCanvas/**",
+					"$(SRCROOT)/../node_modules/react-native/React\node_modules@terrylinla\neact-native-sketch-canvasiosRNSketchCanvas/**",
 					"$(SRCROOT)..\node_moduleslottie-react-nativesrciosLottieReactNative",
 					"$(SRCROOT)..\node_modules\neact-native-audioios",
 					"$(SRCROOT)..\node_modules\neact-native-cameraios/**",

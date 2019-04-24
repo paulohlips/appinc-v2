@@ -53,11 +53,9 @@ class Group extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    //console.tron.log('testando nexxtProps', nextProps.group.dataGroup, this.props.group.dataGroup)
     const { group, data } = this.props;
 
     group.dataGroup.map(item => {
-      //console.tron.log(['dataGroup', item.key, data.data_name])
       if (item.key === data.data_name) {
         const array = Object.values(item.value);
         this.setState({ arrayGroup: item.value, groupName: item.key })
@@ -66,13 +64,10 @@ class Group extends Component {
     )
   }
 
-
   componentWillMount() {
-    //console.tron.log(['entrei grupo', this.props.group]) 
     const { group, data } = this.props;
 
     group.dataGroup.map(item => {
-      //console.tron.log(['dataGroup', item.key, data.data_name])
       if (item.key === data.data_name) {
         const array = Object.values(item.value);
         this.setState({ arrayGroup: item.value, groupName: item.key })
@@ -92,7 +87,6 @@ class Group extends Component {
   renderOneGroupTest = group => {
     // array = Object.values(group)
     //array.map(item => <ComponentList data={item.value} />)
-    //console.tron.log(['group params', group, array])
     Object.keys(group).map(item => { return <ComponentList data={group[item].value} /> })
 
   };
@@ -110,7 +104,6 @@ class Group extends Component {
 
   increment = () => {
     const { groupName } = this.state;
-    // console.tron.log('increment group', groupName, this.props)
     this.props.incrementDataGroup(groupName);
 
     /*const { group } = this.props;
@@ -149,7 +142,6 @@ class Group extends Component {
   render() {
     const { group, data, resetUpdateView } = this.props
     const { dataGroup, arrayGroup, groupName } = this.state;
-    //console.tron.log(['group component', this.props, this.state, data])
     return (
       <View style={styles.container}>
         <ScrollView

@@ -4986,6 +4986,11 @@ react-native-safe-area-view@^0.8.0:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
+react-native-scan-barcode@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/react-native-scan-barcode/-/react-native-scan-barcode-3.1.5.tgz#7a6a0f1b9460e75766e3d34f3a3bf1504b73173f"
+  integrity sha512-m+XI5nAna0m5zcqwfxsswUCO7vpA01JyqUu3di0QhR4DmC0VHyAMTZv8VCTTeRC8clonRo9xIHR7i7reQIHwdw==
+
 react-native-sound@^0.10.9:
   version "0.10.12"
   resolved "https://registry.yarnpkg.com/react-native-sound/-/react-native-sound-0.10.12.tgz#f912d6f9d6e9e2b42b391e0226787628d940f01a"

@@ -29,7 +29,6 @@ class ComponentList extends Component {
     }).start();
   }
   render() {
-    //console.tron.log(['componentlist', this.props])
     return (
       <Animated.View style={{
         ...styles.container,

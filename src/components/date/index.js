@@ -31,15 +31,10 @@ class MyDatePicker extends Component {
 
     if (data.group === 'true') {
       group.dataGroup.map(item => {
-        //console.tron.log(['map array', item])
         item.value.map(components => {
-          //console.tron.log(['map array components', components])
           if (components.index === index) {
-            //console.tron.log('deucerteo', index)
             Object.keys(components).map(key => {
-              //console.tron.log('object map', components, key, data.data_name)
               if (key === data.data_name) {
-                //console.tron.log('deu input', components[key].value)
                 this.setState({ date: components[key].value })
               }
             })
@@ -56,21 +51,6 @@ class MyDatePicker extends Component {
       }
     }
   }
-
-  // verificaData = () => {
-  //   const { form } = this.props;
-  //   const dataInicio = new Date(form.step.data_inicio.value);
-  //   const dataFinal = new Date(form.step.data_final.value);
-
-  //   if (dataInicio > dataFinal) {
-  //     console.tron.log("DEEEEEEEEEEEEEEEEEEEEEU RUIM")
-  //     console.tron.log(dataFinal)
-  //     Alert.alert('Data de término não pode ser anterior a data de início.')
-  //   } else {
-  //     console.tron.log("Tudo ok", dataInicio, dataFinal)
-  //   }
-
-  // }
 
   getNewDate = () => {
     const { form } = this.props;
@@ -98,9 +78,7 @@ class MyDatePicker extends Component {
       groupMother,
       startControlArrayGroup,
     } = this.props;
-    //console.tron.log(['group save input', data.group, info.data_name])
     if (date) {
-      //console.tron.log(['group save', data.group, info.data_name])
       saveDataGroup({
         index,
         groupMother,
@@ -110,7 +88,6 @@ class MyDatePicker extends Component {
         type: data.component_type
       })
     }
-    //console.tron.log('antes de ', info.data_name)
     startControlArrayGroup(info.data_name)
   }
 
@@ -151,7 +128,6 @@ class MyDatePicker extends Component {
       this.saveFormInput({ data_name, default_value });
     }
     if (group.flagGroup) {
-      //console.tron.log('numero de flag gorup input', group.groupFlag)
       this.saveGroupDate({ data_name, default_value })
     }
     return (

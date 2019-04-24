@@ -62,7 +62,6 @@ class Main extends Component {
     this.setState({
       nome: name
     });
-    //console.tron.log(['Nome', this.state.nome])
   }
 
   componentDidMount() {

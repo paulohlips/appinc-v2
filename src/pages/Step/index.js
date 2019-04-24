@@ -58,7 +58,6 @@ class StepPage extends Component {
     render() {
         const { navigation } = this.props;
         const step = navigation.getParam('step'); // pra testar group comentar essa linha
-        //console.tron.log(step.components)
 
         return (
             <View style={styles.container}>

@@ -21,9 +21,7 @@ class MenuClass extends Component {
         this.setState({
             nome: name
         });
-
-        //console.tron.log(['props menu', this.props])
-    }
+   }
 
     navigateToScreen = (route, exit) => () => {
         if (exit) {

@@ -103,9 +103,7 @@ class Login extends Component {
     this.setState({ viewModal: false , cont: false ,load: true});
     try {
       const response = await Api.user.postCadastroId({ matricula: inputSave })
-      //console.tron.log(response)
       if (response.status === 200) {
-        //console.tron.log('navega')
         this.navigateToHash();
       } else {
         this.setState({ viewModal: true, messageRequest: response.data.mensagem, load: false , cont: true});

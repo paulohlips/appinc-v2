@@ -44,7 +44,6 @@ class StepBoxComponent extends Component {
       formState, 
       createDataGroup, 
     } = this.props;
-    //console.tron.log(['steps', steps, formState]);
 
     this.setState({ createdForms: true });
     const arrayProgress = {
@@ -95,7 +94,6 @@ class StepBoxComponent extends Component {
               extra: null,              
             }; 
           })          
-          //console.tron.log(['fasdfas', component, component.data_name])
           form[component.data_name] = { key: component.data_name, value: component.default_value, filled: null };
           createDataGroup(component.data_name, prototype);
         } else if(component.component_type === 'camera'){
@@ -161,7 +159,6 @@ class StepBoxComponent extends Component {
     const { steps, form, formState, index } = this.props;
     const { createdForms, arrayProgress, callFunction, progress, paolo } = this.state;
     const { item } = steps;
-    // console.tron.log(['props', this.props])
     if (!createdForms) {
       this.createFormsSave();
     }

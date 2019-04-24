@@ -53,7 +53,6 @@ export default function groupState(state = INITIAL_STATE, action) {
     }
     case Types.FLAG_DATA_GROUP: {
       //const size = controlArray(state);
-      //console.tron.log("size group", size);
       return { ...state, flagGroup: true };
     }
     case Types.CONTROLL_ARRAY_GROUP: {
@@ -128,13 +127,11 @@ const decrement = (id, groupMother, state) => {
         })
     }   
   });
-  // console.log(arrayState); 
   return arrayState;
 };
 
 const saveData = (info, state) => {
   const { index, groupMother, name, data, extra } = info;
-    // console.tron.log(index, groupMother, name, data, extra)
   var arrayState = state.dataGroup;
 
   arrayState.map(group => {
@@ -155,31 +152,24 @@ const saveData = (info, state) => {
       });
     }
   }); 
-  //console.tron.log('arrayState for group', arrayState)
   return arrayState;
 };
 
 const controlArray = (state, name) => {
   const arrayGroup = state.flagGroup;
-  //console.tron.log("entri control array", state, name);
 
   if (arrayGroup === true) {
     let count = 0;
-    //console.tron.log("entri control array if", state, name);
     const dataGroup = state.dataGroup;
     dataGroup.map(item => {
-      //console.tron.log("item", item);
       item.value.map(item2 => {
-        //console.tron.log("item2", item2, name);
         Object.keys(item2).map(key => {            
-            //console.tron.log('count', count)
             if (key !== 'index') {
                 count += 1;
             }
         });
       });
     });
-    //console.tron.log('return count', count)
     return count;
   }
 

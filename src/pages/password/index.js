@@ -17,7 +17,7 @@ import {
   BackHandler
 } from 'react-native';
 import { ModalCheck } from '../../globalComponents';
-import {SnackBar} from './../../globalComponents';
+import {SnackBar, Header} from './../../globalComponents';
 import StepIndicator from 'react-native-step-indicator';
 import Axios from 'axios';
 import Api from '../../services/api';
@@ -131,6 +131,11 @@ class Login extends Component {
     const { viewModal, messageRequest , viewModals} = this.state;
     return (
       <View style={styles.container}>
+      <Header
+          title=''
+          showArrowRegister
+          color = 'rgba(45, 45, 45, 0.8)'
+        />
       <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
         <View style={styles.mainContainer}>
         <View style={styles.icon}>

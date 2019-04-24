@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {SnackBar} from './../../globalComponents';
+import {SnackBar , Header} from './../../globalComponents';
 
 import {
   View,
@@ -136,6 +136,11 @@ class Login extends Component {
     const { viewModal, messageRequest } = this.state;
     return (
       <View style={styles.container}>
+      <Header
+          title=''
+          showArrowRegister
+          color = 'rgba(45, 45, 45, 0.8)'
+        />
         <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
         <View style={styles.mainContainer}>
           <View style={styles.icon}>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { SnackBar } from '../../globalComponents';
+import { SnackBar, Header } from '../../globalComponents';
 import {
   View,
   Text,
@@ -15,7 +15,8 @@ import {
   Easing,
   AsyncStorage,
   Alert,
-  BackHandler
+  BackHandler,
+  ActivityIndicator
 } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 
@@ -63,6 +64,8 @@ class Login extends Component {
     inputSave: null,
     viewModal: false,
     messageRequest: '',
+    load : false,
+    cont: true,
   }
 
   componentWillMount() {
@@ -97,7 +100,7 @@ class Login extends Component {
 
   confereID = async () => {
     const { inputSave } = this.state;
-    this.setState({ viewModal: false });
+    this.setState({ viewModal: false , cont: false ,load: true});
     try {
       const response = await Api.user.postCadastroId({ matricula: inputSave })
       //console.tron.log(response)
@@ -105,7 +108,7 @@ class Login extends Component {
         //console.tron.log('navega')
         this.navigateToHash();
       } else {
-        this.setState({ viewModal: true, messageRequest: response.data.mensagem });
+        this.setState({ viewModal: true, messageRequest: response.data.mensagem, load: false , cont: true});
       }
     } catch {
       this.setState({ viewModal: true, messageRequest: response.data.mensagem });
@@ -133,10 +136,16 @@ class Login extends Component {
   }
 
   render() {
-    const { viewModal, messageRequest } = this.state;
+    const { viewModal, messageRequest, load ,cont } = this.state;
     return (
 
       <View style={styles.container}>
+       <Header
+          title=''
+          showArrowRegister
+          color = 'rgba(45, 45, 45, 0.8)'
+         
+        />
         <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
         <View style={styles.mainContainer}>
           <View style={styles.icon}>
@@ -154,10 +163,22 @@ class Login extends Component {
               value={this.state.inputSave}
             />
             <TouchableOpacity style={styles.testebutton} onPress={() => { this.confereID(); }}>
-              <Text style={styles.buttonText}>
+            {
+              cont && (
+                <Text style={styles.buttonText}>
                 Continuar
                 </Text>
+              )
+              
+            }
+
+            {
+              load && (
+                <ActivityIndicator size="small" color="rgb(225, 200, 133)" />
+              )
+            }
             </TouchableOpacity>
+           
           </View>
         </View>
         <HideWithKeyboard>

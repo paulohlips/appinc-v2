@@ -49,6 +49,7 @@ class HeaderRedux extends Component {
       showClear,
       showModalInfo,
       showArrow,
+      showArrowRegister,
       showMenu,
       showInfo,
       goBack,
@@ -59,14 +60,17 @@ class HeaderRedux extends Component {
       saveStepState,
       form,
       activeFlag,
+      navigation,
     } = this.props;
     const { showAlert } = this.state;
     const { largura_tela } = responsividade;
+    console.tron.log(this.props, goBack);
+  
 
     return (
-      <View style={styles.header}>
+      <View style={{...styles.header, backgroundColor: this.props.color}}>
 
-        <StatusBar backgroundColor='#344955' barStyle="light-content" />
+        <StatusBar backgroundColor= {this.props.color} barStyle="light-content" />
           <View style={styles.viewIcon}>
             {
               showMenu && (
@@ -90,6 +94,16 @@ class HeaderRedux extends Component {
                 </TouchableOpacity>
               )
             }
+             {
+              showArrowRegister && (
+                <TouchableOpacity onPress={() => 
+                    navigation.navigate('Login')
+                  }
+                >
+                  <Icon name="md-arrow-back" size={ largura_tela < 430 ? 28 : 40 } style={styles.iconMenu} />
+                </TouchableOpacity>
+              )
+            }
           </View>
             <View style={styles.viewTitle}>
               <Text style={styles.headerTitle}>
@@ -105,7 +119,7 @@ class HeaderRedux extends Component {
               : <View style={styles.concerto} />
             }
             {
-              showClear && (
+              showClear && __DEV__ && (
                 <TouchableOpacity onPress={() => this.clearAsync()}>
                   <Icon name="md-trash" size={28} style={styles.iconMenu} />
                 </TouchableOpacity>

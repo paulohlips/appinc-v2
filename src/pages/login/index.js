@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { ModalCheck } from '../../globalComponents';
-import { SnackBar } from '../../globalComponents';
+//import { SnackBar } from '../../globalComponents';
+import SnackBar from 'react-native-snackbar-component'
 import {
   View,
   Text,
@@ -70,14 +71,8 @@ class Login extends Component {
   }
 
   navigateToSignUp = () => {
-    const resetAction = StackActions.reset({
-      index: 0,
-      actions: [
-        // Logged
-        NavigationActions.navigate({ routeName: 'SignUp' }),
-      ]
-    });
-    this.props.navigation.dispatch(resetAction);
+    
+    this.props.navigation.navigate('SignUp');
   }
 
   confereCadastro = () => {
@@ -123,7 +118,7 @@ class Login extends Component {
                 Entrar
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cadastrobutton} onPress={() => { this.navigateToSignUp(); }}>
+            <TouchableOpacity style={styles.cadastrobutton} onPress={() => this.navigateToSignUp()}>
               <Text style={styles.buttonText}>
                 Cadastrar
               </Text>
@@ -132,7 +127,7 @@ class Login extends Component {
         </View>
         {
           login.error && (
-            <SnackBar inside content={login.messageError} color="white" />
+            <SnackBar visible={login.error} textMessage={login.messageError} actionHandler={()=>{}} actionText="Fechar" autoHidingTime = '2000'/>
           )
         }
       </ImageBackground>

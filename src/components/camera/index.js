@@ -210,17 +210,32 @@ class Camera extends React.Component {
   }
 
   pickMultiple() {
+    const { data } = this.props;
     ImagePicker.openPicker({
       multiple: true,
       waitAnimationEnd: false,
       includeExif: true,
       forceJpg: true,
     }).then(images => {
-      this.setState({
-        image: null,
-        images: images.map(i => {
-          console.log('received image', i);
-          return { uri: i.path, width: i.width, height: i.height, mime: i.mime };
+      images.map(image => {
+        this.setState({
+          images: [
+            ...this.state.images,
+            { 
+              uri: image.path, 
+              width: image.width, 
+              height: image.height,
+              mine: image.mime,
+            }
+          ],
+          arrayCamera: [
+            ...this.state.arrayCamera,
+            {
+              uri: image.path,
+              type: 'image/jpeg',
+              name: `${data.data_name}.jpg`,
+            }
+          ],
         })
       });
     });//.catch(e => alert(e));

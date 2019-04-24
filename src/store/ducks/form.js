@@ -126,7 +126,6 @@ export const Creators = {
 
 // controla o tamano do array step
 const controlArraySte = state => {
-  //console.tron.log(state, store);
   const arraySize = state.controlArraySize;
   // caso seja null ele pega o tamnho do arra step e retorna
   if (!arraySize) {

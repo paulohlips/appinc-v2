@@ -14,7 +14,6 @@ export function* getLoginRequest(action) {
       yield put(LoginActions.getLoginSucsses(response.data, action.payload.data.inputSave));
     }    
   } catch (err) {
-    //console.tron.log(err)
     yield put(LoginActions.getLoginFailure(err));
   } 
 }

@@ -20,7 +20,6 @@ class PickerItem extends Component {
         const { setPicker, shift, configPicker, valueText } = this.state
         const { receiveProps } = this.props; 
         const size = configPicker.length;
-        //console.tron.log(['asds', item])
         if (item !== undefined) {
             this.setState({ valueText: item.name, valuePicker: item.value });
             receiveProps(item.value);
@@ -43,7 +42,6 @@ class PickerItem extends Component {
     }
 
     renderPicker = props => {
-        //console.tron.log(props);
         return (
             <TouchableOpacity onPress={() => this.setPicker(props.item)}>
                 <View style={styles.onePicker}>

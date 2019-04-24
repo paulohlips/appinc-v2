@@ -154,9 +154,7 @@ class Veiculos extends Component {
   }
 
   getMarcas = data => {
-    //console.tron.log(this.state.dadosMarcas, data);
     data.map(item => {
-      //console.tron.log(item)
       this.setState({
         dadosMarcas: [
           ...this.state.dadosMarcas,
@@ -171,7 +169,6 @@ class Veiculos extends Component {
     this.setState({
       renderPicker: true,
     });
-    // console.tron.log(this.state.dadosMarcas);
   }
 
   pegaModelos = (value) => {
@@ -188,9 +185,7 @@ class Veiculos extends Component {
   }
 
   getModelos = data => {
-    // console.tron.log(data)
     data.map(item => {
-      //console.tron.log(item)
       this.setState({
         dadosModelos: [
           ...this.state.dadosModelos,
@@ -205,7 +200,6 @@ class Veiculos extends Component {
     this.setState({
       renderPickerModelos: true,
     });
-    // console.tron.log(this.state.dadosModelos,)
   }
 
   pegaAno = value => {
@@ -222,9 +216,7 @@ class Veiculos extends Component {
   }
 
   getAno = data => {
-    // console.tron.log(['getano',data])
     data.map(item => {
-      //console.tron.log(item)
       this.setState({
         dadosAno: [
           ...this.state.dadosAno,
@@ -234,13 +226,11 @@ class Veiculos extends Component {
           }
         ]
       })
-      //console.tron.log(['pickerano',item])
 
     })
     this.setState({
       renderPickerAno: true,
     });
-    //console.tron.log(['pickerano',this.state.dadosAno])
   }
 
   saveFormVeiculo = data => {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Alert, Text, TouchableOpacity } from 'react-native';
-import BarcodeScanner from 'react-native-barcode-scanner-google';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -11,7 +10,15 @@ import { Creators as GroupActions } from '../../store/ducks/group';
 
 import { responsividade } from '../../styles';
 
+import { RNCamera } from 'react-native-camera';
+ 
 class Scanner extends Component {
+
+  constructor(props) {
+    super(props);
+    this.camera = null;
+    this.barcodeCodes = [];
+  }
 
   state = {
     vetor: [],
@@ -20,6 +27,11 @@ class Scanner extends Component {
     showButton: true,
     showButton2: false,
     showCode: false,
+    camera: {
+      type: RNCamera.Constants.Type.back,
+      flashMode: RNCamera.Constants.FlashMode.auto,
+      barcodeFinderVisible: true
+    },
   }
 
   componentWillMount() {
@@ -30,16 +42,11 @@ class Scanner extends Component {
 
     if (data.group === 'true') {
       group.dataGroup.map(item => {
-        //console.tron.log(['map array', item])
         item.value.map(components => {
-          //console.tron.log(['map array components', components])
           if (components.index === index) {
-            //console.tron.log('deucerteo', index)
             Object.keys(components).map(key => {
-              //console.tron.log('object map', components, key, data.data_name)
               if (key === data.data_name) {
                 if (components[key].value !== null && components[key].filled === true) {
-                  //console.tron.log('deu input', components[key].value)
                   this.setState({ infoScanner: components[key].value, showCode: true })
                 }
               }
@@ -75,9 +82,7 @@ class Scanner extends Component {
       groupMother,
       startControlArrayGroup,
     } = this.props;
-    //console.tron.log(['group save ', data.group, info.data_name])
     if (infoScanner) {
-      //console.tron.log(['group save2', data.group, info.data_name])
       saveDataGroup({
         index,
         groupMother,
@@ -87,7 +92,6 @@ class Scanner extends Component {
         type: data.component_type
       })
     }
-    console.tron.log('antes de ', info.data_name)
     startControlArrayGroup(info.data_name)
   }
 
@@ -123,6 +127,39 @@ class Scanner extends Component {
     startControlArray();
   }
 
+  onBarCodeRead(scanResult) {
+    this.setState({ infoScanner: scanResult.data, showScanner: false, showButton2: true, showCode: true })
+    if (scanResult.data != null) {
+	  if (!this.barcodeCodes.includes(scanResult.data)) {
+	  this.barcodeCodes.push(scanResult.data);
+	}
+    }
+    return;
+  }
+
+  async takePicture() {
+    if (this.camera) {
+      const options = { quality: 0.5, base64: true };
+      const data = await this.camera.takePictureAsync(options);
+      //console.log(data.uri);
+    }
+  }
+
+  pendingView() {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: 'lightgreen',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Text>Waiting</Text>
+      </View>
+    );
+  }
+
   render() {
     const { data_name, label, hint, default_value, newState } = this.props.data;
     const { showScanner, showButton, showButton2, infoScanner } = this.state;
@@ -134,7 +171,6 @@ class Scanner extends Component {
       this.saveFormScanner({ data_name, default_value });
     }
     if (group.flagGroup) {
-      //console.tron.log('numero de flag gorup camera', group.groupFlag)
       this.saveGroupScanner({ data_name, default_value })
     }
     return (
@@ -150,14 +186,28 @@ class Scanner extends Component {
         {
           showScanner && (
             <View style={{ alignItems: 'center', height: 250 }}>
-              <BarcodeScanner
-                style={{ width: 330, height: 250, rigth: 50 }}
-                onBarcodeRead={infoScanner => {
-                  this.setState({ infoScanner: infoScanner.data }); //Guarda o valor de todos os códigos lidos.
-                  this.setState({ showScanner: false, showButton2: true, showCode: true });
-
+              {
+              <RNCamera
+                ref={ref => {
+                  this.camera = ref;
                 }}
-              />
+                barcodeFinderVisible={this.state.camera.barcodeFinderVisible}
+                barcodeFinderWidth={280}
+                barcodeFinderHeight={220}
+                barcodeFinderBorderColor="white"
+                barcodeFinderBorderWidth={2}
+                defaultTouchToFocus
+                flashMode={this.state.camera.flashMode}
+                mirrorImage={false}
+                onBarCodeRead={this.onBarCodeRead.bind(this)}
+                onFocusChanged={() => {}}
+                onZoomChanged={() => {}}
+                permissionDialogTitle={'Permission to use camera'}
+                permissionDialogMessage={'We need your permission to use your camera phone'}
+                style={{ width: 330, height: 250 }}
+                type={this.state.camera.type}
+            />
+            }
             </View>
 
           )}

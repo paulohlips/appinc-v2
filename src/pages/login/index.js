@@ -16,6 +16,8 @@ import {
   Alert
 } from 'react-native';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as LoginActions } from '../../store/ducks/login';
@@ -95,7 +97,10 @@ class Login extends Component {
     const { btt, viewModal, messageRequest, call } = this.state;
     return (
       <ImageBackground source={require('../../assents/imgs/local_crime.jpg')} style={styles.backgroundImage} >
-        <View style={styles.container}>
+        <KeyboardAwareScrollView
+          contentContainerStyle={styles.container}
+          scrollEnabled={false}
+        >
           <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
           <Text style={styles.title}>Bem-Vindo</Text>
           <Text style={styles.descript}>Por favor, digite suas credenciais</Text>
@@ -136,7 +141,7 @@ class Login extends Component {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+          </KeyboardAwareScrollView>
         {
           login.error && (
             <SnackBar inside content={login.messageError} color="white" />

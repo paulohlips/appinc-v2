@@ -10,6 +10,8 @@ import { View, FlatList, ScrollView, TouchableOpacity, Text, ProgressBarAndroid,
 import styles from './styles';
 import ComponentList from './components/ComponentsList';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 const COMPONENT_EXAMPLE = [
     {
         "hint": "Componente data",
@@ -70,7 +72,10 @@ class StepPage extends Component {
                     goBack={this.props.navigation.goBack}
                 />
 
-                <ScrollView>
+                <KeyboardAwareScrollView
+                    scrollEnabled={true}
+                    extraScrollHeight={50}
+                >
                     {//troca step.components por COMPONENT_EXAMPLE para testar group 
                         step.components.map((item, i) => {
                             i = i + 1;
@@ -85,7 +90,7 @@ class StepPage extends Component {
                                     <ComponentList data={item} index={i} />
                                 </Animated.View>)
                         })}
-                </ScrollView>
+                </KeyboardAwareScrollView>
             </View>
         );
     }

@@ -57,7 +57,6 @@ class Camera extends React.Component {
       for (var key in form.step) {
         if (key === data.data_name) {
           if (form.step[key].filled === true) {
-            console.tron.log('recupera colecao', key, form.step[key])
             this.setState({ 
               images: form.step[key].data, 
               imagePath: form.step[key].value.uri,
@@ -79,7 +78,6 @@ class Camera extends React.Component {
       width: 600,
       height: 600,
     }).then(image => {
-      console.tron.log('ESTADO1', image);
       this.setState({
         image: { 
           uri: image.path, 
@@ -105,7 +103,7 @@ class Camera extends React.Component {
         ],
         imagePath: image.path
       });     
-      console.tron.log('ESTADO', this.state);
+
     }).catch();
   }
  
@@ -324,7 +322,7 @@ class Camera extends React.Component {
       group, // importa
     } = this.props;
     const size = arrayCamera.length;
-    console.tron.log('entrei no save',info, imagePath, image, inputSave, size)
+
 
     if (size > 0) {     
         for (var key in form.step) {
@@ -337,7 +335,7 @@ class Camera extends React.Component {
               filled: true,
               type: info.component_type,
             };
-            console.tron.log('dados1',form)
+
             getSaveStateForm(form);
             form[`leg_${info.data_name}`] = { 
               key: `leg_${info.data_name}`, 
@@ -345,7 +343,7 @@ class Camera extends React.Component {
               filled: true,
               type: 'text', 
             };
-            console.tron.log('dados2',form)
+
 
             getSaveStateForm(form);
             //console.tron.log('entrei form nao grupo', image, imagePath)
@@ -368,7 +366,7 @@ class Camera extends React.Component {
           };
           getSaveStateForm(form);
           form[`leg_${info.data_name}`] = { key: `leg_${info.data_name}`, value: inputSave, data: null, filled: true };
-          console.tron.log('dados2',form)
+
           getSaveStateForm(form);
           //console.tron.log('sem foto', image, imagePath)
         }
@@ -390,7 +388,7 @@ class Camera extends React.Component {
     const { saveStep } = this.props.form;
     const { group } = this.props;
     const { largura_tela } = responsividade;
-    console.tron.log('camera', this.state)
+
     if (saveStep) {
       this.saveFormInput({ data_name, default_value, component_type });
     }

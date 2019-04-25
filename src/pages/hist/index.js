@@ -113,7 +113,7 @@ class Historico extends Component {
           style={styles.box}
           onPress={() => this.restoreForm(item)}
         >
-          <Text style={styles.status1}>{" Minha Perícia" + " - " + item}</Text>
+          <Text style={styles.status1}>{item}</Text>
           <View style={styles.row}>
             <Text style={styles.status1}> Status :</Text>
             <Text style={styles.status}> Em andamento</Text>
@@ -136,7 +136,7 @@ class Historico extends Component {
         }}
       >
         <Text style={styles.status1}>
-          {" Minha Perícia" + " - " + item.matricula}
+          {"Perícia nº" + " :" + item.matricula}
         </Text>
         <View style={styles.row}>
           <Text style={styles.status1}> Status :</Text>

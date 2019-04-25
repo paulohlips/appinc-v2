@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         elevation: 1,
+        zIndex: 1,
       },
   
       card: {

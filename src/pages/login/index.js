@@ -135,6 +135,11 @@ class Login extends Component {
             
           </View>
           </KeyboardAwareScrollView>
+          <HideWithKeyboard>
+            <TouchableOpacity style={styles.serverbutton} onPress={() => { this.navigateToChangeService(); }}>
+            <Icon name='server' size={20} color="rgb(225, 200, 133)" style={styles.icon} />
+            </TouchableOpacity>
+          </HideWithKeyboard>
       </ImageBackground>
      
     );

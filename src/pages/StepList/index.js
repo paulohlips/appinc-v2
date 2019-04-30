@@ -176,7 +176,7 @@ class StepList extends Component {
       .then(response => {
         console.log(response);
         AsyncStorage.setItem('@IDlaudo', response.data.number);
-        // Alert.alert('ID do laudo', 'O número do seu laudo é ' + response.data.number);
+        Alert.alert('ID do laudo', 'O número do seu laudo é ' + response.data.number);
         this.onSendGroup({ 
           userId, 
           token, 

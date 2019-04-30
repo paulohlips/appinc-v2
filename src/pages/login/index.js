@@ -3,6 +3,7 @@ import { StackActions, NavigationActions } from 'react-navigation';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import { ModalCheck } from '../../globalComponents';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 import { SnackBar } from '../../globalComponents';
 import {
   View,
@@ -134,17 +135,6 @@ class Login extends Component {
             
           </View>
           </KeyboardAwareScrollView>
-        {
-          login.error && (
-            <SnackBar visible={login.error} textMessage={login.messageError} actionHandler={()=>{}} actionText="Fechar" autoHidingTime = '2000'/>
-          )
-        }
-      <HideWithKeyboard>
-        <TouchableOpacity style={styles.serverbutton} onPress={() => { this.navigateToChangeService(); }}>
-        <Icon name="server" size={20} color="rgb(225, 200, 133)" style={styles.icon} />
-        </TouchableOpacity>
-
-      </HideWithKeyboard>
       </ImageBackground>
      
     );

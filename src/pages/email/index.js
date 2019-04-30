@@ -145,7 +145,6 @@ class Login extends Component {
             <TextInput
               style={styles.input}
               autoCapitalize="none"
-              autoCorrect={false}
               placeholder="Digite seu ID "
               underlineColorAndroid="rgba(0,0,0,0)"
               onChangeText={inputSave => this.setState({ inputSave })}

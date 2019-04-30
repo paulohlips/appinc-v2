@@ -307,7 +307,7 @@ class Veiculos extends Component {
               <Text style={styles.numberType}>1</Text>
             </View>
             <View style={styles.hintview}>
-              <Text style={styles.hint}>Preencha os campos abaixo para consultar a tabela FIPE</Text>
+              <Text style={styles.hint}>Consulta à tabela FIPE</Text>
             </View>
           </View>
           {
@@ -414,7 +414,7 @@ class Veiculos extends Component {
             <Text style={styles.numberType}>2</Text>
           </View>
           <View style={styles.hintview}>
-            <Text style={styles.hint}>Informe a placa para recuperar dados do DENATRAN</Text>
+            <Text style={styles.hint}>Consulta ao DENATRAN</Text>
           </View>
         </View>
         <View style={styles.cabecalho} >

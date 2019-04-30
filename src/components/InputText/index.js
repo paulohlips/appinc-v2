@@ -125,7 +125,7 @@ class InputText extends Component {
         <TextInput
           style={{ ...styles.input, backgroundColor: (groupFlag === true ? colors.light : 'white') }}
           autoCapitalize="sentences"
-          autoCorrect={false}
+          autoCorrect={true}
           placeholder={"Digite aqui..."}
           maxLength={255}
           underlineColorAndroid="rgba(0,0,0,0)"

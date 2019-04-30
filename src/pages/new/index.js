@@ -184,7 +184,6 @@ class New extends Component {
                   <TextInput
                     style={styles.input}
                     autoCapitalize="words"
-                    autoCorrect={false}
                     maxLength={72}
                     underlineColorAndroid="rgba(0,0,0,0)"
                     onChangeText={inputSave => this.setState({ inputSave })}
@@ -230,41 +229,3 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(New);
-
-/*
- <Picker
-                style={styles.estiloPicker}
-                onValueChange={(hahaha => { this.setState({ baseUrl: hahaha }); this.reqUrl(hahaha); })}
-                selectedValue={this.state.baseUrl}
-              >
-                <Picker.Item label='Selecione a perícia' />
-                <Picker.Item label='Veículos' value='30' />
-                <Picker.Item label='Incêndio' value='32' />
-                <Picker.Item label='Genética Forense' value='33' />
-                <Picker.Item label='Arrombamento de Caixa' value='6' />
-                <Picker.Item label='Catálogo de Componentes' value='1' />
-              </Picker>
-
-              [
-                {
-                  name: 'Veículos',
-                  value: 30,
-                },
-                {
-                  name: 'Incêndio',
-                  value: 32,
-                },
-                {
-                  name: 'Genética Forense',
-                  value: 33,
-                },
-                {
-                  name: 'Arrombamento de Caixa',
-                  value: 6,
-                },
-                {
-                  name: 'Catálogo de Componentes',
-                  value: 1,
-                },
-              ]
-*/

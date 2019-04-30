@@ -144,7 +144,7 @@ class MyDatePicker extends Component {
               maxDate="2100-01-01"
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
-              onDateChange={(date) => { this.props.submitDATE({ date }); this.setState({ date, call: true }); }}
+              onDateChange={(date) => { console.tron.log("OIII") }}
               customStyles={{
                 dateIcon: {
                   width: 0,
@@ -166,6 +166,7 @@ class MyDatePicker extends Component {
         {
           this.state.date && (
             this.getNewDate()
+
           )
         }
       </View>

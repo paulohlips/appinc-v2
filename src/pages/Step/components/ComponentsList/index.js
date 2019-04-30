@@ -12,6 +12,7 @@ import {
   Sketch,
   Vestigios,
   OCR,
+  DifDatas,
   Group,
 } from '../../../../components';
 import styles from './styles';
@@ -24,7 +25,7 @@ class ComponentList extends Component {
   componentDidMount() {
     Animated.timing(this.state.move, {
       toValue: 0,
-      duration: 200, 
+      duration: 200,
       delay: 300
     }).start();
   }
@@ -47,6 +48,13 @@ class ComponentList extends Component {
             )
           }
           {
+            this.props.data.component_type === 'periodo' && (
+              <View style={styles.component}>
+                <DifDatas data={this.props.data} index={this.props.data.group ? this.props.index : null} />
+              </View>
+            )
+          }
+          {
             this.props.data.component_type === 'ocr' && (
               <View style={styles.component}>
                 <OCR data={this.props.data} index={this.props.data.group ? this.props.index : null} />
@@ -56,8 +64,8 @@ class ComponentList extends Component {
           {
             this.props.data.component_type === 'scanner' && (
               <View style={styles.component}>
-                <Scanner 
-                  data={this.props.data} 
+                <Scanner
+                  data={this.props.data}
                   index={this.props.data.group ? this.props.index : null}
                   groupMother={this.props.data.group ? this.props.groupName : null}
                 />
@@ -84,9 +92,9 @@ class ComponentList extends Component {
           {
             this.props.data.component_type === 'camera' && (
               <View style={styles.component}>
-                <Camera 
-                  data={this.props.data} 
-                  index={this.props.data.group ? this.props.index : null} 
+                <Camera
+                  data={this.props.data}
+                  index={this.props.data.group ? this.props.index : null}
                   groupMother={this.props.data.group ? this.props.groupName : null}
                 />
               </View>
@@ -95,9 +103,9 @@ class ComponentList extends Component {
           {
             this.props.data.component_type === 'text' && (
               <View style={styles.component}>
-                <InputText 
-                  data={this.props.data} 
-                  index={this.props.data.group ? this.props.index : null} 
+                <InputText
+                  data={this.props.data}
+                  index={this.props.data.group ? this.props.index : null}
                   groupMother={this.props.data.group ? this.props.groupName : null}
                 />
               </View>
@@ -113,10 +121,10 @@ class ComponentList extends Component {
           {
             this.props.data.component_type === 'date' && (
               <View style={styles.component}>
-                <MyDatePicker 
-                  data={this.props.data} 
+                <MyDatePicker
+                  data={this.props.data}
                   index={this.props.data.group ? this.props.index : null}
-                  groupMother={this.props.data.group ? this.props.groupName : null} 
+                  groupMother={this.props.data.group ? this.props.groupName : null}
                 />
               </View>
             )

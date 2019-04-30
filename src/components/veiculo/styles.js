@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
 
   hintview: {
     margin: responsividade.margin.mainMargin,
+    width: responsividade.LARGURA_INPUT,
     marginTop: responsividade.margin.mainMargin,
   },
 
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
   miniball: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10,
+    //padding: 10,
     borderRadius: 30,
     width: responsividade.LARGURABOLA * 0.73,
     height: responsividade.LARGURABOLA * 0.73,

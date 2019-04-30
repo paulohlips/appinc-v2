@@ -18,7 +18,7 @@ class ChangeService extends Component {
       },
       {
         name: 'Servidor v2',
-        value: '32',
+        value: 'http://35.198.17.69/api/v2',
       },
     ],
     testeParam: '',

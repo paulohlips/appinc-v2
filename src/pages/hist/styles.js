@@ -66,8 +66,8 @@ const styles = StyleSheet.create({
 
         height: 20,
         color: '#002F7F',
-        fontSize:  responsividade.fonts.descriptionSize,
-        fontWeight: '500',
+        fontSize:  responsividade.fonts.nameSize * 0.8,
+        fontWeight: '400',
         lineHeight: 21,
         opacity: 0.6,
         marginTop: responsividade.margin.mainMargin
@@ -77,11 +77,11 @@ const styles = StyleSheet.create({
 
         height: 20,
         color: 'green',
-        fontSize: responsividade.fonts.descriptionSize,
-        fontWeight: '500',
+        fontSize:  responsividade.fonts.nameSize * 0.8,
+        fontWeight: '400',
         lineHeight: 21,
         opacity: 0.6,
-        marginTop: responsividade.margin.mainMargin,
+        marginTop: responsividade.margin.mainMargin
     
       },
       status1: {     
@@ -92,7 +92,16 @@ const styles = StyleSheet.create({
         // opacity: 0.6,
         marginTop: responsividade.margin.mainMargin,
     
-      },    
+      }, 
+      
+      ref: {
+        height: 20,
+        fontSize:  responsividade.fonts.nameSize,
+        fontWeight: '300',
+        lineHeight: 21,
+        marginTop: responsividade.margin.mainMargin
+      },
+
       row: {
         flexDirection: "row",
       },

@@ -28,6 +28,10 @@ class HeaderRedux extends Component {
     AsyncStorage.clear();
   }
 
+  static defaultProps = {
+    color: '#344955',
+  }
+
   render() {
     const {
       showClear,
@@ -52,7 +56,7 @@ class HeaderRedux extends Component {
   
 
     return (
-      <View style={{...styles.header, backgroundColor: this.props.color}}>
+      <View style={{...styles.header, backgroundColor: this.props.color }}>
 
         <StatusBar backgroundColor= {this.props.color} barStyle="light-content" />
           <View style={styles.viewIcon}>

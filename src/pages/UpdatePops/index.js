@@ -82,16 +82,14 @@ class UpdatePops extends Component {
         >
 
           <View style={styles.row}>
-            <Text style={styles.status1}>Perícia {item.form_titulo}</Text>
+            <Text style={styles.status}>Perícia {item.form_titulo} </Text>
           </View>
           <View style={styles.row}>
-            <Text style={styles.status1}> Num ID : {item.form_id}</Text>
+            <Text style={styles.status1}>Num ID: {item.form_id}  |  Versão {item.form_version}</Text>
           </View>
           <View style={styles.row}>
-            <Text style={styles.status1}> Versão {item.form_version}</Text>
+            <Text style={styles.status1}></Text>
           </View>
-          <Text style={styles.status}> Status :</Text>
-
         </TouchableOpacity>
 
       );

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
+import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import { ModalCheck } from '../../globalComponents';
-//import { SnackBar } from '../../globalComponents';
-import SnackBar from 'react-native-snackbar-component'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { SnackBar } from '../../globalComponents';
 import {
   View,
   Text,
@@ -130,11 +131,7 @@ class Login extends Component {
                 Cadastrar
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cadastrobutton} onPress={() => { this.navigateToChangeService(); }}>
-              <Text style={styles.buttonText}>
-                Servidor
-              </Text>
-            </TouchableOpacity>
+            
           </View>
           </KeyboardAwareScrollView>
         {
@@ -142,7 +139,14 @@ class Login extends Component {
             <SnackBar visible={login.error} textMessage={login.messageError} actionHandler={()=>{}} actionText="Fechar" autoHidingTime = '2000'/>
           )
         }
+      <HideWithKeyboard>
+        <TouchableOpacity style={styles.serverbutton} onPress={() => { this.navigateToChangeService(); }}>
+        <Icon name="server" size={20} color="rgb(225, 200, 133)" style={styles.icon} />
+        </TouchableOpacity>
+
+      </HideWithKeyboard>
       </ImageBackground>
+     
     );
   }
 }

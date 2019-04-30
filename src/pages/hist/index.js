@@ -113,10 +113,14 @@ class Historico extends Component {
           style={styles.box}
           onPress={() => this.restoreForm(item)}
         >
-          <Text style={styles.status1}>{item}</Text>
+         <View style={styles.row}>
+            <Text style={styles.status1}>Referência: </Text>
+            <Text style={styles.ref}>{item}</Text>
+          </View>
+          
           <View style={styles.row}>
-            <Text style={styles.status1}> Status :</Text>
-            <Text style={styles.status}> Em andamento</Text>
+            <Text style={styles.status1}>Status: </Text>
+            <Text style={styles.status}>Em andamento</Text>
           </View>
         </TouchableOpacity>
       );
@@ -135,13 +139,15 @@ class Historico extends Component {
           );
         }}
       >
-        <Text style={styles.status1}>
-          {"Perícia nº" + " :" + item.matricula}
-        </Text>
-        <View style={styles.row}>
-          <Text style={styles.status1}> Status :</Text>
-          <Text style={styles.statusEnviado}> Enviado </Text>
-        </View>
+      <View style={styles.row}>
+            <Text style={styles.status1}>Laudo nº: </Text>
+            <Text style={styles.ref}>{item.matricula}</Text>
+      </View>
+        
+      <View style={styles.row}>
+          <Text style={styles.status1}>Status: </Text>
+          <Text style={styles.statusEnviado}>Enviado </Text>
+      </View>
       </TouchableOpacity>
     );
   }

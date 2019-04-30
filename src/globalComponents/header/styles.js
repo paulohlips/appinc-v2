@@ -3,7 +3,6 @@ import { colors, metric, responsividade } from '../../styles';
 
 const styles = StyleSheet.create({
   header: {
-    
     padding: responsividade.padding.mainPadding,
     flexDirection: 'row',
     justifyContent: 'space-between',

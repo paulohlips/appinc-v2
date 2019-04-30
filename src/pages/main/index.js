@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Header } from '../../globalComponents';
 import { Sketch } from '../../components';
 import { responsividade } from '../../styles';
+import { connect } from 'react-redux';
 
 import { NavigationActions, withNavigation, StackActions } from 'react-navigation';
 
@@ -87,7 +88,7 @@ class Main extends Component {
 
 
   render() {
-    const { navigation } = this.props;
+    const { navigation , login } = this.props;
     const { nome } = this.state
     const name = navigation.getParam('nome', 'Nome não cadastrado');
     const { largura_tela } = responsividade;
@@ -113,13 +114,13 @@ class Main extends Component {
               <Image source={require('../../assents/imgs/avatar.png')} style={styles.ImageStyle} />
             </View>
             <View style={styles.name_view}>
-              <Text style={styles.name}>{nome}</Text>
+              <Text style={styles.name}>{login.userName}</Text>
             </View>
           </View>
           <View style={styles.buttons_view}>
             <TouchableOpacity onPress={this.navigateToScreen('NewMenu')}>
               <View style={styles.button}>
-                <Text style={styles.button_text}> NOVA PERÍCIA</Text>
+                <Text style={styles.button_text}>NOVA PERÍCIA</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.navigateToScreen('Hist')}>
@@ -134,4 +135,8 @@ class Main extends Component {
   }
 }
 
-export default Main;
+const mapStateToProps = state => ({
+  login: state.loginState,
+});
+
+export default connect( mapStateToProps , null )(Main);

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
+import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import { ModalCheck } from '../../globalComponents';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import { SnackBar } from '../../globalComponents';
 import {
   View,
@@ -129,15 +132,11 @@ class Login extends Component {
                 Cadastrar
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cadastrobutton} onPress={() => { this.navigateToChangeService(); }}>
-              <Text style={styles.buttonText}>
-                Servidor
-              </Text>
-            </TouchableOpacity>
+            
           </View>
           </KeyboardAwareScrollView>
-
       </ImageBackground>
+     
     );
   }
 }

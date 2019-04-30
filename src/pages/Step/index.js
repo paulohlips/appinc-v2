@@ -80,7 +80,7 @@ class StepPage extends Component {
                         step.components.map((item, i) => {
                             i = i + 1;
                             return (
-                                <Animated.View style={{ ...styles.coluna, top: this.state.move }}>
+                                <Animated.View style={{ ...styles.coluna }}>
                                     <View style={styles.linha}>
                                         <View style={styles.ball}>
                                             <Text style={styles.numberType}>{i}</Text>

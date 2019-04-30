@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 5,
         margin: 5,
-        width: responsividade.LARGURACARD,
-        height: responsividade.ALTURACARD * 1,
+        width: responsividade.LARGURACARD * 0.99,
+        height: responsividade.ALTURACARD * 0.7,
         // justifyContent: "flex-start",
         // alignItems: "center",
         padding: 20,
@@ -86,6 +86,16 @@ const styles = StyleSheet.create({
     },
     status1: {
         height: 20,
+        fontSize: responsividade.fonts.descriptionSize,
+        fontWeight: '500',
+        lineHeight: 21,
+        // opacity: 0.6,
+        marginTop: responsividade.margin.mainMargin,
+
+    },
+
+    status: {
+        height: 20,
         fontSize: responsividade.fonts.nameSize,
         fontWeight: '500',
         lineHeight: 21,
@@ -93,6 +103,7 @@ const styles = StyleSheet.create({
         marginTop: responsividade.margin.mainMargin,
 
     },
+
     row: {
         flexDirection: "row",
     },

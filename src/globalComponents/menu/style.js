@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     profileName: {
         fontSize: responsividade.fonts.descriptionSize*1.1,
         fontWeight: 'bold',
+        width: responsividade.LARGURA_MENU * 0.5,
         color: colors.white,
     },
     buttonsView: {

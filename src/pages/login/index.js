@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { ModalCheck } from '../../globalComponents';
-//import { SnackBar } from '../../globalComponents';
-import SnackBar from 'react-native-snackbar-component'
+import { SnackBar } from '../../globalComponents';
 import {
   View,
   Text,
@@ -137,11 +136,7 @@ class Login extends Component {
             </TouchableOpacity>
           </View>
           </KeyboardAwareScrollView>
-        {
-          login.error && (
-            <SnackBar visible={login.error} textMessage={login.messageError} actionHandler={()=>{}} actionText="Fechar" autoHidingTime = '2000'/>
-          )
-        }
+
       </ImageBackground>
     );
   }

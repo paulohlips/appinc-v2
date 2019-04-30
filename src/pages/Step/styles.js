@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
       fontSize: responsividade.fonts.descriptionSize,
       color: 'black',
       fontWeight: 'bold',
+      right: 30,
     },
 
     coluna:{
@@ -62,9 +63,13 @@ const styles = StyleSheet.create({
     linha: {
       flexDirection: 'row',
       alignItems: 'center',
-    // distância entre componentes
-      // marginTop: 30,
+      justifyContent: 'space-between',
     },
+
+    icon: {
+      marginRight: 5,
+      padding: 15,
+    }
 });
 
 export default styles;

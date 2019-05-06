@@ -52,7 +52,7 @@ class HeaderRedux extends Component {
     } = this.props;
     const { showAlert } = this.state;
     const { largura_tela } = responsividade;
-    console.tron.log(this.props, goBack);
+    // console.tron.log(this.props, goBack);
   
 
     return (

@@ -96,7 +96,7 @@ class Login extends Component {
       <ImageBackground source={require('../../assents/imgs/local_crime.jpg')} style={styles.backgroundImage} >
         <KeyboardAwareScrollView
           contentContainerStyle={styles.container}
-          scrollEnabled={false}
+          scrollEnabled={true}
         >
           <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
           <Text style={styles.title}>Bem-Vindo</Text>

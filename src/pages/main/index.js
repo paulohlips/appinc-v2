@@ -57,14 +57,6 @@ class Main extends Component {
     drawerStatus: null,
   }
 
-  async componentWillMount() {
-    const arrayRef = await AsyncStorage.getItem('teste2');
-    const name = await AsyncStorage.getItem('@AppInc:nome');
-    this.setState({
-      nome: name
-    });
-  }
-
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.navigateToLogin);
   }
@@ -83,9 +75,6 @@ class Main extends Component {
     });
     this.props.navigation.dispatch(resetAction);
   }
-
-  renderSketch = () => { };
-
 
   render() {
     const { navigation , login } = this.props;

@@ -22,6 +22,8 @@ import StepIndicator from 'react-native-step-indicator';
 import Axios from 'axios';
 import Api from '../../services/api';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 const imageCheck = require('../../assents/lottie/warning.json');
 const imageCheck2 = require('../../assents/lottie/check.json');
 
@@ -130,7 +132,12 @@ class Login extends Component {
   render() {
     const { viewModal, messageRequest , viewModals} = this.state;
     return (
-      <View style={styles.container}>
+
+      <KeyboardAwareScrollView
+       contentContainerStyle={styles.container}
+       scrollEnabled= {true}
+      >
+
       <Header
           title=''
           showArrowRegister
@@ -197,7 +204,7 @@ class Login extends Component {
           <SnackBar inside content = {this.state.messageRequest} color = "white" fontcolor = "grey"/>
           )
         }
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
   onPageChange(position){

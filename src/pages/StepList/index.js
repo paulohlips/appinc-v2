@@ -146,6 +146,7 @@ class StepList extends Component {
       reference, 
       contentGroup,
       dataGroup,
+      formName: formulario.form.form_name,
     });
 
    
@@ -159,6 +160,7 @@ class StepList extends Component {
       reference, 
       contentGroup,
       dataGroup,
+      formName,
     } = data;
     console.log('onSendForm', contentGroup);    
     
@@ -183,6 +185,7 @@ class StepList extends Component {
           reference,       
           dataGroup,
           idForm: response.data.number,
+          formName,
         });
       })
       .catch(error => {
@@ -198,6 +201,7 @@ class StepList extends Component {
       reference,       
       dataGroup,
       idForm,
+      formName,
     } = data
     console.log('onSendGroup');
     
@@ -220,14 +224,16 @@ class StepList extends Component {
       console.log({ RESULTADO_GROUP_DATA: formGroup})
       axios({
         method: 'post',
-        url: 'http://35.198.17.69/api/pericia/formularios/envio/teste',
+        url: 'http://35.198.17.69/api/pericia/formularios/envio/grupo',
         data: formGroup,
         headers: {
           'Content-Type': 'multipart/form-data',
           'matricula': userId,
           'referencia': '',
           'x-Token': token,
-          'id-form:': idForm,
+          'form-id': idForm,
+          'form-group': group.key,
+          'form-name': formName,
         }
       })
         .then(function (response) {

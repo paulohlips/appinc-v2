@@ -20,6 +20,8 @@ import {
 } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 const imageCheck = require('../../assents/lottie/warning.json');
 
 import styles from './styles';
@@ -104,6 +106,7 @@ class Login extends Component {
     try {
       const response = await Api.user.postCadastroId({ matricula: inputSave })
       if (response.status === 200) {
+        AsyncStorage.setItem('@IdRegistro', inputSave);
         this.navigateToHash();
       } else {
         this.setState({ viewModal: true, messageRequest: response.data.mensagem, load: false , cont: true});
@@ -111,22 +114,6 @@ class Login extends Component {
     } catch {
       this.setState({ viewModal: true, messageRequest: response.data.mensagem });
     }
-
-    /* Axios({
-      method: 'post',
-      url: 'http://35.198.17.69/api/pericia/usuario/cadastro',
-      data: { matricula: inputSave },
-    })
-      .then((resp) => {
-        if (resp.status === 200) {
-          this.navigateToHash();
-        } else {
-          this.setState({ viewModal: true, messageRequest: resp.data.mensagem });
-        }
-      }).catch(err => {
-        this.setState({ viewModal: true, messageRequest: resp.data.mensagem });
-      });*/
-    AsyncStorage.setItem('@IdRegistro', inputSave);
   }
 
   onPressAnimated = async () => {
@@ -137,7 +124,10 @@ class Login extends Component {
     const { viewModal, messageRequest, load ,cont } = this.state;
     return (
 
-      <View style={styles.container}>
+      <KeyboardAwareScrollView
+       contentContainerStyle={styles.container}
+       scrollEnabled= {true}
+      >
        <Header
           title=''
           showArrowRegister
@@ -193,7 +183,7 @@ class Login extends Component {
             <SnackBar inside content={this.state.messageRequest} color="white" />
           )
         }
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
   onPageChange(position) {
@@ -201,9 +191,4 @@ class Login extends Component {
   }
 }
 
-
 export default Login;
-
-/*
- <Image style={styles.image} source={require('../../assents/imgs/policia-federal-logo.png')} />
-*/

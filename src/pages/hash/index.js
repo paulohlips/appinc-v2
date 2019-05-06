@@ -22,6 +22,8 @@ import StepIndicator from 'react-native-step-indicator';
 import Axios from 'axios';
 import Api from '../../services/api';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 const imageCheck = require('../../assents/lottie/warning.json');
 
 import styles from './styles';
@@ -107,6 +109,7 @@ class Login extends Component {
     try {
       const response = await Api.user.postConferePIN({ matricula: idRegistro, pin: inputSave });
       if (response.status === 200) {
+        AsyncStorage.setItem('@PinRegistro', inputSave);
         this.navigateToPassword();
       } else {
         this.setState({ viewModal: true, messageRequest: response.data.mensagem });
@@ -114,27 +117,16 @@ class Login extends Component {
     } catch {
       this.setState({ viewModal: true, messageRequest: response.data.mensagem });
     }
-    /*Axios({
-      method: 'post',
-      url: 'http://35.198.17.69/api/pericia/usuario/validaPin',
-      data: { matricula: idRegistro, pin: inputSave },
-    })
-      .then((resp) => {
-        if (resp.status === 200) {
-          this.navigateToPassword();
-        } else {
-          this.setState({ viewModal: true, messageRequest: resp.data.mensagem });
-        }
-      }).catch(err => {
-        this.setState({ viewModal: true, messageRequest: resp.data.mensagem });
-      });*/
-    AsyncStorage.setItem('@PinRegistro', inputSave);
   }
 
   render() {
     const { viewModal, messageRequest } = this.state;
     return (
-      <View style={styles.container}>
+      <KeyboardAwareScrollView
+       contentContainerStyle={styles.container}
+       scrollEnabled= {true}
+      >
+
       <Header
           title=''
           showArrowRegister
@@ -181,7 +173,7 @@ class Login extends Component {
             <SnackBar inside content = {this.state.messageRequest} color = "white"/>
           )
         }
-      </View>
+      </KeyboardAwareScrollView>
     );
   }
   onPageChange(position) {
@@ -189,9 +181,4 @@ class Login extends Component {
   }
 }
 
-
 export default Login;
-
-/*
- <Image style={styles.image} source={require('../../assents/imgs/policia-federal-logo.png')} />
-*/

@@ -261,14 +261,14 @@ class StepList extends Component {
       this.props.setSaveContentForm(form);
       this.setState({ formRedux: false });
     }
-    const { navigation } = this.props;
+    const { navigation, reference } = this.props;
     const { viewError, load, saved } = this.state;
     let i = 0;
 
     return (
       <View style={styles.container}>
         <Header
-          title={form.area}
+          title={reference}
           showArrow
           showInfo
           info={form.info_form}

@@ -97,10 +97,11 @@ class Historico extends Component {
     });*/
   }
   restoreForm = async name => {
-    const { navigation, restoreFormState, setForm } = this.props;
+    const { navigation, restoreFormState, setForm, getReference } = this.props;
     const formAsync = await AsyncStorage.getItem(name);
     const form = JSON.parse(formAsync);
-
+    
+    await getReference(form.ref);
     await setForm(form.form);
     await restoreFormState(form);
     navigation.navigate("StepList");

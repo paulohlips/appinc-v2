@@ -20,6 +20,7 @@ class DifDatas extends Component {
     state = {
         data: null,
         formattedDate: "DD/MM/AAAA",
+        formattedDate2: "DD/MM/AAAA",
         dataAtual: '2019-01-21',
         showDate: false,
         call: true,
@@ -59,11 +60,13 @@ class DifDatas extends Component {
         const oldDate = new Date(this.state.date);
         const newDate = moment.utc(oldDate).format("DD/MM/YYYY");
 
+        const oldDate2 = new Date(this.state.date2);
+        const newDate2 = moment.utc(oldDate2).format("DD/MM/YYYY");
+
         if (this.state.call) {
             this.state.formattedDate = newDate;
-            this.setState({ formattedDate: newDate, call: false });
+            this.setState({ formattedDate: newDate, formattedDate2: newDate2, call: false });
         }
-
     }
 
     saveGroupDate = info => {
@@ -166,7 +169,7 @@ class DifDatas extends Component {
                                     color: 'blue'
                                 },
                             }}
-                            onDateChange={(date) => { this.setState({ date, showDate: true, call: true }); console.tron.log("INICAL", date) }}
+                            onDateChange={(date) => { this.setState({ date, showDate: true, call: true }); }}
                         />
                     </View>
                 </View>
@@ -176,7 +179,7 @@ class DifDatas extends Component {
                     <View style={styles.parale}>
                         <DatePicker
                             mode="date"
-                            placeholder={this.state.formattedDate}
+                            placeholder={this.state.formattedDate2}
                             format="YYYY-MM-DD"
                             minDate={this.state.date}
                             maxDate="2100-01-01"
@@ -196,7 +199,7 @@ class DifDatas extends Component {
                                     color: 'blue'
                                 },
                             }}
-                            onDateChange={(date2) => { this.setState({ date2, showDate: true, call: true }); console.tron.log("FINAL", date2) }}
+                            onDateChange={(date2) => { this.setState({ date2, showDate: true, call: true }); }}
                         />
                     </View>
                 </View>

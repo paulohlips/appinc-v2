@@ -36,13 +36,9 @@ class Camera extends React.Component {
     if (data.group === 'true') {
 
       group.dataGroup.map(item => {
-        //console.tron.log(['map array', item])
         item.value.map(components => {
-          //console.tron.log(['map array components', components])
           if (components.index === index) {
-            //onsole.tron.log('deucerteo', index)
             Object.keys(components).map(key => {
-              //console.tron.log('object map', components, key, data.data_name)
               if (key === data.data_name) {
                 if (components[key].value !== null && components[key].value !== undefined) {
                   this.setState({ image: components[key].extra, imagePath: components[key].value.uri });
@@ -118,7 +114,6 @@ class Camera extends React.Component {
         images: null,
         imagePath: image.path
       });
-      //console.tron.log('ESTADO', image);
     }).catch(e => {
       console.log(e);
       //Alert.alert(e.message ? e.message : e);
@@ -199,7 +194,7 @@ class Camera extends React.Component {
         images: null,
         imagePath: image.path
       });
-      //console.tron.log('ESTADO', image);
+
 
     }).catch(e => {
       console.log(e);
@@ -289,9 +284,8 @@ class Camera extends React.Component {
       groupMother,
       startControlArrayGroup,      
     } = this.props;    
-    //console.tron.log(['group save ', data.group, info.data_name])
+
     if (imagePath || image) {
-      //console.tron.log(['group save2', data.group, info.data_name])
       saveDataGroup({
         index,
         groupMother,
@@ -305,7 +299,6 @@ class Camera extends React.Component {
         type: data.component_type
       })
     }
-    //console.tron.log('antes de ', info.data_name)
     startControlArrayGroup(info.data_name)
   }
 
@@ -346,7 +339,6 @@ class Camera extends React.Component {
 
 
             getSaveStateForm(form);
-            //console.tron.log('entrei form nao grupo', image, imagePath)
           }
         }
       
@@ -368,7 +360,6 @@ class Camera extends React.Component {
           form[`leg_${info.data_name}`] = { key: `leg_${info.data_name}`, value: inputSave, data: null, filled: true };
 
           getSaveStateForm(form);
-          //console.tron.log('sem foto', image, imagePath)
         }
       }
     }
@@ -393,7 +384,6 @@ class Camera extends React.Component {
       this.saveFormInput({ data_name, default_value, component_type });
     }
     if (group.flagGroup) {
-      //console.tron.log('numero de flag gorup camera', group.groupFlag)
       this.saveGroupCamera({ data_name, default_value })
     }
     return (

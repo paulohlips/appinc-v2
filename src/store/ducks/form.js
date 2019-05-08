@@ -144,7 +144,6 @@ const controlArraySte = state => {
 const saveFormAsync = async data => {
   const arrayRef = await AsyncStorage.getItem('arrayRef');
   let arrayControl = false;
-  console.tron.log("RECUPARANDO O REF\n", data);
   // verifica se ja existe um array de referencia se nao cria um e ja puxa a primeira referencia pra primeiro campod do array
   if (arrayRef === null) {
     const array = [];

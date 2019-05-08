@@ -37,6 +37,7 @@ class StepList extends Component {
     matriculaAsync: '',
     saved: false,
     error: false,
+    mensageError: 'Error',
   }
 
   componentWillMount() {
@@ -80,8 +81,8 @@ class StepList extends Component {
     AsyncStorage.clear();
   }
 
-  errorMessage = () => {
-    this.setState({ viewError: true });
+  errorMessage = msg => {
+    this.setState({ viewError: true, mensageError: msg });
     let that = this;
     setTimeout(function () { that.setState({ viewError: false }) }, 4000);
   }
@@ -113,12 +114,16 @@ class StepList extends Component {
       contentGroup = true;
     }
 
+    console.tron.log('arrayRef\n', array);
+
     array.map(item => {
       if (item === formulario.ref) {
         array.splice(count, 1);
       }
       count += 1;
     });
+
+    console.tron.log('reset arrayRef\n', array);
 
     await AsyncStorage.setItem('arrayRef', JSON.stringify(array));
 
@@ -171,26 +176,46 @@ class StepList extends Component {
       headers: {
         'Content-Type': 'multipart/form-data',
         'matricula': userId,
-        'referencia': '',
+        'referencia': reference,
         'x-Token': token,
       }
     })
       .then(response => {
-        console.log(response);
-        AsyncStorage.setItem('@IDlaudo', response.data.number);
-        Alert.alert('ID do laudo', 'O número do seu laudo é ' + response.data.number);
-        this.onSendGroup({ 
-          userId, 
-          token, 
-          reference,       
-          dataGroup,
-          idForm: response.data.number,
-          formName,
-        });
+        console.tron.log('response', response);
+        if (response.status === 206) {
+          console.tron.log('teste', response.data, response.data.mensagem);
+          this.errorMessage(response.data.mensagem);
+        } else {
+          AsyncStorage.setItem('@IDlaudo', response.data.number);
+          Alert.alert('ID do laudo', 'O número do seu laudo é ' + response.data.number);
+          this.onSendGroup({ 
+            userId, 
+            token, 
+            reference,       
+            dataGroup,
+            idForm: response.data.number,
+            formName,
+          });
+        }       
       })
       .catch(error => {
-        console.log(error); 
-        this.errorMessage();
+        var mensage;
+        if (error.response.status === 404) {
+          mensage = `${error.response.status} - Não encontrado`;
+          console.tron.log('error 404', error, mensage); 
+          // this.errorMessage(mensage);
+        }
+        else if(error.response.status === 403) {
+          mensage = `${error.response.status} - Bloqueado pelo Firewall`;
+        }
+        else if(error.response.status === 500) {
+          mensage = `${error.response.status} - Error interno`;
+        }
+        else if(error.response.status === 0) {
+          mensage = `${error.response.status} - Formato incorreto`;
+        }        
+        console.tron.log('error form', error, mensage); 
+        this.errorMessage(mensage);
       });
   }
 
@@ -246,6 +271,7 @@ class StepList extends Component {
       
     });
 
+    this.props.navigation.navigate('Hist');
     
   }
 
@@ -262,9 +288,10 @@ class StepList extends Component {
       this.setState({ formRedux: false });
     }
     const { navigation, reference } = this.props;
-    const { viewError, load, saved } = this.state;
+    const { viewError, load, saved, mensageError } = this.state;
     let i = 0;
 
+    console.tron.log('msg error', mensageError)
     return (
       <View style={styles.container}>
         <Header
@@ -276,7 +303,7 @@ class StepList extends Component {
         />
         {
           viewError && (
-            <SnackBar outside content="Sem conexão!" color='#3C3C46' fontcolor="white" />
+            <SnackBar outside content={mensageError} color='#3C3C46' fontcolor="white" />
           )
         }
 

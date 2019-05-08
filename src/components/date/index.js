@@ -144,7 +144,6 @@ class MyDatePicker extends Component {
               maxDate="2100-01-01"
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
-              onDateChange={(date) => { console.tron.log("OIII") }}
               customStyles={{
                 dateIcon: {
                   width: 0,

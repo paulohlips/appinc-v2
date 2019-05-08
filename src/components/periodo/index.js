@@ -18,11 +18,13 @@ import { responsividade } from '../../styles';
 class DifDatas extends Component {
 
     state = {
-        date: null,
+        data: null,
         formattedDate: "DD/MM/AAAA",
         dataAtual: '2019-01-21',
         showDate: false,
         call: true,
+        dataInicio: null,
+        dataFinal: null,
     }
 
 
@@ -120,7 +122,7 @@ class DifDatas extends Component {
         const { data_name, label, hint, default_value, newState } = this.props.data
         const { saveStep } = this.props.form;
         const { group } = this.props
-        const { showDate } = this.state;
+        const { showDate, dataInicio, dataFinal } = this.state;
         const { largura_tela } = responsividade;
 
         if (saveStep) {
@@ -135,6 +137,13 @@ class DifDatas extends Component {
                 <View style={styles.button}>
                     <View style={styles.square}><Icon name="date-range" size={largura_tela < 430 ? 28 : 40} color="black" style={styles.icon} /></View>
                     <View style={styles.parale}>
+
+                        {/* <CheckBox
+                            title={"Segurança do local"}
+                            checked={this.state.checked2}
+                            onPress={() => this.setState({ checked2: !this.state.checked2 })}
+                        /> */}
+
                         <DatePicker
                             mode="date"
                             placeholder={this.state.formattedDate}
@@ -143,7 +152,6 @@ class DifDatas extends Component {
                             maxDate="2100-01-01"
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
-                            onDateChange={(date) => { console.tron.log("OIII") }}
                             customStyles={{
                                 dateIcon: {
                                     width: 0,
@@ -158,7 +166,7 @@ class DifDatas extends Component {
                                     color: 'blue'
                                 },
                             }}
-                            onDateChange={(date) => { this.setState({ date, showDate: true, call: true }); }}
+                            onDateChange={(date) => { this.setState({ date, showDate: true, call: true }); console.tron.log("INICAL", date) }}
                         />
                     </View>
                 </View>
@@ -174,7 +182,6 @@ class DifDatas extends Component {
                             maxDate="2100-01-01"
                             confirmBtnText="Confirm"
                             cancelBtnText="Cancel"
-                            onDateChange={(date) => { console.tron.log("OIII") }}
                             customStyles={{
                                 dateIcon: {
                                     width: 0,
@@ -189,7 +196,7 @@ class DifDatas extends Component {
                                     color: 'blue'
                                 },
                             }}
-                            onDateChange={(date) => { this.setState({ date, showDate: true, call: true }); }}
+                            onDateChange={(date2) => { this.setState({ date2, showDate: true, call: true }); console.tron.log("FINAL", date2) }}
                         />
                     </View>
                 </View>

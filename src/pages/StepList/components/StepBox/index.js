@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 //redux
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Creators as FormsActions } from '../../../../store/ducks/form'
-import { Creators as GroupActions } from '../../../../store/ducks/group'
+import { Creators as FormsActions } from '../../../../store/ducks/form';
+import { Creators as GroupActions } from '../../../../store/ducks/group';
+import { Creators as NotesActions } from '../../../../store/ducks/notes';
 
 // styles
 import { View, Text, TouchableOpacity, ProgressBarAndroid, Animated } from 'react-native';
@@ -26,7 +27,7 @@ class StepBoxComponent extends Component {
     array: '',
     paolo: 2,
 
-    move: new Animated.Value(30),
+    move: new Animated.Value(0),
   }
 
   componentDidMount() {
@@ -42,7 +43,8 @@ class StepBoxComponent extends Component {
       getCreateForm, 
       steps, 
       formState, 
-      createDataGroup, 
+      createDataGroup,
+      creteArrayNotes,
     } = this.props;
 
     this.setState({ createdForms: true });
@@ -80,6 +82,7 @@ class StepBoxComponent extends Component {
       steps.item.components.forEach(component => {
 
         const form = {};
+        let notes = {};        
         let group = {};
         let prototype = {};
 
@@ -119,7 +122,13 @@ class StepBoxComponent extends Component {
             type: component.component_type
           };
         }
-        
+
+        notes = {
+          key: component.data_name,
+          value: null,
+        }
+        console.tron.log('notes', notes);
+        creteArrayNotes(notes);        
         getCreateForm(form);
         arrayProgress.array.push(component.data_name);
         const lengthArray = arrayProgress.array.length;
@@ -204,7 +213,12 @@ const mapStateToProps = state => ({
   form: state.formState,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({...FormsActions, ...GroupActions }, dispatch);
+const mapDispatchToProps = dispatch => 
+  bindActionCreators({
+    ...FormsActions, 
+    ...GroupActions,
+    ...NotesActions,
+  }, dispatch);
 
 const StepBox = connect(mapStateToProps, mapDispatchToProps)(StepBoxComponent);
 

@@ -12,9 +12,8 @@ const api = axios.create({
   baseURL: URL,
 });
 
-const tokenAuth = null;
 
-const setToken = (token, matricula) => {
+const setToken = (token, matricula) => { 
   axios.defaults.headers.common['X-Token'] = `${token}`;
   axios.defaults.headers.common['matricula'] = `${matricula}`;
 }

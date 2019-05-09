@@ -19,6 +19,7 @@ import {
 } from "react-native";
 import styles from "./styles";
 import ComponentList from "./components/ComponentsList";
+import ComponentBox from "./components/ComponentBox";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -99,34 +100,9 @@ class StepPage extends Component {
           step.components.map((item, i) => {
             i = i + 1;
             
-            console.tron.log(viewModalArray);
+            console.tron.log(item, i);
             return (
-              <Animated.View style={{ ...styles.coluna, top: this.state.move }}>
-                <View style={styles.linha}>
-                  <View style={styles.ball}>
-                    <Text style={styles.numberType}>{i}</Text>
-                  </View>
-                  <Text style={styles.textType}> {item.label}: </Text>
-                  <TouchableOpacity onPress={() => this.onCloseModal()}>
-                    <Icon
-                      name="ellipsis-h"
-                      size={15}
-                      color="black"
-                      style={styles.icon}
-                    />
-                  </TouchableOpacity>
-                </View>
-                <ComponentList data={item} index={i} />
-                {
-                    viewModal && (
-                        <NotesForm 
-                            viewNotes={viewModal} 
-                            onCloseNotes={this.onCloseModal} 
-                            data={item}
-                        />
-                    )
-                }
-              </Animated.View>
+              <ComponentBox data={item} num={i} />
             );
           })}
         </KeyboardAwareScrollView>        

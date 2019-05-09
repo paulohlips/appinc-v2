@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { responsividade } from '../../styles';
 
 const styles = StyleSheet.create({
     container: {
@@ -8,8 +9,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0, 0.3)'
     },
     box: {
-        width: 200,
-        height: 55,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#FFF',
@@ -17,7 +16,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 275,
-        height: 40,
+        height: 55,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
@@ -29,6 +28,22 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginRight: 5,
+    },
+
+    input: {        
+        height: 150,
+        width: responsividade.largura_tela *0.95,
+    },
+
+    buttonSave: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: responsividade.margin.mainMargin * 2,
+        width: responsividade.LARGURA_BUTTON * 0.7,
+        height: responsividade.ALTURA_BUTTON,
+        borderRadius: responsividade.BORDER_RADIUS_BUTTON,
+        backgroundColor: '#F9AA33',
+        elevation: 1,
     }
 
 });

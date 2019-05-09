@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as FormActions } from '../../store/ducks/form';
 import { Creators as GroupActions } from '../../store/ducks/group';
+import { Creators as NoteActions } from '../../store/ducks/notes';
 
 // styles
 import { View, TextInput, Text } from 'react-native';
@@ -41,6 +42,11 @@ class InputText extends Component {
         }
       }
     }
+  }
+
+  saveNoteInput = () => {
+    const { inputSave } = this.state;
+    console.tron.log('askjdhga', inputSave);
   }
 
   saveGroupInput = info => {
@@ -82,9 +88,10 @@ class InputText extends Component {
       groupMother,
       startControlArrayGroup,
     } = this.props;
+    console.tron.log('entreinput', inputSave, data.note);
     if (inputSave) {
-      if (data.group === 'jhg') {
-        saveDataGroup({ index, groupMother, name: info.data_name, data: inputSave })
+      if (data.note === true) {
+        console.tron.log('entrei aqui input notes', inputSave);
       } else {
         for (var key in form.step) {
           if (key === info.data_name) {
@@ -109,15 +116,25 @@ class InputText extends Component {
   }
 
   render() {
-    const { data_name, label, hint, default_value, newState, groupFlag } = this.props.data;
-    const { group } = this.props
+    const { 
+      data_name,
+      label, hint,
+      default_value,
+      newState,
+      groupFlag,
+      note,
+    } = this.props.data;
+    const { group, noteState } = this.props
     const { saveStep, step } = this.props.form;
-
+    console.tron.log('input', note, this.props.data);
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });
     }
     if (group.flagGroup) {
       this.saveGroupInput({ data_name, default_value })
+    }
+    if (noteState.saveNote) {
+      this.saveNoteInput();
     }
     return (
       <View style={{ ...styles.container, backgroundColor: (groupFlag === true ? 'white' : null) }}>
@@ -141,9 +158,14 @@ class InputText extends Component {
 const mapStateToProps = state => ({
   form: state.formState,
   group: state.groupState,
+  noteState: state.noteState,
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ ...FormActions, ...GroupActions }, dispatch);
+  bindActionCreators({ 
+    ...FormActions, 
+    ...GroupActions,
+    ...NoteActions, 
+  }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(InputText);

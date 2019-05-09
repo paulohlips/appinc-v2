@@ -136,16 +136,10 @@ class DifDatas extends Component {
         }
         return (
             <View style={styles.container}>
-
+                <Text style={styles.button_text}>Data Inicial</Text>
                 <View style={styles.button}>
                     <View style={styles.square}><Icon name="date-range" size={largura_tela < 430 ? 28 : 40} color="black" style={styles.icon} /></View>
                     <View style={styles.parale}>
-
-                        {/* <CheckBox
-                            title={"Segurança do local"}
-                            checked={this.state.checked2}
-                            onPress={() => this.setState({ checked2: !this.state.checked2 })}
-                        /> */}
 
                         <DatePicker
                             mode="date"
@@ -174,6 +168,7 @@ class DifDatas extends Component {
                     </View>
                 </View>
 
+                <Text style={styles.button_text}>Data Final</Text>
                 <View style={styles.button}>
                     <View style={styles.square}><Icon name="date-range" size={largura_tela < 430 ? 28 : 40} color="black" style={styles.icon} /></View>
                     <View style={styles.parale}>

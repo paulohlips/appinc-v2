@@ -7,7 +7,7 @@ export function* getLoginRequest(action) {
   try {
     const response = yield call(Api.user.loginUser,
       { matricula: action.payload.data.inputSave, pass: action.payload.data.password });
-
+    
     if (response.status === 206) {
       yield put(LoginActions.getLoginFailure(response.data.mensagem));
     } else {

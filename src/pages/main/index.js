@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 
 import { NavigationActions, withNavigation, StackActions } from 'react-navigation';
 
+
 const dias = 23;
 class Main extends Component {
 
@@ -20,41 +21,56 @@ class Main extends Component {
     this.props.navigation.dispatch(navigateAction);
   }
 
-
   static navigationOptions = {
     header: null,
   }
 
   state = {
     nome: '',
-  }
-
-
-  openDrawer = () => {
-    const { drawerStatus } = this.state;
-
-    if (drawerStatus === true) {
-    }
-  }
-
-  // requestFroms = () => {
-  //   axios.get('http://35.198.17.69/api/pericia/formularios/4')
-  //     .then((resp) => {
-  //       AsyncStorage.setItem('@Form', JSON.stringify(resp.data));
-  //     }).catch(err => {
-  //     });
-  // }
-
-  // requestQuerry = () => {
-  //   axios.get('http://35.243.140.44/api/query')
-  //     .then((resp) => {
-  //       AsyncStorage.setItem('@Querry', JSON.stringify(resp.data));
-  //     }).catch(err => {
-  //     });
-  // }
-
-  state = {
+    day: 0,
     drawerStatus: null,
+  }
+  
+  componentWillMount() {
+    const { login } = this.props;
+
+    let days;
+    const currentDate = new Date();
+    const date =  new Date(login.valtoken.replace(' ','T'));
+    console.tron.log('date token', days, currentDate, date, currentDay, dateDay, currentMonth, dateMonth);
+   
+
+    const currentDay = currentDate.getDate();
+    const currentMonth = currentDate.getMonth();
+
+    const dateDay = date.getDate();
+    const dateMonth = date.getMonth();
+
+    if (dateMonth > currentMonth) {
+      if (dateDay < currentDay) {
+        days = (30 - currentDay) + dateDay;
+      } else {
+        days = 30;
+      }
+    } else {
+      days = dateDay - currentDay;
+    }
+    
+    
+    console.tron.log('date token', days, currentDate, date, currentDay, dateDay, currentMonth, dateMonth);
+    this.setState({ day: days })  
+  }
+
+  convertDate = starttime => {
+    // Your default date object  
+    //var starttime = new Date();
+    // Get the iso time (GMT 0 == UTC 0)
+    var isotime = new Date((new Date(starttime)).toISOString() );    
+    var fixedtime = new Date(isotime.getTime()-(starttime.getTimezoneOffset()*60000));    
+    var formatedMysqlString = fixedtime.toISOString().slice(0, 19).replace('T', ' ');
+    console.log( formatedMysqlString );
+
+    return formatedMysqlString;
   }
 
   componentDidMount() {
@@ -63,6 +79,14 @@ class Main extends Component {
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress');
+   
+  }
+
+  openDrawer = () => {
+    const { drawerStatus } = this.state;
+
+    if (drawerStatus === true) {
+    }
   }
 
   navigateToLogin = async () => {
@@ -78,10 +102,10 @@ class Main extends Component {
 
   render() {
     const { navigation , login } = this.props;
-    const { nome } = this.state
+    const { nome, day } = this.state
     const name = navigation.getParam('nome', 'Nome não cadastrado');
     const { largura_tela } = responsividade;
-
+    console.tron.log(day);
     return (
       <View style={styles.container}>
         <Header
@@ -94,7 +118,7 @@ class Main extends Component {
         <View style={styles.bodyS}>
           <View style={styles.tokenView}>
             <Text style={styles.token}>Token válido por </Text>
-            <Text style={styles.tokenD}>{dias}</Text>
+            <Text style={styles.tokenD}>{day}</Text>
             <Text style={styles.token}> dias</Text>
           </View>
 

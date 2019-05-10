@@ -58,10 +58,22 @@ class NotesForm extends Component {
               )            
             }
             {
-              viewAudio && (
+              viewInput && (
                 <View style={styles.box}>
                   <View style={styles.input}>
                     <InputText data={{...dataInput, data_name: data.data_name}}  />
+                  </View>
+                  <TouchableOpacity style={styles.buttonSave} onPress={() => this.saveInputNote()}>                 
+                      <Text style={styles.textButton}>SALVAR NOTA</Text>
+                  </TouchableOpacity>
+                </View>
+              )
+            }
+            {
+              viewAudio && (
+                <View style={styles.box}>
+                  <View style={styles.input}>
+                    <AudioRec data={{...dataInput, data_name: data.data_name}}  />
                   </View>
                   <TouchableOpacity style={styles.buttonSave} onPress={() => this.saveInputNote()}>                 
                       <Text style={styles.textButton}>SALVAR NOTA</Text>

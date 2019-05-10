@@ -40,8 +40,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'green',
     opacity: 0.5,
-    paddingVertical: 10,
-   
+    paddingVertical: 10,   
   }
 
 });

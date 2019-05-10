@@ -72,7 +72,6 @@ const styles = StyleSheet.create({
       fontWeight: '200',
     },
 
-
     icon:{
       color: 'black',
     },
@@ -88,6 +87,13 @@ const styles = StyleSheet.create({
       // width: (responsividade.LARGURABOLA*1.5),
       // height: (responsividade.LARGURABOLA*1.5),
     },
+    msgsave: {
+      fontSize: responsividade.fonts.descriptionSize * 0.9,
+      fontWeight: 'bold',
+      color: 'green',
+      opacity: 0.5,
+      paddingVertical: 10,   
+    }
 });
 
 export default styles;

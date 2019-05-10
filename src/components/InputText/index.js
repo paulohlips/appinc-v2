@@ -16,10 +16,11 @@ import { colors } from '../../styles';
 class InputText extends Component {
   state = {
     inputSave: null,
+    savedNote: false,
   }
 
   componentDidMount() {
-    const { form, data, group, index } = this.props;
+    const { form, data, group, index, noteState } = this.props;
 
     if (data.group === 'true') {
       group.dataGroup.map(item => {
@@ -42,6 +43,21 @@ class InputText extends Component {
         }
       }
     }
+
+    console.tron.log('did', data, data.note, data.default_value);
+    if (data.note) {
+      noteState.data.map(note => {
+        if (note.key === data.data_name) {
+          this.setState({ inputSave: note.value });
+        }
+      })
+    }
+  }
+
+  saved() {
+    this.setState({ savedNote: true });
+    let that = this;
+    setTimeout(function () { that.setState({ savedNote: false }); }, 4000);
   }
 
   saveNoteInput = () => {
@@ -124,9 +140,27 @@ class InputText extends Component {
       groupFlag,
       note,
     } = this.props.data;
-    const { group, noteState } = this.props
+    const { savedNote } = this.state;
+    const { group, noteState, resetSaveNote } = this.props
     const { saveStep, step } = this.props.form;
-    console.tron.log('input', note, this.props.data);
+    if (note){
+      if (noteState.saveNote) {
+        console.tron.log('save input', this.state.inputSave);
+        noteState.data.map(note => {
+          if (note.key === data_name) {
+            this.props.addNote({
+              key: data_name,
+              value: this.state.inputSave,
+            });
+          }
+        })
+        this.saved();        
+        resetSaveNote();
+      }
+      
+      console.tron.log('input', note, this.props.data, this.state.inputSave);
+    }
+    
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });
     }
@@ -134,13 +168,20 @@ class InputText extends Component {
       this.saveGroupInput({ data_name, default_value })
     }
     if (noteState.saveNote) {
-      this.saveNoteInput();
+      console.tron.log('save input', this.state.inputSave);
+      
+      // this.saveNoteInput();
     }
     return (
-      <View style={{ ...styles.container, backgroundColor: (groupFlag === true ? 'white' : null) }}>
+      <View style={{ ...styles.container, backgroundColor: (groupFlag === true ? null : null) }}>
+        {
+          savedNote && (
+            <Text style={styles.msgsave}>Nota Salva</Text>
+          )
+        }
         <Text style={styles.hint}>{hint}</Text>
         <TextInput
-          style={{ ...styles.input, backgroundColor: (groupFlag === true ? colors.light : 'white') }}
+          style={{ ...styles.input, backgroundColor: (groupFlag === true ? null : 'white') }}
           autoCapitalize="sentences"
           autoCorrect={false}
           placeholder={"Digite aqui..."}

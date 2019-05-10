@@ -99,8 +99,6 @@ class StepPage extends Component {
           {//troca step.components por COMPONENT_EXAMPLE para testar group
           step.components.map((item, i) => {
             i = i + 1;
-            
-            console.tron.log(item, i);
             return (
               <ComponentBox data={item} num={i} />
             );

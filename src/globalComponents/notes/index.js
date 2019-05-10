@@ -27,7 +27,7 @@ class NotesForm extends Component {
   saveInputNote = () => {
     const { setSaveNote } = this.props;
     setSaveNote()
-    this.setState({ viewAudio: false, viewMenu: true });
+    // this.setState({ viewAudio: false, viewMenu: true });
   }
 
   render() {

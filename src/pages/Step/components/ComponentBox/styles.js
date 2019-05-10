@@ -39,7 +39,10 @@ const styles = StyleSheet.create({
   },
 
   coluna: {
-    flexDirection: "column"
+    flexDirection: "column",
+    paddingBottom: 40,
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'black',
   },
 
   linha: {

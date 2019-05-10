@@ -12,14 +12,14 @@ const InitialState = {
 
 export default function noteState(state = InitialState, action) {
   switch (action.type) {
-    case Types.ADD_NOTE:
-      return {
-          ...state,
-          data: [
-            ...state.data,
-            action.payload.note,
-          ]
-        };
+    case Types.ADD_NOTE: {
+        const updateArrayData = addNoteData(state, action.payload.note);
+        return {
+            ...state,
+            data: updateArrayData,
+        }
+    }
+      
     case Types.SET_SAVENOTE:
       return {
           ...state,
@@ -59,3 +59,14 @@ export const Creators = {
     type: Types.RESET_SAVENOTE,
   }),
 };
+
+addNoteData = (state, note) => {
+    const { data } = state;
+    data.map(item => {
+        if (item.key === note.key) {
+            item.value = note.value;
+        }
+    })
+
+    return data;
+}

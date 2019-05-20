@@ -142,6 +142,7 @@ class Group extends Component {
   render() {
     const { group, data, resetUpdateView } = this.props
     const { dataGroup, arrayGroup, groupName } = this.state;
+    let lastItem = 0;
     return (
       <View style={styles.container}>
         <ScrollView
@@ -153,13 +154,22 @@ class Group extends Component {
           }}
         >
           {
-            arrayGroup.map(item2 =>
-              <View style={styles.boxGroup}>
-                {this.renderOneGroup(item2.index, groupName)}
-                <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrement(item.index)}>
-                  <Icons name="minus" size={18} color="#FFF" />
-                </TouchableOpacity>
-              </View>
+            arrayGroup.map(item2 => {
+              lastItem += 1;
+              return (
+                <View style={styles.boxGroup}>
+                  {this.renderOneGroup(item2.index, groupName)}
+
+                  {
+                    arrayGroup.length === lastItem
+                      ? <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrement(item2.index)}>
+                        <Icons name="minus" size={18} color="#FFF" />
+                      </TouchableOpacity>
+                      : null
+                  }
+                </View>
+              )
+            }
             )
           }
         </ScrollView>
@@ -189,7 +199,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(Group);
         </View>
 
 
-            arrayGroup.map(item => 
+            arrayGroup.map(item =>
               <View style={styles.boxGroup}>
                 {this.renderOneGroup(item.index, groupName)}
                 <TouchableOpacity style={styles.viewMinus} onPress={() => this.decrement(item.index)}>

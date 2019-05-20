@@ -73,7 +73,7 @@ class Login extends Component {
     this.props.navigation.dispatch(resetAction);
   }
 
-  navigateToSignUp = () => {    
+  navigateToSignUp = () => {
     this.props.navigation.navigate('SignUp');
   }
 
@@ -131,16 +131,16 @@ class Login extends Component {
                 Cadastrar
               </Text>
             </TouchableOpacity>
-            
+
           </View>
-          </KeyboardAwareScrollView>
-          <HideWithKeyboard>
-            <TouchableOpacity style={styles.serverbutton} onPress={() => { this.navigateToChangeService(); }}>
+        </KeyboardAwareScrollView>
+        <HideWithKeyboard>
+          <TouchableOpacity style={styles.serverbutton} onPress={() => { this.navigateToChangeService(); }}>
             <Icon name='server' size={20} color="rgb(225, 200, 133)" style={styles.icon} />
-            </TouchableOpacity>
-          </HideWithKeyboard>
+          </TouchableOpacity>
+        </HideWithKeyboard>
       </ImageBackground>
-     
+
     );
   }
 }

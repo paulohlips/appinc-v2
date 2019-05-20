@@ -73,8 +73,7 @@ class Login extends Component {
     this.props.navigation.dispatch(resetAction);
   }
 
-  navigateToSignUp = () => {
-    
+  navigateToSignUp = () => {    
     this.props.navigation.navigate('SignUp');
   }
 

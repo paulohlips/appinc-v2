@@ -37,7 +37,6 @@ class Main extends Component {
     let days;
     const currentDate = new Date();
     const date =  new Date(login.valtoken.replace(' ','T'));
-    // console.tron.log('date token', days, currentDate, date, currentDay, dateDay, currentMonth, dateMonth);
    
 
     const currentDay = currentDate.getDate();
@@ -56,8 +55,6 @@ class Main extends Component {
       days = dateDay - currentDay;
     }
     
-    
-    //console.tron.log('date token', days, currentDate, date, currentDay, dateDay, currentMonth, dateMonth);
     this.setState({ day: days })  
   }
 
@@ -105,7 +102,6 @@ class Main extends Component {
     const { nome, day } = this.state
     const name = navigation.getParam('nome', 'Nome não cadastrado');
     const { largura_tela } = responsividade;
-    //console.tron.log(day);
     return (
       <View style={styles.container}>
         <Header

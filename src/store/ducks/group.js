@@ -182,36 +182,3 @@ const controlArray = (state, name) => {
   return size2;
   
 };
-/*
-const saveData = (data, state) => {
-  var arrayState = state.dataGroup;
-  arrayState.map(item => {
-    if (item.index === data.index) {
-      item[data.name] = {
-        key: data.name,
-        value: data.data,
-        filled: true,
-        extra: data.extra
-      };
-    }
-  });
-  return arrayState;
-};
-
--------------------------------------------------
-
-group.dataGroup.map(group => {
-    console.log(['group mae', group, info.data_name])
-    if (group.key === groupMother) {
-        group.value.map(itemGroup => {
-            console.tron.log(' vendo cada item', itemGroup)
-            if (itemGroup.index === index) {
-                console.tron.log('chequei index', itemGroup.index, index)
-            }
-        })
-        //saveDataGroup({ index, name: info.data_name, data: inputSave })
-    }
-});
-
-
-*/

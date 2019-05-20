@@ -51,9 +51,7 @@ class HeaderRedux extends Component {
       navigation,
     } = this.props;
     const { showAlert } = this.state;
-    const { largura_tela } = responsividade;
-    // console.tron.log(this.props, goBack);
-  
+    const { largura_tela } = responsividade;  
 
     return (
       <View style={{...styles.header, backgroundColor: this.props.color }}>

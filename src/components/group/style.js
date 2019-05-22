@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 20,   
     borderBottomColor: 'black',             
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0,
   },
   boxGroup: {
     width: responsividade.largura_tela * 0.95,

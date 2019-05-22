@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 10,
-        borderBottomWidth: 0.5,
+        borderBottomWidth: 0,
         borderBottomColor: 'black',
         paddingBottom: 40,
     },
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     buttonhp: {
       //backgroundColor: 'rgba(41, 42, 41, 0.65)',
       borderWidth: 2,
-      borderColor: 'rgb(225, 200, 133)',
+      borderColor: '#4CC6D3',
       borderRadius: 40,
       height: responsividade.largura_tela < 430 ? 50 : 60,
       width: responsividade.largura_tela < 430 ? responsividade.largura_tela * 0.7 : responsividade.largura_tela * 0.55,
@@ -141,15 +141,15 @@ const styles = StyleSheet.create({
     
         //color: 'black',
         //color: 'white',
-        color: 'rgb(225, 200, 133)',
+        color: '#4CC6D3',
         fontSize: responsividade.fonts.descriptionSize,
         //fontWeight: 'bold',
         marginLeft: 5,
-    
+  
       },
 
       font: {
-        color: 'rgb(225, 200, 133)', 
+        color: '#4CC6D3',
       },
 
       component_card: {
@@ -162,14 +162,14 @@ const styles = StyleSheet.create({
       },
 
       answer: {
-        backgroundColor: "pink",
+        //backgroundColor: "pink",
         width: responsividade. LARGURABOX*0.85,
         margin: 5,
         justifyContent: 'flex-start'
       },
 
       title: {
-        backgroundColor: "pink",
+        //backgroundColor: "pink",
         width: responsividade. LARGURABOX*0.85,
         margin: 5,
         justifyContent: 'flex-start'
@@ -182,6 +182,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'      },
 
       blueline: {
+
+        backgroundColor: "#4CC6D3",
+        marginTop: 5,
+        height: 3,
+        width: responsividade. LARGURABOX*0.15,
 
       },
 

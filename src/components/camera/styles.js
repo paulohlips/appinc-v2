@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
       // borderColor: 'white',
       // borderRadius: 10,
       padding: 10,
-      borderBottomWidth: 0.5,
+      borderBottomWidth: 0,
       borderBottomColor: 'black',
       paddingBottom: 40,
     //   width: responsividade.LARGURAFOTO,

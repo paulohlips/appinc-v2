@@ -89,7 +89,7 @@ class OCR extends Component {
 
             <View style={styles.title}> 
             <View style={styles.title_view}>
-            <Text style={styles.title_text}> Questão X</Text>
+            <Text style={styles.title_text}>Questão X</Text>
             <View style={styles.blueline}></View>
             </View>
 

@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     width: responsividade.largura_tela,
     padding: 20,
     paddingBottom: 40,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0,
     borderBottomColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',

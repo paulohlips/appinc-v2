@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 
     indicadorContainer: {
       backgroundColor: 'rgba(45, 45, 45, 0.8)',
-      paddingBottom: 40,
+      paddingBottom: 10,
     },
 
     mainContainer: {

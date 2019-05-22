@@ -100,11 +100,11 @@ const styles = StyleSheet.create({
     borderColor: '#4CC6D3',
     borderRadius: 40,
     height: responsividade.largura_tela < 430 ? 50 : 60,
-    width: responsividade.largura_tela < 430 ? responsividade.largura_tela * 0.7 : responsividade.largura_tela * 0.55,
-    marginVertical: metrics.baseMargin,
+    width: responsividade. LARGURABOX*0.85,
     paddingHorizontal: metrics.basePadding,
     justifyContent: 'center',
     alignItems: 'center',
+    marginVertical: 5,
 
   },
 

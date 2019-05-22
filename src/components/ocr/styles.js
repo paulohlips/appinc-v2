@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderBottomWidth: 0,
         borderBottomColor: 'black',
-        paddingBottom: 40,
+        paddingBottom: 10,
     },
 
     avatarContainer: {
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
       borderColor: '#4CC6D3',
       borderRadius: 40,
       height: responsividade.largura_tela < 430 ? 50 : 60,
-      width: responsividade.largura_tela < 430 ? responsividade.largura_tela * 0.7 : responsividade.largura_tela * 0.55,
+      width: responsividade. LARGURABOX*0.85,
       marginVertical: metrics.baseMargin,
       paddingHorizontal: metrics.basePadding,
       justifyContent: 'center',

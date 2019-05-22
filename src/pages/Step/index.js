@@ -81,7 +81,6 @@ class StepPage extends Component {
                             i = i + 1;
                             return (
                                 <Animated.View style={{ ...styles.coluna }}>
-                                    
                                     <ComponentList data={item} index={i} />
                                 </Animated.View>)
                         })}

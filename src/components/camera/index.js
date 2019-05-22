@@ -384,6 +384,21 @@ class Camera extends React.Component {
       
       <View style={groupFlag ? stylesGroup.container : styles.container}>
 
+
+        <View style={styles.component_card}>
+
+            <View style={styles.title}> 
+            <View style={styles.title_view}>
+            <Text style={styles.title_text}>Questão X</Text>
+            <View style={styles.blueline}></View>
+            </View>
+
+            </View>
+
+            <View style={styles.answer}>
+                <Text style={styles.answer_text}>Lorem ipsum sit dolor amet Lorem ipsum sit dolor amet</Text>
+        </View>
+
         <ScrollView 
           horizontal
           pagingEnabled
@@ -395,29 +410,7 @@ class Camera extends React.Component {
           {/*this.state.image ? this.renderAsset(this.state.image) : null*/}
           {this.state.images ? this.state.images.map(i => <View key={i.uri}>{this.renderAsset(i)}</View>) : null}
         </ScrollView>
-        <View style={styles.buttonsView}>
-          <TouchableOpacity onPress={() => this.pickSingleWithCamera(true)}>
-            <View style={styles.avatarContainer}>
-              <View style={styles.avatarContainer2}>
-                <Icon name="add-a-photo" color="black" size={largura_tela < 430 ? 20 : 30} style={styles.icon} />
-                <View style={styles.text_foto}>
-                  <Text style={styles.text1}>Tirar foto</Text>
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => this.pickMultiple(false)} style={styles.button}>
-            <View style={styles.avatarContainer1}>
-              <View style={styles.avatarContainer2}>
-                <Icon name="photo-library" color="white" size={largura_tela < 430 ? 20 : 30} style={styles.icon} />
-                <View style={styles.text_foto}>
-                  <Text style={styles.text}>Abrir galeria</Text>
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </View>
         <View style={styles.containerText}>
           <TextInput
             style={groupFlag ? stylesGroup.input : styles.input}
@@ -430,6 +423,15 @@ class Camera extends React.Component {
             value={this.state.inputSave}
             onChangeText={inputSave => this.setState({ inputSave })}
           />
+        </View>
+
+        <TouchableOpacity  onPress={() => this.pickSingleWithCamera(true)} style={styles.buttonhp}>
+            <View style={styles.button_texthp}><Text style={styles.font}>ABRIR CÂMERA</Text></View>  
+        </TouchableOpacity>
+
+        <TouchableOpacity  onPress={() => this.pickMultiple(false)} style={styles.buttonhp}>
+            <View style={styles.button_texthp}><Text style={styles.font}>ABRIR GALERIA</Text></View>  
+        </TouchableOpacity>
         </View>
       </View>
     );

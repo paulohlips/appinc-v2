@@ -14,10 +14,13 @@ import { StackActions, NavigationActions } from 'react-navigation';
 import { Header, ModalCheck, PickerItem } from '../../globalComponents';
 import styles from './styles';
 
+import Radio from '../../components/radio'
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as NewActions } from '../../store/ducks/new';
 import { Creators as FormActios } from '../../store/ducks/form';
+
 
 const imageCheck = require('../../assents/lottie/warning.json');
 
@@ -148,6 +151,8 @@ class New extends Component {
           showMenu
           openMenu={navigation.toggleDrawer}
         />
+
+        <Radio />
         <ScrollView contentContainerStyle={styles.scrollview}>
           {
             viewError && (

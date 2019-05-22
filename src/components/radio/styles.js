@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
 
     radio: {
         justifyContent: 'flex-start',
+        width: responsividade. LARGURABOX*0.85,
 
     }
 

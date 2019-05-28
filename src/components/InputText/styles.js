@@ -7,9 +7,7 @@ const styles = StyleSheet.create({
     //backgroundColor: colors.light,
     width: responsividade.largura_tela,
     padding: 20,
-    paddingBottom: 40,
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'black',
+    
   },
    Name: {
     width: responsividade.LARGURABOX,
@@ -35,6 +33,14 @@ const styles = StyleSheet.create({
     color: 'black',
     opacity: 0.3,
     paddingVertical: 10,
+  },
+
+  msgsave: {
+    fontSize: responsividade.fonts.descriptionSize * 0.9,
+    fontWeight: 'bold',
+    color: 'green',
+    opacity: 0.5,
+    paddingVertical: 10,   
   }
 
 });

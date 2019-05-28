@@ -106,7 +106,7 @@ class ComponentList extends Component {
           {
             this.props.data.component_type === 'audiorec' && (
               <View style={styles.component}>
-                <InputText data={this.props.data} index={this.props.data.group ? this.props.index : null} />
+                <AudioRec data={this.props.data} index={this.props.data.group ? this.props.index : null} />
               </View>
             )
           }

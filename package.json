@@ -13,6 +13,7 @@
     "react": "16.7.0",
     "react-native": "0.58.4",
     "react-native-audio": "^4.2.2",
+    "react-native-audio-recorder-player": "^2.1.4",
     "react-native-awesome-alerts": "^1.2.0",
     "react-native-barcode-scanner-google": "^1.4.2",
     "react-native-camera": "^1.12.0",

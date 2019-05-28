@@ -95,7 +95,7 @@ class StepList extends Component {
 
   enviaForm = async () => {
     const { matriculaAsync } = this.state;
-    const { reference, formulario, setUpdateHistory, login, group } = this.props;
+    const { reference, formulario, setUpdateHistory, login, group, note } = this.props;
     const { dataGroup } = group;
 
     this.setState({ sending: true, original: false });
@@ -105,11 +105,11 @@ class StepList extends Component {
 
     const arrayRef = await AsyncStorage.getItem("arrayRef");
     const array = JSON.parse(arrayRef);
-    
+
     let contentGroup = false;
     let count = 0;
     console.log(dataGroup.length);
-    if(dataGroup.length > 0) {
+    if (dataGroup.length > 0) {
       contentGroup = true;
     }
 
@@ -122,46 +122,54 @@ class StepList extends Component {
 
     await AsyncStorage.setItem('arrayRef', JSON.stringify(array));
 
-    const dataForm = new FormData();   
-   
+    const dataForm = new FormData();
+
     dataForm.append('form_name', formulario.form.form_name);
 
-    for (var key in formulario.step) { 
-      if(formulario.step[key].type === 'camera') {
+    for (var key in formulario.step) {
+      if (formulario.step[key].type === 'camera') {
         formulario.step[key].value.map(item => {
           dataForm.append(`${key}[]`, item);
-        })       
+        })
       } else {
         dataForm.append(formulario.step[key].key, formulario.step[key].value)
-      }      
+      }
     }
+
+    console.tron.log('dataform 1', dataForm)
+
+    note.data.map(item => {
+      dataForm.append(`note_${item.key}`, item.value)
+    })
+
+    console.tron.log('dataform 2', dataForm)
 
     setUpdateHistory();
     this.setState({ matriculaAsync: matricula });
 
     this.onSendForm({
-      dataForm, 
-      userId: login.userID, 
-      token: login.token, 
-      reference, 
+      dataForm,
+      userId: login.userID,
+      token: login.token,
+      reference,
       contentGroup,
       dataGroup,
     });
 
-   
+
   }
-  
+
   onSendForm = (data) => {
-    const { 
-      dataForm, 
-      userId, 
-      token, 
-      reference, 
+    const {
+      dataForm,
+      userId,
+      token,
+      reference,
       contentGroup,
       dataGroup,
     } = data;
-    console.log('onSendForm', contentGroup);    
-    
+    console.log('onSendForm', contentGroup);
+
     axios({
       method: 'post',
       url: 'http://35.198.17.69/api/pericia/formulario/envio',
@@ -177,30 +185,30 @@ class StepList extends Component {
         console.log(response);
         AsyncStorage.setItem('@IDlaudo', response.data.number);
         Alert.alert('ID do laudo', 'O número do seu laudo é ' + response.data.number);
-        this.onSendGroup({ 
-          userId, 
-          token, 
-          reference,       
+        this.onSendGroup({
+          userId,
+          token,
+          reference,
           dataGroup,
           idForm: response.data.number,
         });
       })
       .catch(error => {
-        console.log(error); 
+        console.log(error);
         this.errorMessage();
       });
   }
 
   onSendGroup = (data) => {
-    const { 
-      userId, 
-      token, 
-      reference,       
+    const {
+      userId,
+      token,
+      reference,
       dataGroup,
       idForm,
     } = data
     console.log('onSendGroup');
-    
+
 
     dataGroup.map(group => {
       console.log(['one group map', group])
@@ -210,14 +218,14 @@ class StepList extends Component {
         console.log(['item', item])
         Object.keys(item).map(key => {
           console.log(['keys', key])
-          if(key !== 'index') {
+          if (key !== 'index') {
             formGroup.append(`${group.key}[${count}][${key}]`, item[key].value)
-          }          
+          }
         })
         count += 1;
-      }) 
+      })
 
-      console.log({ RESULTADO_GROUP_DATA: formGroup})
+      console.log({ RESULTADO_GROUP_DATA: formGroup })
       axios({
         method: 'post',
         url: 'http://35.198.17.69/api/pericia/formularios/envio/teste',
@@ -231,22 +239,31 @@ class StepList extends Component {
         }
       })
         .then(function (response) {
-          console.log(response)          
+          console.log(response)
         })
         .catch(error => {
           console.log(['error group', error])
           this.errorMessage();
         });
-      
+
     });
 
-    
+
   }
 
   sendGroup = (dataGroup, userId, token, groupName) => {
-    
+
     console.log(['api envia group', dataGroup, userId, token, groupName])
   }
+
+  double = (n) => {
+    return n * 2;
+  }
+
+  increment = (y) => {
+    return y + 1;
+  }
+
 
   render() {
     const { formRedux } = this.state;
@@ -311,6 +328,7 @@ const mapStateToProps = state => ({
   formulario: state.formState,
   login: state.loginState,
   group: state.groupState,
+  note: state.noteState,
 });
 
 const mapDispatchToProps = dispatch =>

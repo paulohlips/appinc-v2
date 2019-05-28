@@ -1,5 +1,5 @@
 import InputText from './InputText';
-import AudioRec from './audio';
+import AudioRec from './audio2';
 import Camera from './camera';
 import MyDatePicker from './date';
 import GeoLocation from './geolocation';

@@ -31,7 +31,6 @@ class ComponentBox extends Component {
   render() {
     const { data, num } = this.props;
     const { viewModal } = this.state;
-    // console.tron.log('cbox', data, num, viewModal);
     return (
       <View style={styles.coluna}>
         <View style={styles.linha}>

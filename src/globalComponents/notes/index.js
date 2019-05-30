@@ -33,7 +33,6 @@ class NotesForm extends Component {
   render() {
       const { viewNotes, onCloseNotes, data } = this.props;
       const { viewAudio, viewInput, viewMenu } = this.state;
-      console.tron.log(['data do modal notes', data, this.props]);
     return (
         <Modal
             animationType="fade"

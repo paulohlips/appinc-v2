@@ -44,7 +44,7 @@ class InputText extends Component {
       }
     }
 
-    console.tron.log('did', data, data.note, data.default_value);
+
     if (data.note) {
       noteState.data.map(note => {
         if (note.key === data.data_name) {
@@ -62,7 +62,6 @@ class InputText extends Component {
 
   saveNoteInput = () => {
     const { inputSave } = this.state;
-    console.tron.log('askjdhga', inputSave);
   }
 
   saveGroupInput = info => {
@@ -104,10 +103,8 @@ class InputText extends Component {
       groupMother,
       startControlArrayGroup,
     } = this.props;
-    console.tron.log('entreinput', inputSave, data.note);
     if (inputSave) {
       if (data.note === true) {
-        console.tron.log('entrei aqui input notes', inputSave);
       } else {
         for (var key in form.step) {
           if (key === info.data_name) {
@@ -145,7 +142,6 @@ class InputText extends Component {
     const { saveStep, step } = this.props.form;
     if (note){
       if (noteState.saveNote) {
-        console.tron.log('save input', this.state.inputSave);
         noteState.data.map(note => {
           if (note.key === data_name) {
             this.props.addNote({
@@ -158,7 +154,6 @@ class InputText extends Component {
         resetSaveNote();
       }
       
-      console.tron.log('input', note, this.props.data, this.state.inputSave);
     }
     
     if (saveStep) {
@@ -168,7 +163,6 @@ class InputText extends Component {
       this.saveGroupInput({ data_name, default_value })
     }
     if (noteState.saveNote) {
-      console.tron.log('save input', this.state.inputSave);
       
       // this.saveNoteInput();
     }

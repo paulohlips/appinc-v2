@@ -136,13 +136,11 @@ class StepList extends Component {
       }
     }
 
-    console.tron.log('dataform 1', dataForm)
 
     note.data.map(item => {
       dataForm.append(`note_${item.key}`, item.value)
     })
 
-    console.tron.log('dataform 2', dataForm)
 
     setUpdateHistory();
     this.setState({ matriculaAsync: matricula });
@@ -281,8 +279,6 @@ class StepList extends Component {
         <Header
           title={form.area}
           showArrow
-          showInfo
-          info={form.info_form}
           goBack={this.saveForm}
         />
         {

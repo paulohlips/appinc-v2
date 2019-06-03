@@ -127,7 +127,6 @@ class StepBoxComponent extends Component {
           key: component.data_name,
           value: null,
         }
-        console.tron.log('notes', notes);
         creteArrayNotes(notes);        
         getCreateForm(form);
         arrayProgress.array.push(component.data_name);

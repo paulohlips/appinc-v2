@@ -11,13 +11,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  input: {
+    backgroundColor: 'white',
+    height: responsividade.ALTURA_INPUT,
+    width: responsividade.LARGURA_INPUT,
+    borderRadius: 4,
+    paddingLeft: 20,
+    fontSize: 16,
+    marginBottom: 30,
+    marginTop: 10
+  },
+
   title: {
-    fontSize: 18,
+    fontSize: 20,
     color: colors.lighter,
   },
   picker: {
     width: responsividade.LARGURABUTTON,
-
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,

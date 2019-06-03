@@ -79,13 +79,10 @@ class AudioRec extends Component {
   componentDidMount() {
     const { data, noteState } = this.props;
     if (data.note) {
-      console.tron.log('entrei no if note');
       noteState.data.map(note => {
         if (note.key === data.data_name && note.value !== null) {
-          console.tron.log('entrei no if note sem null');
           this.setState(note.value.stateAudio);                 
         } else {
-          console.tron.log('entrei no if note COM NULL');
           this._checkPermission().then((hasPermission) => {
             this.setState({ hasPermission });
             this.prepareRecordingPath(this.state.audioPath);
@@ -238,7 +235,6 @@ class AudioRec extends Component {
   }
 
   async _play() {
-    console.tron.log('PLAY', this.state);
     if (this.state.recording) {
       await this._stop();
     }
@@ -248,16 +244,13 @@ class AudioRec extends Component {
     setTimeout(() => {
       var sound = new Sound(this.state.audioPath, '', (error) => {
         if (error) {
-          console.tron.log('failed to load the sound', error);
         }
       });
 
       setTimeout(() => {
         sound.play((success) => {
           if (success) {
-            console.tron.log('successfully finished playing');
           } else {
-            console.tron.log('playback failed due to audio decoding errors');
           }
         });
       }, 100);
@@ -351,10 +344,8 @@ class AudioRec extends Component {
     const { noteState, resetSaveNote } = this.props;
     const { saveStep, step } = this.props.form;
     const { filePath, audioPath, savedNote } = this.state;
-    console.tron.log('audio', filePath, audioPath)
     if (note){
       if (noteState.saveNote) {
-        console.tron.log('save input', this.state.inputSave);
         noteState.data.map(note => {
           if (note.key === data_name) {
             this.props.addNote({

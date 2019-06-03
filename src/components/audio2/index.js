@@ -56,7 +56,7 @@ class AudioRec extends Component {
 
   onStartRecord = async () => {
     const { name } = this.state;
-    const result = await this.audioRecorderPlayer.startRecorder(`/storage/emulated/0/Music/${name}.mp3`);
+    const result = await this.audioRecorderPlayer.startRecorder(`${name}.m4a`);
     this.audioRecorderPlayer.addRecordBackListener((e) => {
       this.setState({
         recordSecs: e.current_position,
@@ -65,7 +65,6 @@ class AudioRec extends Component {
       return;
     });
     this.setState({ filePath: result })
-    console.tron.log(result);
   }
 
   onStopRecord = async () => {
@@ -74,17 +73,13 @@ class AudioRec extends Component {
     this.setState({
       recordSecs: 0,
     });
-    console.tron.log(result);
   }
 
   onStartPlay = async () => {
     const { name } = this.state;
-    console.tron.log('onStartPlay');
-    const msg = await this.audioRecorderPlayer.startPlayer(`/storage/emulated/0/Music/${name}.mp3`);
-    console.tron.log(msg);
+    const msg = await this.audioRecorderPlayer.startPlayer(`${name}.m4a`);
     this.audioRecorderPlayer.addPlayBackListener((e) => {
       if (e.current_position === e.duration) {
-        console.tron.log('finished');
         this.audioRecorderPlayer.stopPlayer();
       }
       this.setState({
@@ -102,7 +97,6 @@ class AudioRec extends Component {
   }
 
   onStopPlay = async () => {
-    console.tron.log('onStopPlay');
     this.audioRecorderPlayer.stopPlayer();
     this.audioRecorderPlayer.removePlayBackListener();
   }
@@ -161,11 +155,9 @@ class AudioRec extends Component {
     const { data, noteState, form, resetSaveNote } = this.props;
     const { data_name, default_value, note } = data;
     const { saveStep } = form;
-    console.tron.log(this.state);
 
     if (note) {
       if (noteState.saveNote) {
-        console.tron.log('save input', this.state.inputSave);
         noteState.data.map(note => {
           if (note.key === data_name) {
             this.props.addNote({

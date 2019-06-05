@@ -30,17 +30,23 @@ class NotesForm extends Component {
     // this.setState({ viewAudio: false, viewMenu: true });
   }
 
+  onClose = () => {
+    const { setSaveNote, onCloseNotes } = this.props;
+    setSaveNote()
+    onCloseNotes()
+  }
+
   render() {
-      const { viewNotes, onCloseNotes, data } = this.props;
-      const { viewAudio, viewInput, viewMenu } = this.state;
+    const { viewNotes, onCloseNotes, data } = this.props;
+    const { viewAudio, viewInput, viewMenu } = this.state;
     return (
-        <Modal
-            animationType="fade"
-            transparent
-            visible={viewNotes}
-            onRequestClose={() => onCloseNotes()}
-        >
-        <TouchableOpacity style={styles.container} onPress={() => onCloseNotes()}>
+      <Modal
+        animationType="fade"
+        transparent
+        visible={viewNotes}
+        onRequestClose={() => onCloseNotes()}
+      >
+        <TouchableOpacity style={styles.container} onPress={() => this.onClose()}>
           <View style={styles.box}>
             {
               viewMenu && (
@@ -49,21 +55,17 @@ class NotesForm extends Component {
                     <Icon name="microphone-alt" size={20} color="black" style={styles.icon} />
                     <Text style={styles.textButton}>Gravar Audios</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.button} onPress={() => this.recordAudio()}>
-                    <Icon name="microphone-alt" size={20} color="black" style={styles.icon} />
-                    <Text style={styles.textButton}>Gravar Audios</Text>
-                  </TouchableOpacity>
                 </View>
-              )            
+              )
             }
             {
               viewInput && (
                 <View style={styles.box}>
                   <View style={styles.input}>
-                    <InputText data={{...dataInput, data_name: data.data_name}}  />
+                    <InputText data={{ ...dataInput, data_name: data.data_name }} />
                   </View>
-                  <TouchableOpacity style={styles.buttonSave} onPress={() => this.saveInputNote()}>                 
-                      <Text style={styles.textButton}>SALVAR NOTA</Text>
+                  <TouchableOpacity style={styles.buttonSave} onPress={() => this.saveInputNote()}>
+                    <Text style={styles.textButton}>SALVAR NOTA</Text>
                   </TouchableOpacity>
                 </View>
               )
@@ -72,10 +74,10 @@ class NotesForm extends Component {
               viewAudio && (
                 <View style={styles.box}>
                   <View style={styles.input}>
-                    <AudioRec data={{...dataInput, data_name: data.data_name}}  />
+                    <AudioRec data={{ ...dataInput, data_name: data.data_name }} />
                   </View>
-                  <TouchableOpacity style={styles.buttonSave} onPress={() => this.saveInputNote()}>                 
-                      <Text style={styles.textButton}>SALVAR NOTA</Text>
+                  <TouchableOpacity style={styles.buttonSave} onPress={() => this.saveInputNote()}>
+                    <Text style={styles.textButton}>SALVAR NOTA</Text>
                   </TouchableOpacity>
                 </View>
               )

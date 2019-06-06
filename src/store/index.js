@@ -16,12 +16,18 @@ const saveAuthToken = store => next => action => {
   return next(action);
 }
 
+const saveForm = store => next => action => {
+  //console.tron.log('middlewere saveform\n\n', store, action);
+  return next(action);
+}
+
 const sagaMonitor = __DEV__ ? console.tron.createSagaMiddleware : null;
 const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
 
 const middleware = [
   sagaMiddleware,
   saveAuthToken,
+  saveForm
 ];
 
 const createAppropriateStore = __DEV__ ? console.tron.createStore : createStore;

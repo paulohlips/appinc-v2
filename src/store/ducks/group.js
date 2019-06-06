@@ -1,3 +1,6 @@
+import { AsyncStorage } from 'react-native';
+
+
 const Types = {
   ICREMENT_DATA_GROUP: "group/ICREMENT_DATA_GROUP",
   DECREMENT_DATA_GROUP: "group/DECREMENT_DATA_GROUP",
@@ -6,6 +9,9 @@ const Types = {
   CREATE_DATA_GROUP: "group/CREATE_DATA_GROUP",
   CONTROLL_ARRAY_GROUP: "group/CONTROLL_ARRAY_GROUP",
   RESET_UPDATE_VIEW: "group/RESET_UPDATE_VIEW",
+
+  SAVE_OFFLINE_GROUP: "group/SAVE_OFFLINE_GROUP",
+  RECOVER_STATE_GROUP: "group/RECOVER_STATE_GROUP"
 };
 
 const INITIAL_STATE = {
@@ -56,14 +62,32 @@ export default function groupState(state = INITIAL_STATE, action) {
       return { ...state, flagGroup: true };
     }
     case Types.CONTROLL_ARRAY_GROUP: {
-        const status = controlArray(state, action.payload.data_name);
-        if (!state.flagGroup) {
-            return { ...state, flagGroup: status };
-        }
+      const status = controlArray(state, action.payload.data_name);
+      if (!state.flagGroup) {
         return { ...state, flagGroup: status };
+      }
+      return { ...state, flagGroup: status };
     }
     case Types.RESET_UPDATE_VIEW: {
-        return { ...state, updateViewGroup: false }
+      return { ...state, updateViewGroup: false }
+    }
+    case Types.RECOVER_STATE_GROUP: {
+      return {
+        dataGroup: action.payload.data.dataGroup,
+        flagGroup: action.payload.data.flagGroup,
+        arrayGroupSize: action.payload.data.arrayGroupSize,
+        updateViewGroup: action.payload.data.updateViewGroup,
+      }
+    }
+    case Types.SAVE_OFFLINE_GROUP: {
+      saveGroupAsync({
+        ref: action.payload.ref,
+        state: {
+          ...state,
+          formEdit: true,
+          ref: action.payload.ref
+        }
+      });
     }
     default:
       return state;
@@ -92,11 +116,21 @@ export const Creators = {
   }),
   startControlArrayGroup: data_name => ({
     type: Types.CONTROLL_ARRAY_GROUP,
-    payload: { data_name}
+    payload: { data_name }
   }),
   resetUpdateView: () => ({
-    type: Types.RESET_UPDATE_VIEW,  
+    type: Types.RESET_UPDATE_VIEW,
   }),
+  // salva o GROUP  no asyncstorage com o nome de referencia
+  saveGroup: ref => ({
+    type: Types.SAVE_OFFLINE_GROUP,
+    payload: { ref }
+  }),
+  // recupera o group save
+  recoverGroupState: data => ({
+    type: Types.RECOVER_STATE_GROUP,
+    payload: { data }
+  })
 };
 
 const increment = (groupName, state) => {
@@ -119,13 +153,13 @@ const decrement = (id, groupMother, state) => {
 
   arrayState.map(group => {
     if (group.key === groupMother) {
-        group.value.map(item => {
-            if(item.index === id) {
-                group.value.splice(count, 1)
-            }
-            count += 1;
-        })
-    }   
+      group.value.map(item => {
+        if (item.index === id) {
+          group.value.splice(count, 1)
+        }
+        count += 1;
+      })
+    }
   });
   return arrayState;
 };
@@ -144,14 +178,14 @@ const saveData = (info, state) => {
                 key: keyName,
                 value: data,
                 filled: true,
-                extra, 
+                extra,
               };
             }
           });
         }
       });
     }
-  }); 
+  });
   return arrayState;
 };
 
@@ -163,10 +197,10 @@ const controlArray = (state, name) => {
     const dataGroup = state.dataGroup;
     dataGroup.map(item => {
       item.value.map(item2 => {
-        Object.keys(item2).map(key => {            
-            if (key !== 'index') {
-                count += 1;
-            }
+        Object.keys(item2).map(key => {
+          if (key !== 'index') {
+            count += 1;
+          }
         });
       });
     });
@@ -175,10 +209,41 @@ const controlArray = (state, name) => {
 
   const size2 = arrayGroup - 1;
 
-  if(size2 === 0) {
-      return false;
+  if (size2 === 0) {
+    return false;
   }
 
   return size2;
-  
+
+};
+
+// save group async
+const saveGroupAsync = async data => {
+  console.tron.log('savegroupAsync', data);
+  const arrayRef = await AsyncStorage.getItem('arrayRefGroup');
+  console.tron.log('arrayrefgroup', arrayRef);
+  let arrayControl = false;
+  // verifica se ja existe um array de referencia se nao cria um e ja puxa a primeira referencia pra primeiro campod do array
+  if (arrayRef === null) {
+    const array = [];
+    array.push(data.ref);
+    await AsyncStorage.setItem('arrayRefGroup', JSON.stringify(array));
+    //adiciona o group para diferenciar do form
+    console.tron.log('KEY group', `${data.ref}Group`);
+    await AsyncStorage.setItem(`${data.ref}Group`, JSON.stringify(data.state));
+  } else {
+    // caso contrario varre o array pra ver se tem aguma ref caso sim ele so substitui caso nao pussh a ref pro fim do array e os dados
+    const array = JSON.parse(arrayRef);
+    array.map(item => {
+      if (item === data.ref) {
+        AsyncStorage.setItem(`${data.ref}Group`, JSON.stringify(data.state));
+        arrayControl = true;
+      }
+    });
+    if (!arrayControl) {
+      array.push(data.ref);
+      await AsyncStorage.setItem('arrayRefGroup', JSON.stringify(array));
+      await AsyncStorage.setItem(`${data.ref}Group`, JSON.stringify(data.state));
+    }
+  }
 };

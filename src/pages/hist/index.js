@@ -29,6 +29,7 @@ import { Creators as FormActions } from "../../store/ducks/form";
 import { Creators as NewActions } from "../../store/ducks/new";
 import { Creators as HistActions } from '../../store/ducks/hist';
 
+
 class Historico extends Component {
   state = {
     arrayEnviados: null,
@@ -98,11 +99,16 @@ class Historico extends Component {
   }
   restoreForm = async name => {
     const { navigation, restoreFormState, setForm, getReference } = this.props;
+    console.tron.log('form name', name)
     const formAsync = await AsyncStorage.getItem(name);
+    const groupAsync = await AsyncStorage.getItem(`${name}Group`)
     const form = JSON.parse(formAsync);
-    
+    const group = JSON.parse(groupAsync);
+
+    console.tron.log('RECUPERA ASYNC', form, group)
     await getReference(form.ref);
     await setForm(form.form);
+    await recoverGroupState(group);
     await restoreFormState(form);
     navigation.navigate("StepList");
   };
@@ -114,11 +120,11 @@ class Historico extends Component {
           style={styles.box}
           onPress={() => this.restoreForm(item)}
         >
-         <View style={styles.row}>
+          <View style={styles.row}>
             <Text style={styles.status1}>Referência: </Text>
             <Text style={styles.ref}>{item}</Text>
           </View>
-          
+
           <View style={styles.row}>
             <Text style={styles.status1}>Status: </Text>
             <Text style={styles.status}>Em andamento</Text>
@@ -140,23 +146,23 @@ class Historico extends Component {
           );
         }}
       >
-      <View style={styles.row}>
-            <Text style={styles.status1}>Laudo nº: </Text>
-            <Text style={styles.ref}>{item.matricula}</Text>
-      </View>
-        
-      <View style={styles.row}>
+        <View style={styles.row}>
+          <Text style={styles.status1}>Laudo nº: </Text>
+          <Text style={styles.ref}>{item.matricula}</Text>
+        </View>
+
+        <View style={styles.row}>
           <Text style={styles.status1}>Status: </Text>
           <Text style={styles.statusEnviado}>Enviado </Text>
-      </View>
+        </View>
       </TouchableOpacity>
     );
   }
 
   _onRefresh = () => {
-    this.setState({refreshing: true});
+    this.setState({ refreshing: true });
     this.requestFroms();
-    this.setState({refreshing: false});
+    this.setState({ refreshing: false });
   }
 
   render() {
@@ -170,7 +176,7 @@ class Historico extends Component {
 
     return (
       <View style={styles.container}>
-      
+
         <Header
           showMenu
           showClear
@@ -199,14 +205,14 @@ class Historico extends Component {
           </View>
         </Modal>
         {this.state.errorview && (
-             <SnackBar outside content="Sem conexão!" color='#3C3C46' fontcolor="white" />
+          <SnackBar outside content="Sem conexão!" color='#3C3C46' fontcolor="white" />
         )}
         <View style={styles.main}>
-          <ScrollView  refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh}
-          />}>
+          <ScrollView refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh}
+            />}>
             {arrayRef ? arrayRef.map(item => this.renderOffline(item)) : null}
 
             {this.state.loading && (

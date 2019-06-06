@@ -22,6 +22,7 @@ import Api from '../../services/api';
 import { bindActionCreators } from 'redux';
 import { Creators as FormAction } from '../../store/ducks/form';
 import { Creators as HistActions } from '../../store/ducks/hist';
+import { Creators as GroupActions } from '../../store/ducks/group';
 import { SnackBar } from '../../globalComponents';
 
 
@@ -72,8 +73,9 @@ class StepList extends Component {
   }
 
   saveForm2 = () => {
-    const { reference, saveForm, setSaveContentForm, form } = this.props;
+    const { reference, saveForm, saveGroup, setSaveContentForm, form } = this.props;
     saveForm(reference);
+    saveGroup(reference)
     this.saved();
   }
 
@@ -188,15 +190,15 @@ class StepList extends Component {
         } else {
           AsyncStorage.setItem('@IDlaudo', response.data.number);
           Alert.alert('ID do laudo', 'O número do seu laudo é ' + response.data.number);
-          this.onSendGroup({ 
-            userId, 
-            token, 
-            reference,       
+          this.onSendGroup({
+            userId,
+            token,
+            reference,
             dataGroup,
             idForm: response.data.number,
             formName,
           });
-        }       
+        }
       })
       .catch(error => {
         var mensage;
@@ -204,15 +206,15 @@ class StepList extends Component {
           mensage = `${error.response.status} - Não encontrado`;
           // this.errorMessage(mensage);
         }
-        else if(error.response.status === 403) {
+        else if (error.response.status === 403) {
           mensage = `${error.response.status} - Bloqueado pelo Firewall`;
         }
-        else if(error.response.status === 500) {
+        else if (error.response.status === 500) {
           mensage = `${error.response.status} - Error interno`;
         }
-        else if(error.response.status === 0) {
+        else if (error.response.status === 0) {
           mensage = `${error.response.status} - Formato incorreto`;
-        }        
+        }
         this.errorMessage(mensage);
       });
   }
@@ -270,7 +272,7 @@ class StepList extends Component {
     });
 
     this.props.navigation.navigate('Hist');
-    
+
   }
 
   sendGroup = (dataGroup, userId, token, groupName) => {
@@ -356,6 +358,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators({
     ...FormAction,
     ...HistActions,
+    ...GroupActions
   }, dispatch);
 
 StepList.navigationOptions = {

@@ -9,7 +9,8 @@ import {
   Linking,
   BackHandler,
   ActivityIndicator,
-  RefreshControl
+  RefreshControl,
+  FlatList
 } from "react-native";
 import { Header } from "../../globalComponents";
 import {
@@ -136,7 +137,7 @@ class Historico extends Component {
     return null;
   }
 
-  renderEnviados = item => {
+  renderEnviados = ({ item }) => {
     return (
       <TouchableOpacity
         style={styles.box}
@@ -205,28 +206,36 @@ class Historico extends Component {
             </ScrollView>
           </View>
         </Modal>
-        {this.state.errorview && (
-          <SnackBar outside content="Sem conexão!" color='#3C3C46' fontcolor="white" />
-        )}
+        {
+          this.state.errorview && (
+            <SnackBar outside content="Sem conexão!" color='#3C3C46' fontcolor="white" />
+          )
+        }
         <View style={styles.main}>
           <ScrollView refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
               onRefresh={this._onRefresh}
-            />}>
-            {arrayRef ? arrayRef.map(item => this.renderOffline(item)) : null}
-
-            {this.state.loading && (
-              <View style={styles.loading}>
-                <ActivityIndicator size="large" color="#fff" />
-              </View>
-            )}
-
+            />
+          }>
+            {
+              arrayRef
+                ? arrayRef.map(item => this.renderOffline(item))
+                : null
+            }
 
             {
-              arrayEnviados
-                ? arrayEnviados.map(item => this.renderEnviados(item))
-                : null}
+              this.state.loading && (
+                <View style={styles.loading}>
+                  <ActivityIndicator size="large" color="#fff" />
+                </View>
+              )
+            }
+            <FlatList
+              data={arrayEnviados}
+              keyExtractor={item => item.matricula}
+              renderItem={item => this.renderEnviados(item)}
+            />
           </ScrollView>
         </View>
       </View>

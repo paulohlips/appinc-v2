@@ -52,6 +52,13 @@ class AudioRec extends Component {
 
     } else {
       this.setState({ name: `${newState.reference}_${data_name}` })
+      Object.keys(form.step).map(key => {
+        if (key === data_name) {
+          if (form.step[key].value) {
+            this.setState(form.step[key].value.stateAudio);
+          }
+        }
+      })
     }
 
   }
@@ -153,7 +160,7 @@ class AudioRec extends Component {
   }
 
   render() {
-    const { filePath, savedNote } = this.state;
+    const { filePath, savedNote, recordTime } = this.state;
     const { data, noteState, form, resetSaveNote } = this.props;
     const { data_name, default_value, note } = data;
     const { saveStep } = form;
@@ -192,21 +199,26 @@ class AudioRec extends Component {
         }
         <View style={styles.controls}>
           <TouchableOpacity style={styles.button} onPress={() => this.onStartRecord()}>
-            <Text>Gr</Text>
+            <Icon name="md-microphone" size={28} style={{ color: 'blcak' }} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => this.onStopRecord()}>
-            <Text>St</Text>
+            <Icon name="md-square" size={28} style={{ color: 'blcak' }} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => this.onStartPlay()}>
-            <Text>play</Text>
+            <Icon name="md-play" size={28} style={{ color: 'black' }} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => this.onPausePlay()}>
-            <Text>Resume</Text>
+            <Icon name="md-pause" size={28} style={{ color: 'black' }} />
           </TouchableOpacity>
-          <View style={styles.seconds}>
-            <Text style={styles.progressText}>{this.state.recordTime} s</Text>
-          </View>
         </View>
+        {
+          recordTime && (
+            <View style={styles.seconds}>
+              <Text style={styles.progressText}>{recordTime} s</Text>
+            </View>
+          )
+        }
+
       </View>
     )
   }

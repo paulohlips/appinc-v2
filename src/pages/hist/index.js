@@ -30,6 +30,7 @@ import { Creators as FormActions } from "../../store/ducks/form";
 import { Creators as NewActions } from "../../store/ducks/new";
 import { Creators as HistActions } from '../../store/ducks/hist';
 import { Creators as GroupActions } from '../../store/ducks/group';
+import { Creators as NoteActions } from '../../store/ducks/notes';
 
 
 class Historico extends Component {
@@ -100,18 +101,28 @@ class Historico extends Component {
     });*/
   }
   restoreForm = async name => {
-    const { navigation, restoreFormState, setForm, getReference, recoverGroupState } = this.props;
+    const {
+      navigation,
+      restoreFormState,
+      setForm,
+      getReference,
+      recoverGroupState,
+      recoverNoteState
+    } = this.props;
     console.tron.log('form name', name)
     const formAsync = await AsyncStorage.getItem(name);
-    const groupAsync = await AsyncStorage.getItem(`${name}Group`)
+    const groupAsync = await AsyncStorage.getItem(`${name}Group`);
+    const noteAsync = await AsyncStorage.getItem(`${name}Note`);
     const form = JSON.parse(formAsync);
     const group = JSON.parse(groupAsync);
+    const note = JSON.parse(noteAsync);
 
     console.tron.log('RECUPERA ASYNC', form, group)
     await getReference(form.ref);
     await setForm(form.form);
     await recoverGroupState(group);
     await restoreFormState(form);
+    await recoverNoteState(note);
     navigation.navigate("StepList");
   };
 
@@ -255,6 +266,7 @@ const mapDispatchToProps = dispatch =>
     ...NewActions,
     ...HistActions,
     ...GroupActions,
+    ...NoteActions
   }, dispatch);
 
 export default connect(

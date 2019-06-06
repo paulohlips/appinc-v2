@@ -23,6 +23,7 @@ import { bindActionCreators } from 'redux';
 import { Creators as FormAction } from '../../store/ducks/form';
 import { Creators as HistActions } from '../../store/ducks/hist';
 import { Creators as GroupActions } from '../../store/ducks/group';
+import { Creators as NoteActions } from '../../store/ducks/notes';
 import { SnackBar } from '../../globalComponents';
 
 
@@ -73,9 +74,17 @@ class StepList extends Component {
   }
 
   saveForm2 = () => {
-    const { reference, saveForm, saveGroup, setSaveContentForm, form } = this.props;
+    const {
+      reference,
+      saveForm,
+      saveGroup,
+      setSaveContentForm,
+      form,
+      saveNoteState,
+    } = this.props;
     saveForm(reference);
-    saveGroup(reference)
+    saveGroup(reference);
+    saveNoteState(reference);
     this.saved();
   }
 
@@ -358,7 +367,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators({
     ...FormAction,
     ...HistActions,
-    ...GroupActions
+    ...GroupActions,
+    ...NoteActions
   }, dispatch);
 
 StepList.navigationOptions = {

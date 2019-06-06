@@ -28,6 +28,7 @@ import { bindActionCreators } from "redux";
 import { Creators as FormActions } from "../../store/ducks/form";
 import { Creators as NewActions } from "../../store/ducks/new";
 import { Creators as HistActions } from '../../store/ducks/hist';
+import { Creators as GroupActions } from '../../store/ducks/group';
 
 
 class Historico extends Component {
@@ -98,7 +99,7 @@ class Historico extends Component {
     });*/
   }
   restoreForm = async name => {
-    const { navigation, restoreFormState, setForm, getReference } = this.props;
+    const { navigation, restoreFormState, setForm, getReference, recoverGroupState } = this.props;
     console.tron.log('form name', name)
     const formAsync = await AsyncStorage.getItem(name);
     const groupAsync = await AsyncStorage.getItem(`${name}Group`)
@@ -244,6 +245,7 @@ const mapDispatchToProps = dispatch =>
     ...FormActions,
     ...NewActions,
     ...HistActions,
+    ...GroupActions,
   }, dispatch);
 
 export default connect(

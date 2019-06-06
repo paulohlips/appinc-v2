@@ -8,7 +8,7 @@ import {
   AsyncStorage,
   TextInput,
   Animated,
-  BackHandler
+  BackHandler,
 } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { Header, ModalCheck, PickerItem } from '../../globalComponents';
@@ -19,6 +19,7 @@ import { bindActionCreators } from 'redux';
 import { Creators as NewActions } from '../../store/ducks/new';
 import { Creators as FormActios } from '../../store/ducks/form';
 
+
 const imageCheck = require('../../assents/lottie/warning.json');
 
 class New extends Component {
@@ -27,6 +28,7 @@ class New extends Component {
   }
 
   state = {
+    errorInput: false,
     tipo: null,
     subtipo: null,
     ssubtipo: null,
@@ -95,17 +97,34 @@ class New extends Component {
     return true;
   }
 
-  onPressButton = () => {
+  onPressButton = async () => {
     const { navigation, getReference, resetEditForm } = this.props;
-    const { inputSave } = this.state;
-    if (inputSave) {
-      getReference(this.state.inputSave);
-      resetEditForm();
-      navigation.navigate('StepList', { inputSave: this.state.inputSave });
+    const { inputSave, errorInput } = this.state;
+    let err = false;
+
+    const arrayRef = await AsyncStorage.getItem('arrayRef');
+    const refs = JSON.parse(arrayRef);
+    console.tron.log('array', refs, inputSave)
+    refs.map(async item => {
+      if (item === inputSave) {
+        err = true;
+        this.setState({ errorInput: true });
+        console.tron.log('err', refs, item, inputSave, err);
+      }
+    })
+
+    if (err) {
+      console.tron.log('ERROOORRR', refs, inputSave)
     } else {
-      getReference('Laudo sem Nome');
-      resetEditForm();
-      navigation.navigate('StepList');
+      if (inputSave) {
+        getReference(this.state.inputSave);
+        resetEditForm();
+        navigation.navigate('StepList', { inputSave: this.state.inputSave });
+      } else {
+        getReference('Laudo sem Nome');
+        resetEditForm();
+        navigation.navigate('StepList');
+      }
     }
   }
 
@@ -127,6 +146,10 @@ class New extends Component {
     this.props.closeModalError();
   };
 
+  closeModalErr = () => {
+    this.setState({ errorInput: false });
+  }
+
   receiveParams = params => {
     this.setState({ testeParam: params, baseUrl: params });
     this.reqUrl(params)
@@ -139,6 +162,7 @@ class New extends Component {
       viewError,
       messageRequest,
       infopicker,
+      errorInput
     } = this.state;
     const { navigation, newState } = this.props;
     return (
@@ -209,6 +233,17 @@ class New extends Component {
                 failure
                 sourceImage={imageCheck}
                 onClose={this.closeModal}
+              />
+            )
+          }
+          {
+            errorInput && (
+              <ModalCheck
+                message={'Ja existe uma perícia com essa refêrencia'}
+                viewModal={errorInput}
+                failure
+                sourceImage={imageCheck}
+                onClose={this.closeModalErr}
               />
             )
           }

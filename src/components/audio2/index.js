@@ -15,7 +15,6 @@ import { Creators as FormActions } from '../../store/ducks/form';
 import { Creators as NoteActions } from '../../store/ducks/notes';
 
 
-
 class AudioRec extends Component {
   state = {
     savedNote: false,
@@ -26,30 +25,33 @@ class AudioRec extends Component {
   audioRecorderPlayer = new AudioRecorderPlayer();
 
   componentWillMount = () => {
-    const { noteState, form, data } = this.props;
+    const { noteState, form, data, newState } = this.props;
     const { note, data_name, } = data;
-
+    console.tron.log('reference name in audio', newState, newState.reference)
     if (note) {
-      this.setState({ name: `note_${data_name}` })
+      this.setState({ name: `note_${newState.reference}_${data_name}` });
       noteState.data.map(item => {
         if (item.key === data_name) {
           if (item.value) {
-            this.setState({
-              savedNote: item.value.stateAudio.savedNote,
-              recordSecs: item.value.stateAudio.recordSecs,
-              recordTime: item.value.stateAudio.recordTime,
-              name: item.value.stateAudio.name,
-              filePath: item.value.stateAudio.filePath,
-              currentPositionSec: item.value.stateAudio.currentPositionSec,
-              currentDurationSec: item.value.stateAudio.currentDurationSec,
-              playTime: item.value.stateAudio.playTime,
-              duration: item.value.stateAudio.duration,
-            })
+            if (`note_${newState.reference}_${data_name}` === item.value.stateAudio.name) {
+              this.setState({
+                savedNote: item.value.stateAudio.savedNote,
+                recordSecs: item.value.stateAudio.recordSecs,
+                recordTime: item.value.stateAudio.recordTime,
+                name: item.value.stateAudio.name,
+                filePath: item.value.stateAudio.filePath,
+                currentPositionSec: item.value.stateAudio.currentPositionSec,
+                currentDurationSec: item.value.stateAudio.currentDurationSec,
+                playTime: item.value.stateAudio.playTime,
+                duration: item.value.stateAudio.duration,
+              })
+            }
           }
         }
       })
+
     } else {
-      this.setState({ name: data_name })
+      this.setState({ name: `${newState.reference}_${data_name}` })
     }
 
   }
@@ -156,6 +158,8 @@ class AudioRec extends Component {
     const { data_name, default_value, note } = data;
     const { saveStep } = form;
 
+    console.tron.log('name audio', this.state.name)
+
     if (note) {
       if (noteState.saveNote) {
         noteState.data.map(note => {
@@ -212,8 +216,12 @@ class AudioRec extends Component {
 const mapStateToProps = state => ({
   form: state.formState,
   noteState: state.noteState,
+  newState: state.newState,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ ...FormActions, ...NoteActions }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  ...FormActions,
+  ...NoteActions,
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AudioRec);

@@ -117,10 +117,14 @@ class Historico extends Component {
     const group = JSON.parse(groupAsync);
     const note = JSON.parse(noteAsync);
 
-    console.tron.log('RECUPERA ASYNC', form, group)
+    console.tron.log('RECUPERA ASYNC', form, group, note)
     await getReference(form.ref);
     await setForm(form.form);
-    await recoverGroupState(group);
+
+    if (group) {
+      await recoverGroupState(group);
+    }
+
     await restoreFormState(form);
     await recoverNoteState(note);
     navigation.navigate("StepList");

@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { HeaderCadastro, ModalCheck, PickerItem, Header } from '../../globalComponents';
 
 const imageCheck = require('../../assents/lottie/warning.json');
 
@@ -102,12 +102,12 @@ class Login extends Component {
 
   confereID = async () => {
     const { inputSave } = this.state;
-    this.setState({ viewModal: false , cont: false ,load: true});
+    const { navigation } = this.props;
+    this.setState({ viewModal: false });
     try {
       const response = await Api.user.postCadastroId({ matricula: inputSave })
       if (response.status === 200) {
-        AsyncStorage.setItem('@IdRegistro', inputSave);
-        this.navigateToHash();
+        navigation.navigate('Hash', {key: inputSave})    
       } else {
         this.setState({ viewModal: true, messageRequest: response.data.mensagem, load: false , cont: true});
       }
@@ -123,17 +123,12 @@ class Login extends Component {
   render() {
     const { viewModal, messageRequest, load ,cont } = this.state;
     return (
-
-      <KeyboardAwareScrollView
-       contentContainerStyle={styles.container}
-       scrollEnabled= {true}
-      >
-       <Header
-          title=''
-          showArrowRegister
-          color = 'rgba(45, 45, 45, 0.8)'
-         
-        />
+      <View style={styles.container}>
+      <Header
+        title='Cadastro'
+        showArrow
+        goBack={this.navigateToLogin}
+      />
         <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
         <View style={styles.mainContainer}>
           <View style={styles.icon}>

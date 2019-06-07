@@ -65,7 +65,7 @@ class AudioRec extends Component {
 
   onStartRecord = async () => {
     const { name } = this.state;
-    const result = await this.audioRecorderPlayer.startRecorder(`/storage/emulated/0/Music/${name}.mp3`);
+    const result = await this.audioRecorderPlayer.startRecorder(`${name}.m4a`);
     this.audioRecorderPlayer.addRecordBackListener((e) => {
       this.setState({
         recordSecs: e.current_position,
@@ -86,7 +86,7 @@ class AudioRec extends Component {
 
   onStartPlay = async () => {
     const { name } = this.state;
-    const msg = await this.audioRecorderPlayer.startPlayer(`/storage/emulated/0/Music/${name}.mp3`);
+    const msg = await this.audioRecorderPlayer.startPlayer(`${name}.m4a`);
     this.audioRecorderPlayer.addPlayBackListener((e) => {
       if (e.current_position === e.duration) {
         this.audioRecorderPlayer.stopPlayer();

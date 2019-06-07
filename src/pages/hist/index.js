@@ -116,8 +116,7 @@ class Historico extends Component {
     const form = JSON.parse(formAsync);
     const group = JSON.parse(groupAsync);
     const note = JSON.parse(noteAsync);
-
-    console.tron.log('RECUPERA ASYNC', form, group, note)
+    
     await getReference(form.ref);
     await setForm(form.form);
 
@@ -196,7 +195,6 @@ class Historico extends Component {
 
         <Header
           showMenu
-          showClear
           openMenu={navigation.toggleDrawer}
           title="Minhas Perícias"
         />

@@ -16,13 +16,12 @@ import {
   Alert,
   BackHandler
 } from 'react-native';
-import { ModalCheck } from '../../globalComponents';
-import {SnackBar, Header} from './../../globalComponents';
+import {SnackBar} from './../../globalComponents';
 import StepIndicator from 'react-native-step-indicator';
 import Axios from 'axios';
 import Api from '../../services/api';
 
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { HeaderCadastro, ModalCheck, PickerItem, Header } from '../../globalComponents';
 
 const imageCheck = require('../../assents/lottie/warning.json');
 const imageCheck2 = require('../../assents/lottie/check.json');
@@ -85,7 +84,7 @@ class Login extends Component {
     BackHandler.addEventListener('hardwareBackPress', this.navigateToEmail);
   }
 
-  navigateToEmail = async () => {
+  navigateToLogin = async () => {
     const resetAction = StackActions.reset({
       index: 0,
       actions: [
@@ -132,17 +131,14 @@ class Login extends Component {
   render() {
     const { viewModal, messageRequest , viewModals} = this.state;
     return (
-
-      <KeyboardAwareScrollView
-       contentContainerStyle={styles.container}
-       scrollEnabled= {true}
-      >
+      <View style={styles.container}>
 
       <Header
-          title=''
-          showArrowRegister
-          color = 'rgba(45, 45, 45, 0.8)'
-        />
+        title='Cadastro'
+        showArrow
+        goBack={this.navigateToLogin}
+      />
+
       <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
         <View style={styles.mainContainer}>
         <View style={styles.icon}>

@@ -44,7 +44,6 @@ class InputText extends Component {
       }
     }
 
-
     if (data.note) {
       noteState.data.map(note => {
         if (note.key === data.data_name) {
@@ -153,7 +152,6 @@ class InputText extends Component {
         this.saved();        
         resetSaveNote();
       }
-      
     }
     
     if (saveStep) {

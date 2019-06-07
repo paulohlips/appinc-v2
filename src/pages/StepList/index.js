@@ -322,8 +322,6 @@ class StepList extends Component {
         <Header
           title={reference}
           showArrow
-          showInfo
-          info={form.info_form}
           goBack={this.saveForm}
         />
         {

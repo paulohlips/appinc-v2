@@ -219,9 +219,9 @@ const controlArray = (state, name) => {
 
 // save group async
 const saveGroupAsync = async data => {
-  console.tron.log('savegroupAsync', data);
+  // console.tron.log('savegroupAsync', data);
   const arrayRef = await AsyncStorage.getItem('arrayRefGroup');
-  console.tron.log('arrayrefgroup', arrayRef);
+  //console.tron.log('arrayrefgroup', arrayRef);
   let arrayControl = false;
   // verifica se ja existe um array de referencia se nao cria um e ja puxa a primeira referencia pra primeiro campod do array
   if (arrayRef === null) {
@@ -229,7 +229,7 @@ const saveGroupAsync = async data => {
     array.push(data.ref);
     await AsyncStorage.setItem('arrayRefGroup', JSON.stringify(array));
     //adiciona o group para diferenciar do form
-    console.tron.log('KEY group', `${data.ref}Group`);
+    //console.tron.log('KEY group', `${data.ref}Group`);
     await AsyncStorage.setItem(`${data.ref}Group`, JSON.stringify(data.state));
   } else {
     // caso contrario varre o array pra ver se tem aguma ref caso sim ele so substitui caso nao pussh a ref pro fim do array e os dados

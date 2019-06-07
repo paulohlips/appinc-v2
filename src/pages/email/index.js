@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { SnackBar, Header } from '../../globalComponents';
 import {
   View,
   Text,
@@ -20,7 +19,7 @@ import {
 } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 
-import { HeaderCadastro, ModalCheck, PickerItem, Header } from '../../globalComponents';
+import { SnackBar, HeaderCadastro, ModalCheck, PickerItem, Header } from '../../globalComponents';
 
 const imageCheck = require('../../assents/lottie/warning.json');
 
@@ -66,7 +65,7 @@ class Login extends Component {
     inputSave: null,
     viewModal: false,
     messageRequest: '',
-    load : false,
+    load: false,
     cont: true,
   }
 
@@ -107,9 +106,9 @@ class Login extends Component {
     try {
       const response = await Api.user.postCadastroId({ matricula: inputSave })
       if (response.status === 200) {
-        navigation.navigate('Hash', {key: inputSave})    
+        navigation.navigate('Hash', { key: inputSave })
       } else {
-        this.setState({ viewModal: true, messageRequest: response.data.mensagem, load: false , cont: true});
+        this.setState({ viewModal: true, messageRequest: response.data.mensagem, load: false, cont: true });
       }
     } catch {
       this.setState({ viewModal: true, messageRequest: response.data.mensagem });
@@ -121,14 +120,14 @@ class Login extends Component {
   }
 
   render() {
-    const { viewModal, messageRequest, load ,cont } = this.state;
+    const { viewModal, messageRequest, load, cont } = this.state;
     return (
       <View style={styles.container}>
-      <Header
-        title='Cadastro'
-        showArrow
-        goBack={this.navigateToLogin}
-      />
+        <Header
+          title='Cadastro'
+          showArrow
+          goBack={this.navigateToLogin}
+        />
         <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
         <View style={styles.mainContainer}>
           <View style={styles.icon}>
@@ -145,22 +144,22 @@ class Login extends Component {
               value={this.state.inputSave}
             />
             <TouchableOpacity style={styles.testebutton} onPress={() => { this.confereID(); }}>
-            {
-              cont && (
-                <Text style={styles.buttonText}>
-                Continuar
+              {
+                cont && (
+                  <Text style={styles.buttonText}>
+                    Continuar
                 </Text>
-              )
-              
-            }
+                )
 
-            {
-              load && (
-                <ActivityIndicator size="small" color="rgb(225, 200, 133)" />
-              )
-            }
+              }
+
+              {
+                load && (
+                  <ActivityIndicator size="small" color="rgb(225, 200, 133)" />
+                )
+              }
             </TouchableOpacity>
-           
+
           </View>
         </View>
         <HideWithKeyboard>
@@ -178,7 +177,7 @@ class Login extends Component {
             <SnackBar inside content={this.state.messageRequest} color="white" />
           )
         }
-      </KeyboardAwareScrollView>
+      </View>
     );
   }
   onPageChange(position) {

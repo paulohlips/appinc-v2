@@ -27,7 +27,7 @@ class AudioRec extends Component {
   componentWillMount = () => {
     const { noteState, form, data, newState } = this.props;
     const { note, data_name, } = data;
-    console.tron.log('reference name in audio', newState, newState.reference)
+    //console.tron.log('reference name in audio', newState, newState.reference)
     if (note) {
       this.setState({ name: `note_${newState.reference}_${data_name}` });
       noteState.data.map(item => {
@@ -165,7 +165,7 @@ class AudioRec extends Component {
     const { data_name, default_value, note } = data;
     const { saveStep } = form;
 
-    console.tron.log('name audio', this.state.name)
+    //console.tron.log('name audio', this.state.name)
 
     if (note) {
       if (noteState.saveNote) {

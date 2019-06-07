@@ -109,14 +109,14 @@ class Historico extends Component {
       recoverGroupState,
       recoverNoteState
     } = this.props;
-    console.tron.log('form name', name)
+    //console.tron.log('form name', name)
     const formAsync = await AsyncStorage.getItem(name);
     const groupAsync = await AsyncStorage.getItem(`${name}Group`);
     const noteAsync = await AsyncStorage.getItem(`${name}Note`);
     const form = JSON.parse(formAsync);
     const group = JSON.parse(groupAsync);
     const note = JSON.parse(noteAsync);
-    
+
     await getReference(form.ref);
     await setForm(form.form);
 

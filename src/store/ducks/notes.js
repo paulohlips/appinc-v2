@@ -101,9 +101,9 @@ addNoteData = (state, note) => {
 }
 
 const saveNoteAsync = async data => {
-  console.tron.log('savegroupAsync', data);
+  //console.tron.log('savegroupAsync', data);
   const arrayRef = await AsyncStorage.getItem('arrayRefNote');
-  console.tron.log('arrayrefnote', arrayRef);
+  //console.tron.log('arrayrefnote', arrayRef);
   let arrayControl = false;
   // verifica se ja existe um array de referencia se nao cria um e ja puxa a primeira referencia pra primeiro campod do array
   if (arrayRef === null) {
@@ -111,7 +111,7 @@ const saveNoteAsync = async data => {
     array.push(data.ref);
     await AsyncStorage.setItem('arrayRefNote', JSON.stringify(array));
     //adiciona o group para diferenciar do form
-    console.tron.log('KEY note', `${data.ref}Note`);
+    //console.tron.log('KEY note', `${data.ref}Note`);
     await AsyncStorage.setItem(`${data.ref}Note`, JSON.stringify(data.state));
   } else {
     // caso contrario varre o array pra ver se tem aguma ref caso sim ele so substitui caso nao pussh a ref pro fim do array e os dados

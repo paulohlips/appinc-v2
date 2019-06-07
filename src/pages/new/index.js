@@ -104,17 +104,17 @@ class New extends Component {
 
     const arrayRef = await AsyncStorage.getItem('arrayRef');
     const refs = JSON.parse(arrayRef);
-    console.tron.log('array', refs, inputSave)
+    //console.tron.log('array', refs, inputSave)
     refs.map(async item => {
       if (item === inputSave) {
         err = true;
         this.setState({ errorInput: true });
-        console.tron.log('err', refs, item, inputSave, err);
+        //console.tron.log('err', refs, item, inputSave, err);
       }
     })
 
     if (err) {
-      console.tron.log('ERROOORRR', refs, inputSave)
+      //console.tron.log('ERROOORRR', refs, inputSave)
     } else {
       if (inputSave) {
         getReference(this.state.inputSave);

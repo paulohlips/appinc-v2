@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {SnackBar , Header} from './../../globalComponents';
 
 import {
   View,
@@ -22,7 +21,7 @@ import StepIndicator from 'react-native-step-indicator';
 import Axios from 'axios';
 import Api from '../../services/api';
 
-import { HeaderCadastro, ModalCheck, PickerItem, Header } from '../../globalComponents';
+import { SnackBar, HeaderCadastro, ModalCheck, PickerItem, Header } from '../../globalComponents';
 
 const imageCheck = require('../../assents/lottie/warning.json');
 
@@ -126,11 +125,11 @@ class Login extends Component {
     return (
       <View style={styles.container}>
 
-      <Header
-        title='Cadastro'
-        showArrow
-        goBack={this.navigateToLogin}
-      />
+        <Header
+          title='Cadastro'
+          showArrow
+          goBack={this.navigateToLogin}
+        />
 
         <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
         <View style={styles.mainContainer}>
@@ -170,10 +169,10 @@ class Login extends Component {
         </HideWithKeyboard>
         {
           viewModal && (
-            <SnackBar inside content = {this.state.messageRequest} color = "white"/>
+            <SnackBar inside content={this.state.messageRequest} color="white" />
           )
         }
-      </KeyboardAwareScrollView>
+      </View>
     );
   }
   onPageChange(position) {

@@ -22,6 +22,8 @@ import StepIndicator from 'react-native-step-indicator';
 import Axios from 'axios';
 import Api from '../../services/api';
 
+import { HeaderCadastro, ModalCheck, PickerItem, Header } from '../../globalComponents';
+
 const imageCheck = require('../../assents/lottie/warning.json');
 
 import styles from './styles';
@@ -66,8 +68,10 @@ class Login extends Component {
   }
 
   async componentWillMount() {
-    const idRegistro = await AsyncStorage.getItem('@IdRegistro');
-    this.setState({ idRegistro: idRegistro });
+    //const idRegistro = await AsyncStorage.getItem('@IdRegistro');
+    const { navigation } = this.props;
+    const id = navigation.getParam('key');
+    this.setState({ idRegistro: id });
   }
 
   componentDidMount() {
@@ -135,6 +139,13 @@ class Login extends Component {
     const { viewModal, messageRequest } = this.state;
     return (
       <View style={styles.container}>
+
+      <Header
+        title='Cadastro'
+        showArrow
+        goBack={this.navigateToLogin}
+      />
+
         <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
         <View style={styles.mainContainer}>
           <View style={styles.icon}>

@@ -9,7 +9,10 @@ import { responsividade } from '../../styles';
 
 import { NavigationActions, withNavigation, StackActions } from 'react-navigation';
 
-const dias = 23;
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Creators as LoginActions } from '../../store/ducks/login';
+const dias = 23
 class Main extends Component {
 
   navigateToScreen = (route) => () => {
@@ -36,32 +39,8 @@ class Main extends Component {
     }
   }
 
-  // requestFroms = () => {
-  //   axios.get('http://35.198.17.69/api/pericia/formularios/4')
-  //     .then((resp) => {
-  //       AsyncStorage.setItem('@Form', JSON.stringify(resp.data));
-  //     }).catch(err => {
-  //     });
-  // }
-
-  // requestQuerry = () => {
-  //   axios.get('http://35.243.140.44/api/query')
-  //     .then((resp) => {
-  //       AsyncStorage.setItem('@Querry', JSON.stringify(resp.data));
-  //     }).catch(err => {
-  //     });
-  // }
-
   state = {
     drawerStatus: null,
-  }
-
-  async componentWillMount() {
-    const arrayRef = await AsyncStorage.getItem('teste2');
-    const name = await AsyncStorage.getItem('@AppInc:nome');
-    this.setState({
-      nome: name
-    });
   }
 
   componentDidMount() {
@@ -87,7 +66,7 @@ class Main extends Component {
 
 
   render() {
-    const { navigation } = this.props;
+    const { navigation, login } = this.props;
     const { nome } = this.state
     const name = navigation.getParam('nome', 'Nome não cadastrado');
     const { largura_tela } = responsividade;
@@ -113,7 +92,7 @@ class Main extends Component {
               <Image source={require('../../assents/imgs/avatar.png')} style={styles.ImageStyle} />
             </View>
             <View style={styles.name_view}>
-              <Text style={styles.name}>{nome}</Text>
+              <Text style={styles.name}>{login.userName}</Text>
             </View>
           </View>
           <View style={styles.buttons_view}>
@@ -134,4 +113,11 @@ class Main extends Component {
   }
 }
 
-export default Main;
+const mapStateToProps = state => ({
+  login: state.loginState,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(LoginActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

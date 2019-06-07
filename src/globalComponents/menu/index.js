@@ -36,13 +36,14 @@ class MenuClass extends Component {
     render() {
         const { nome } = this.state;
         const { largura_tela } = responsividade;
+        const { login } = this.props;
 
         return (
             <View style={styles.container}>
                 <TouchableOpacity onPress={this.navigateToScreen('Main')}>
                     <View style={styles.profile}>
                         <Image source={require(pathImage)} style={styles.profileImage} />
-                        <Text style={styles.profileName}>{nome}</Text>
+                        <Text style={styles.profileName}>{login.userName}</Text>
                     </View>
                 </TouchableOpacity>
                 <View style={styles.buttonsView}>

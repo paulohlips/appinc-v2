@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import {
   Header,
-  PickerItem,
+  PickerItem
 } from '../../globalComponents';
+
 import Api from '../../services/api';
 
 import styles from './styles';
@@ -23,8 +24,14 @@ class ChangeService extends Component {
   }
 
   change = (variavel) => {
+    if (variavel) {
     Api.changeBaseURL(variavel);
     this.props.navigation.goBack();
+    }
+    else {
+      Api.changeBaseURL('http://35.198.17.69/api');
+      this.props.navigation.goBack();
+    }
   }
 
   changeByInput = () => {
@@ -36,7 +43,6 @@ class ChangeService extends Component {
   receiveParams = params => {
     console.log(params)
     this.setState({ testeParam: params });
-
   }
 
   render() {

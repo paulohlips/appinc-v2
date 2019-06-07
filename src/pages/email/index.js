@@ -19,6 +19,8 @@ import {
 } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 
+import { HeaderCadastro, ModalCheck, PickerItem, Header } from '../../globalComponents';
+
 const imageCheck = require('../../assents/lottie/warning.json');
 
 import styles from './styles';
@@ -97,11 +99,12 @@ class Login extends Component {
 
   confereID = async () => {
     const { inputSave } = this.state;
+    const { navigation } = this.props;
     this.setState({ viewModal: false });
     try {
       const response = await Api.user.postCadastroId({ matricula: inputSave })
       if (response.status === 200) {
-        this.navigateToHash();
+        navigation.navigate('Hash', {key: inputSave})    
       } else {
         this.setState({ viewModal: true, messageRequest: response.data.mensagem });
       }
@@ -133,8 +136,12 @@ class Login extends Component {
   render() {
     const { viewModal, messageRequest } = this.state;
     return (
-
       <View style={styles.container}>
+      <Header
+        title='Cadastro'
+        showArrow
+        goBack={this.navigateToLogin}
+      />
         <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
         <View style={styles.mainContainer}>
           <View style={styles.icon}>

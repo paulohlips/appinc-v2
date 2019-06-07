@@ -2,38 +2,18 @@ import React, { Component } from "react";
 import {
   View,
   Text,
-  AsyncStorage,
   TouchableOpacity,
-  Modal,
-  ScrollView,
-  Linking,
   BackHandler,
-  ActivityIndicator
 } from "react-native";
 import { Header } from "../../globalComponents";
-import {
-  NavigationActions,
-  withNavigation,
-  StackActions
-} from "react-navigation";
 import styles from "./styles";
-import Icon from "react-native-vector-icons/Ionicons";
 import Api from '../../services/api';
-import axios from "axios";
-
+import ListPops from './Screens/ListPops';
+import DownloadPops from './Screens/DownloadPops';
 
 class UpdatePops extends Component {
   state = {
-    pops: '',
-    popList: false,
-    arrayEnviados: null,
-    arrayRef: null,
-    modalVisible: false,
-    form: null,
-    idUser: null,
-    loading: true,
-    errorview: false,
-    callFuction: true,
+    screen1: true,
   };
 
   componentDidMount() {
@@ -73,14 +53,11 @@ class UpdatePops extends Component {
 
   renderPops = item => {
     if (item) {
-
       return (
-
         <TouchableOpacity
           style={styles.box}
           onPress={() => { }}
         >
-
           <View style={styles.row}>
             <Text style={styles.status}>Perícia {item.form_titulo} </Text>
           </View>
@@ -97,10 +74,68 @@ class UpdatePops extends Component {
     return null;
   }
 
+  toggleScreen = (screen) => {
+    if (screen === 1)
+      this.setState({ screen1: true });
+
+    if (screen === 2)
+      this.setState({ screen1: false });
+
+  }
+
+  renderTabMenu = () => {
+    const { screen1 } = this.state;
+    return (
+      <View style={styles.tabMenu}>
+        {
+          screen1
+            ? <TouchableOpacity
+              onPress={() => this.toggleScreen(1)}
+              style={{
+                ...styles.tabButton1,
+                borderBottomColor: '#f9aa33',
+                borderBottomWidth: 3,
+              }}
+            >
+              <Text>Baixar POP</Text>
+            </TouchableOpacity>
+            : <TouchableOpacity
+              onPress={() => this.toggleScreen(1)}
+              style={{
+                ...styles.tabButton1,
+              }}
+            >
+              <Text>Baixar POP</Text>
+            </TouchableOpacity>
+        }
+        {
+          !screen1
+            ? <TouchableOpacity
+              style={{
+                ...styles.tabButton2,
+                borderBottomColor: '#f9aa33',
+                borderBottomWidth: 3,
+              }}
+              onPress={() => this.toggleScreen(2)}
+            >
+              <Text>Baixados</Text>
+            </TouchableOpacity>
+            : <TouchableOpacity
+              style={{
+                ...styles.tabButton2,
+              }}
+              onPress={() => this.toggleScreen(2)}
+            >
+              <Text>Baixados</Text>
+            </TouchableOpacity>
+        }
+      </View>
+    );
+  }
 
   render() {
+    const { screen1 } = this.state;
     const { navigation } = this.props;
-    const { popList, pops } = this.state;
     return (
       <View style={styles.container}>
         <Header
@@ -109,14 +144,24 @@ class UpdatePops extends Component {
           openMenu={navigation.toggleDrawer}
           title="POPs Disponíveis"
         />
-        <View style={styles.main}>
-          <ScrollView>
-            {popList ? pops.map(item => this.renderPops(item)) : null}
-          </ScrollView>
-        </View>
+        {this.renderTabMenu()}
+        {
+          screen1
+            ? <DownloadPops />
+            : <ListPops />
+
+        }
+
+
       </View>
     );
   }
 }
 
 export default (UpdatePops);
+
+/*
+  <ScrollView>
+    {popList ? pops.map(item => this.renderPops(item)) : null}
+  </ScrollView>
+*/

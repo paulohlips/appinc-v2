@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   View,
   Text,
+  TouchableOpacity,
 } from "react-native";
 import styles from "./styles";
 
@@ -35,7 +36,9 @@ class ListPops extends Component {
 
   render() {
     return (
-      <View style={styles.container} />
+      <View style={styles.container}>
+        {this.renderPops({form_titulo: 'ahhaha', form_id: 32, form_version: 2 })}
+      </View>
     );
   }
 }

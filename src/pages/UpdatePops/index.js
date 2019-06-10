@@ -144,15 +144,14 @@ class UpdatePops extends Component {
           openMenu={navigation.toggleDrawer}
           title="POPs Disponíveis"
         />
-        {this.renderTabMenu()}
-        {
-          screen1
-            ? <DownloadPops />
-            : <ListPops />
-
-        }
-
-
+        <View style={styles.main}>
+          {this.renderTabMenu()}
+          {
+            screen1
+              ? <DownloadPops />
+              : <ListPops />
+          }
+        </View> 
       </View>
     );
   }

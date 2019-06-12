@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingBottom: 40,
     paddingTop: 10,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0,
     borderBottomColor: 'black',
   },
   label: {

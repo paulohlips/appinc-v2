@@ -37,7 +37,10 @@ class ComponentBox extends Component {
           <View style={styles.ball}>
             <Text style={styles.numberType}>{num}</Text>
           </View>
-          <Text style={styles.textType}> {data.label}: </Text>
+          <View style={styles.textTypeView}>
+            <Text style={styles.textType}> {data.label}: </Text>
+          </View>
+          
           <TouchableOpacity onPress={() => this.onCloseModal()}>
             <Icon
               name="ellipsis-h"

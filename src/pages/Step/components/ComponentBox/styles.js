@@ -35,7 +35,14 @@ const styles = StyleSheet.create({
     fontSize: responsividade.fonts.descriptionSize,
     color: "black",
     fontWeight: "bold",
-    right: 30
+    //right: 30
+  },
+
+  textTypeView: {
+    //backgroundColor: 'green',
+    width: responsividade.largura_tela*0.7,
+    justifyContent: 'flex-start',
+    //alignItems: 'center',
   },
 
   coluna: {

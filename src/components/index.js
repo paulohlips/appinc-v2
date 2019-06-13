@@ -6,9 +6,8 @@ import GeoLocation from './geolocation';
 import Check from './checkbox';
 import OCR from './ocr';
 import Group from './group';
-import Scanner from './scanner'
-
-
+import Scanner from './scanner';
+import DifDatas from './periodo';
 import Veiculos from './veiculo';
 import Sketch from './sketch';
 
@@ -23,6 +22,7 @@ export {
     Check,
     OCR,
     Group,
-    Scanner
+    Scanner,
+    DifDatas
 };
 

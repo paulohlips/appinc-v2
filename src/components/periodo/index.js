@@ -24,8 +24,10 @@ class DifDatas extends Component {
         dataAtual: '2019-01-21',
         showDate: false,
         call: true,
-        dataInicio: null,
-        dataFinal: null,
+        dataInicio: "DD/MM/AAAA",
+        dataFinal: "DD/MM/AAAA",
+        date: null,
+        date2: null,
     }
 
 
@@ -38,7 +40,10 @@ class DifDatas extends Component {
                     if (components.index === index) {
                         Object.keys(components).map(key => {
                             if (key === data.data_name) {
-                                this.setState({ date: components[key].value })
+                                this.setState({ 
+                                    date: components[key].value.date, 
+                                    date2: components[key].value.date,
+                                })
                             }
                         })
                     }
@@ -48,7 +53,10 @@ class DifDatas extends Component {
             for (var key in form.step) {
                 if (key === data.data_name) {
                     if (form.step[key].filled === true) {
-                        this.setState({ date: form.step[key].value });
+                        this.setState({ 
+                            date: form.step[key].value.date, 
+                            date2: form.step[key].value.date2, 
+                        });
                     }
                 }
             }
@@ -70,7 +78,7 @@ class DifDatas extends Component {
     }
 
     saveGroupDate = info => {
-        const { dataAtual, date } = this.state;
+        const { date } = this.state;
         const {
             form,
             getSaveStateForm,
@@ -97,14 +105,14 @@ class DifDatas extends Component {
 
 
     saveFormInput = data => {
-        const { dataAtual, date } = this.state;
+        const { date, date2 } = this.state;
         const { form, getSaveStateForm, startControlArray } = this.props;
-
+       
         if (date) {
             for (var key in form.step) {
                 if (key === data.data_name) {
                     const form = {};
-                    form[data.data_name] = { key: data.data_name, value: date, filled: true };
+                    form[data.data_name] = { key: data.data_name, value: { date, date2 }, filled: true };
                     getSaveStateForm(form);
                 }
             }
@@ -125,8 +133,9 @@ class DifDatas extends Component {
         const { data_name, label, hint, default_value, newState } = this.props.data
         const { saveStep } = this.props.form;
         const { group } = this.props
-        const { showDate, dataInicio, dataFinal } = this.state;
+        const { showDate, dataInicio, dataFinal, date, date2, formattedDate } = this.state;
         const { largura_tela } = responsividade;
+        console.tron.log('state perioo', this.state)
 
         if (saveStep) {
             this.saveFormInput({ data_name, default_value });
@@ -143,7 +152,8 @@ class DifDatas extends Component {
 
                         <DatePicker
                             mode="date"
-                            placeholder={this.state.formattedDate}
+                            date={date}
+                            placeholder={formattedDate}
                             format="YYYY-MM-DD"
                             minDate={moment().format()}
                             maxDate="2100-01-01"
@@ -174,7 +184,8 @@ class DifDatas extends Component {
                     <View style={styles.parale}>
                         <DatePicker
                             mode="date"
-                            placeholder={this.state.formattedDate2}
+                            date={date2}
+                            placeholder={formattedDate}
                             format="YYYY-MM-DD"
                             minDate={this.state.date}
                             maxDate="2100-01-01"

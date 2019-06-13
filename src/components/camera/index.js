@@ -193,8 +193,6 @@ class Camera extends React.Component {
         images: null,
         imagePath: image.path
       });
-
-
     }).catch(e => {
       console.log(e);
     });
@@ -280,9 +278,8 @@ class Camera extends React.Component {
       saveDataGroup,
       group,
       groupMother,
-      startControlArrayGroup,      
-    } = this.props;    
-
+      startControlArrayGroup,
+    } = this.props;
     if (imagePath || image) {
       saveDataGroup({
         index,
@@ -336,8 +333,7 @@ class Camera extends React.Component {
           };
 
 
-            getSaveStateForm(form);
-          }
+          getSaveStateForm(form);
         }
       }
 

@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     main: {
         justifyContent: 'flex-start',
         alignItems: 'center',
+        flex: 1,
     },
 
     tabMenu: {

@@ -50,32 +50,42 @@ class New extends Component {
     viewModal: false,
     messageRequest: 'Sem conexão',
     viewError: false,
-    infopicker: [
-      {
-        name: 'Veículos',
-        value: 30,
-      },
-      {
-        name: 'Incêndio',
-        value: 32,
-      },
-      {
-        name: 'Genética Forense',
-        value: 33,
-      },
-      {
-        name: 'Arrombamento de Caixa',
-        value: 6,
-      },
-      {
-        name: 'Catálogo de Componentes',
-        value: 1,
-      },
-    ],
+    infopicker: [],
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+
+    let array = [];
+    try{
+      const response = await AsyncStorage.getItem('arrayKeys');
+      console.tron.log('arrayKeysNEW', response);
+      const keyPops = JSON.parse(response);
+      console.tron.log('keyPopsNEW', keyPops);
+
+
+      for (let i = 0; i < keyPops.length; i++) {
+        const popJSON = await AsyncStorage.getItem(keyPops[i]);
+        const pop = JSON.parse(popJSON);
+
+        console.tron.log('popNEW', pop); 
+
+        array = [
+          ...array,
+          {
+            value: pop,
+            name: pop.form_titulo,
+          }         
+        ]
+        console.tron.log('arrayNEW', array);        
+      }
+    } catch(err) {
+      console.tron.log('errorNEW', err);
+    }
+
+    this.setState({ infopicker: array });
+
+
   }
 
   async componentWillMount() {
@@ -105,13 +115,17 @@ class New extends Component {
     const arrayRef = await AsyncStorage.getItem('arrayRef');
     const refs = JSON.parse(arrayRef);
     console.tron.log('array', refs, inputSave)
-    refs.map(async item => {
-      if (item === inputSave) {
-        err = true;
-        this.setState({ errorInput: true });
-        console.tron.log('err', refs, item, inputSave, err);
-      }
-    })
+
+    if(arrayRef !== null) {
+      refs.map(async item => {
+        if (item === inputSave) {
+          err = true;
+          this.setState({ errorInput: true });
+          console.tron.log('err', refs, item, inputSave, err);
+        }
+      })
+    }
+   
 
     if (err) {
       console.tron.log('ERROOORRR', refs, inputSave)
@@ -129,9 +143,11 @@ class New extends Component {
   }
 
   reqUrl = (value) => {
-    const { getNewRequest } = this.props;
-    getNewRequest(value);
-    this.setState({ showRef: true });
+    const { getNewRequest, getNewSucsses } = this.props;
+    console.tron.log('SUPER VALUE', value)
+    getNewSucsses(value);
+
+    this.setState({ showRef: true, showButton: true });
     Animated.timing(                  // Animate over time
       this.state.fadeAnim_ref,            // The animated value to drive
       {
@@ -162,9 +178,11 @@ class New extends Component {
       viewError,
       messageRequest,
       infopicker,
-      errorInput
+      errorInput,
+      showButton
     } = this.state;
     const { navigation, newState } = this.props;
+    console.tron.log('NEW', this.state)
     return (
       <View style={styles.container}>
         <Header
@@ -186,12 +204,16 @@ class New extends Component {
                 <Text style={styles.numberType}>1</Text>
               </View>
               <Text style={styles.textType}> Perícia: </Text>
-            </View>
+            </View> 
             <View style={styles.Picker}>
-              <PickerItem
-                receiveProps={(params => this.receiveParams(params))}
-                arrayConfig={infopicker}
-              />
+              {
+                infopicker.length !== 0 && (
+                  <PickerItem
+                    receiveProps={(params => this.receiveParams(params))}
+                    arrayConfig={infopicker}
+                  />
+                ) 
+              }              
             </View>
           </View>
 
@@ -217,7 +239,7 @@ class New extends Component {
             )
           }
           {
-            newState.showButton && (
+            showButton && (
               <TouchableOpacity style={styles.button} onPress={() => this.onPressButton()}>
                 <Text style={styles.buttonText}>
                   CONTINUAR

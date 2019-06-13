@@ -15,7 +15,6 @@ class PickerItem extends Component {
     componentWillMount() {
         const { arrayConfig } = this.props;
         this.setState({ configPicker: arrayConfig })
-        console.tron.log('will', this.props, this.state);
     }
     setPicker = item => {
         const { setPicker, shift, configPicker, valueText } = this.state
@@ -33,7 +32,6 @@ class PickerItem extends Component {
                 duration: 200,
             }).start();
         } else {
-            console.tron.log('setpicker', this.props, this.state);
             this.setState({ setPicker: true })
             Animated.timing(shift, {
                 toValue: (size + 1) * responsividade.ALTURA_INPUT,
@@ -55,7 +53,6 @@ class PickerItem extends Component {
 
     render() {
         const { valueText, valuePicker, configPicker } = this.state;
-        console.tron.log('pickeritem', this.props, this.state)      
         return(
             <Animated.View style={{ ...styles.container, height: this.state.shift }}>
                 <TouchableOpacity onPress={() => this.setPicker()}>

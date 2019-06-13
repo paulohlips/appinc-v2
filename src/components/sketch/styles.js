@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { colors, metrics,responsividade } from '../../styles';
+import { colors, metrics, responsividade } from '../../styles';
 
 const styles = StyleSheet.create({
 
-   Name: {
+  Name: {
     width: responsividade.LARGURABOX,
     height: 30,
     backgroundColor: colors.transparent,
@@ -11,20 +11,26 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '400',
     lineHeight: 21,
-   },
+  },
+
+  avatar: {
+    width: responsividade.LARGURA_BUTTON,
+    height: responsividade.LARGURA_BUTTON,
+    margin: 10,
+  },
 
   input: {
-     backgroundColor: 'white',
-     height: responsividade.ALTURABOX,
-     borderRadius: 4,
-     paddingLeft: 20,
-     fontSize: 16,
+    backgroundColor: 'white',
+    height: responsividade.ALTURABOX,
+    borderRadius: 4,
+    paddingLeft: 20,
+    fontSize: 16,
   },
 
   square: {
     backgroundColor: "#FAAB1A",
     height: responsividade.ALTURA_BUTTON,
-    width: responsividade.LARGURA_INPUT * 0.3,    
+    width: responsividade.LARGURA_INPUT * 0.3,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 60,
@@ -48,7 +54,7 @@ const styles = StyleSheet.create({
     //borderRadius: 50,
     borderRadius: 60,
     height: responsividade.ALTURA_BUTTON,
-    width: responsividade.LARGURA_INPUT,    
+    width: responsividade.LARGURA_INPUT,
     margin: 10,
     paddingHorizontal: metrics.basePadding,
     justifyContent: 'center',
@@ -56,10 +62,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     elevation: 1,
   },
- picker:{
-  width: 10
- },
-  button_text:{
+  picker: {
+    width: 10
+  },
+  button_text: {
 
     //color: 'black',
     //color: 'white',
@@ -70,7 +76,7 @@ const styles = StyleSheet.create({
 
   },
 
-  hint:{
+  hint: {
 
     fontSize: 14,
     fontWeight: 'bold',

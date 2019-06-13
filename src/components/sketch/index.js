@@ -65,7 +65,7 @@ class Sketch extends Component {
       for (var key in form.step) {
         if (key === info.data_name) {
           const form = {};
-          form[info.data_name] = { key: info.data_name, value: uri, filled: true };
+          form[info.data_name] = { key: info.data_name, value: `file://${uri}`, filled: true };
           getSaveStateForm(form);
         }
       }
@@ -84,14 +84,11 @@ class Sketch extends Component {
   }
 
   renderImage(image) {
-    return <Image resizeMode="contain" style={styles.avatar} source={this.state.uri} />
+    console.tron.log(image);
+    return <Image resizeMode="contain" style={styles.avatar} source={{ uri: 'file://' + image }} />
   }
-
+  
   renderAsset(image) {
-    if (image.mime && image.mime.toLowerCase().indexOf('video/') !== -1) {
-      return this.renderVideo(image);
-    }
-
     return this.renderImage(image);
   }
 
@@ -109,7 +106,7 @@ class Sketch extends Component {
     return (
       <View style={{ justifyContent: "center", alignItem: "center" }}>
 
-        {this.state.uri ? <View>{this.renderAsset(this.state.uri)}</View> : null}
+        {this.state.uri ? this.renderAsset(this.state.uri) : null}
         {console.tron.log("EAE MAN", "File://" + this.state.uri)}
 
         {showButton && (

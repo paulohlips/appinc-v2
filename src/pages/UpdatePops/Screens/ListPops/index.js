@@ -16,17 +16,12 @@ class ListPops extends Component {
     let array = [];
     try{
       const response = await AsyncStorage.getItem('arrayKeys');
-      console.tron.log('arrayKeys', response);
       const keyPops = JSON.parse(response);
-      console.tron.log('keyPops', keyPops);
-
 
       for (let i = 0; i < keyPops.length; i++) {
         const popJSON = await AsyncStorage.getItem(keyPops[i]);
         const pop = JSON.parse(popJSON);
 
-        console.tron.log('pop', pop); 
-
         array = [
           ...array,
           {
@@ -35,26 +30,10 @@ class ListPops extends Component {
             form_version: pop.form_version,
           }         
         ]
-        console.tron.log('array', array);        
       }
-
-      /*keyPops.map(async item => {
-        const pop = await AsyncStorage.getItem(item);
-
-        array = [
-          ...array,
-          {
-            form_name: pop.form_name,
-            form_titulo: pop.form_titulo,
-            form_version: pop.form_version,
-          }         
-        ]
-
-      })*/
-      
       
     } catch(err) {
-      console.tron.log('error', err);
+      console.log('error', err);
     }
 
     this.setState({ offlinePops: array });
@@ -89,7 +68,6 @@ class ListPops extends Component {
 
   render() {
     const { offlinePops } = this.state;
-    console.tron.log(this.state);
     return (
       <View style={styles.container}>
         {

@@ -58,34 +58,24 @@ class New extends Component {
 
     let array = [];
     try{
-      const response = await AsyncStorage.getItem('arrayKeys');
-      console.tron.log('arrayKeysNEW', response);
-      const keyPops = JSON.parse(response);
-      console.tron.log('keyPopsNEW', keyPops);
-
+      const response = await AsyncStorage.getItem('arrayKeys');      
+      const keyPops = JSON.parse(response); 
 
       for (let i = 0; i < keyPops.length; i++) {
         const popJSON = await AsyncStorage.getItem(keyPops[i]);
         const pop = JSON.parse(popJSON);
-
-        console.tron.log('popNEW', pop); 
-
         array = [
           ...array,
           {
             value: pop,
             name: pop.form_titulo,
           }         
-        ]
-        console.tron.log('arrayNEW', array);        
+        ] 
       }
     } catch(err) {
-      console.tron.log('errorNEW', err);
+      console.log('errorNEW', err);
     }
-
     this.setState({ infopicker: array });
-
-
   }
 
   async componentWillMount() {
@@ -120,14 +110,12 @@ class New extends Component {
         if (item === inputSave) {
           err = true;
           this.setState({ errorInput: true });
-          console.tron.log('err', refs, item, inputSave, err);
         }
       })
     }
    
 
     if (err) {
-      //console.tron.log('ERROOORRR', refs, inputSave)
     } else {
       if (inputSave) {
         getReference(this.state.inputSave);
@@ -143,7 +131,6 @@ class New extends Component {
 
   reqUrl = (value) => {
     const { getNewRequest, getNewSucsses } = this.props;
-    console.tron.log('SUPER VALUE', value)
     getNewSucsses(value);
 
     this.setState({ showRef: true, showButton: true });
@@ -181,7 +168,6 @@ class New extends Component {
       showButton
     } = this.state;
     const { navigation, newState } = this.props;
-    console.tron.log('NEW', this.state)
     return (
       <View style={styles.container}>
         <Header

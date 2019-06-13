@@ -26,13 +26,12 @@ class DownloadPops extends Component {
   };
 
   async componentDidMount() {
-    Api.setTokenTest();
     try {
       const response = await Api.form.getHierarchyPops();
       
       this.setState({ hierarchy: response.data })
     } catch (error) {
-      console.tron.log(error)
+      console.log(error)
     }
 
     try {
@@ -40,7 +39,7 @@ class DownloadPops extends Component {
      
       this.setState({ allPops: response.data })
     } catch (error) {
-      console.tron.log(error)
+      console.log(error)
     }
 
     let array = [];
@@ -108,7 +107,6 @@ class DownloadPops extends Component {
         ]
       }      
     })
-    console.tron.log('array', array)
 
     this.setState({ viewPops: array })
   }
@@ -122,13 +120,11 @@ class DownloadPops extends Component {
 
   setFormOffline = async (item) => {
     var arrayKeys = await AsyncStorage.getItem('arrayKeys');
-    console.tron.log('arrayKeys', JSON.parse(arrayKeys))
 
     try{
       const resp = await Api.form.getNewForm(item.form_id);
 
       if(arrayKeys === null) {
-        console.tron.log('if');
         const array = []
         
         await AsyncStorage.setItem(item.form_name, JSON.stringify(resp.data));
@@ -136,22 +132,19 @@ class DownloadPops extends Component {
 
         await AsyncStorage.setItem('arrayKeys', JSON.stringify(array));
       } else {
-        console.tron.log('else');
         const array = JSON.parse(arrayKeys);
-        console.tron.log('arrayKeys2', array)
 
         await AsyncStorage.setItem(item.form_name, JSON.stringify(resp.data));
         array.push(item.form_name);
         await AsyncStorage.setItem('arrayKeys', JSON.stringify(array));
       }
     } catch(err) {
-      console.tron.log('error', err)
+      console.log('error', err)
     }
   }
 
   render() {
     const { area, classe, subclasse, viewPops } = this.state;
-    console.tron.log('STATEEEE', this.state)
     return (
       <View style={styles.container}>
         <View style={styles.main}>

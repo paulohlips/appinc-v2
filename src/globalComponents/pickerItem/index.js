@@ -52,7 +52,7 @@ class PickerItem extends Component {
     }
 
     render() {
-        const { valueText, valuePicker, configPicker } = this.state;       
+        const { valueText, valuePicker, configPicker } = this.state;
         return(
             <Animated.View style={{ ...styles.container, height: this.state.shift }}>
                 <TouchableOpacity onPress={() => this.setPicker()}>

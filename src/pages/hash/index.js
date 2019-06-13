@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {SnackBar} from './../../globalComponents';
 
 import {
   View,
@@ -21,6 +20,8 @@ import {
 import StepIndicator from 'react-native-step-indicator';
 import Axios from 'axios';
 import Api from '../../services/api';
+
+import { SnackBar, HeaderCadastro, ModalCheck, PickerItem, Header } from '../../globalComponents';
 
 const imageCheck = require('../../assents/lottie/warning.json');
 
@@ -66,8 +67,10 @@ class Login extends Component {
   }
 
   async componentWillMount() {
-    const idRegistro = await AsyncStorage.getItem('@IdRegistro');
-    this.setState({ idRegistro: idRegistro });
+    //const idRegistro = await AsyncStorage.getItem('@IdRegistro');
+    const { navigation } = this.props;
+    const id = navigation.getParam('key');
+    this.setState({ idRegistro: id });
   }
 
   componentDidMount() {
@@ -107,6 +110,7 @@ class Login extends Component {
     try {
       const response = await Api.user.postConferePIN({ matricula: idRegistro, pin: inputSave });
       if (response.status === 200) {
+        AsyncStorage.setItem('@PinRegistro', inputSave);
         this.navigateToPassword();
       } else {
         this.setState({ viewModal: true, messageRequest: response.data.mensagem });
@@ -114,27 +118,19 @@ class Login extends Component {
     } catch {
       this.setState({ viewModal: true, messageRequest: response.data.mensagem });
     }
-    /*Axios({
-      method: 'post',
-      url: 'http://35.198.17.69/api/pericia/usuario/validaPin',
-      data: { matricula: idRegistro, pin: inputSave },
-    })
-      .then((resp) => {
-        if (resp.status === 200) {
-          this.navigateToPassword();
-        } else {
-          this.setState({ viewModal: true, messageRequest: resp.data.mensagem });
-        }
-      }).catch(err => {
-        this.setState({ viewModal: true, messageRequest: resp.data.mensagem });
-      });*/
-    AsyncStorage.setItem('@PinRegistro', inputSave);
   }
 
   render() {
     const { viewModal, messageRequest } = this.state;
     return (
       <View style={styles.container}>
+
+        <Header
+          title='Cadastro'
+          showArrow
+          goBack={this.navigateToLogin}
+        />
+
         <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
         <View style={styles.mainContainer}>
           <View style={styles.icon}>
@@ -173,7 +169,7 @@ class Login extends Component {
         </HideWithKeyboard>
         {
           viewModal && (
-            <SnackBar inside content = {this.state.messageRequest} color = "white"/>
+            <SnackBar inside content={this.state.messageRequest} color="white" />
           )
         }
       </View>
@@ -184,9 +180,4 @@ class Login extends Component {
   }
 }
 
-
 export default Login;
-
-/*
- <Image style={styles.image} source={require('../../assents/imgs/policia-federal-logo.png')} />
-*/

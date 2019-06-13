@@ -15,6 +15,7 @@ const InitialState = {
   logged: false,
   error: false,
   messageError: '',
+  valToken: null,
 };
 
 
@@ -28,7 +29,8 @@ export default function LoginState(state = InitialState, action) {
         userName: action.payload.response.nome,
         token: action.payload.response.token,
         userID: action.payload.userID,
-        logged: true
+        logged: true,
+        valtoken: action.payload.response.validade_token,
       };
     case Types.GET_FAILURE:
       return {

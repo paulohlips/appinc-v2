@@ -19,6 +19,8 @@ import styles from './styles';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Creators as FormActions } from '../../store/ducks/form';
+import { Creators as NoteActions } from '../../store/ducks/notes';
+
 
 class AudioRec extends Component {
 
@@ -28,11 +30,12 @@ class AudioRec extends Component {
     paused: false,
     stoppedRecording: false,
     finished: false,
-    audioPath: AudioUtils.DocumentDirectoryPath + '/test.amr',
+    audioPath:  AudioUtils.MusicDirectoryPath + '/test.aac',
     hasPermission: true,
     gravarcor: 'black',
     stopcor: 'black',
     playcor: 'black',
+    savedNote: false,
   };
 
   gravar = () => {
@@ -68,25 +71,49 @@ class AudioRec extends Component {
       SampleRate: 22050,
       Channels: 1,
       AudioQuality: "Low",
-      AudioEncoding: "amr_wb",
-      AudioEncodingBitRate: 16000
+      AudioEncoding: "aac",
+      AudioEncodingBitRate: 32000
     });
   }
 
   componentDidMount() {
-    this._checkPermission().then((hasPermission) => {
-      this.setState({ hasPermission });
-      this.prepareRecordingPath(this.state.audioPath);
-
-      AudioRecorder.onProgress = (data) => {
-        this.setState({ currentTime: Math.floor(data.currentTime) });
-      };
-      AudioRecorder.onFinished = (data) => {
-        if (Platform.OS === 'ios') {
-          this._finishRecording(data.status === "OK", data.audioFileURL, data.audioFileSize);
-        }
-      };
-    });
+    const { data, noteState } = this.props;
+    if (data.note) {
+      noteState.data.map(note => {
+        if (note.key === data.data_name && note.value !== null) {
+          this.setState(note.value.stateAudio);                 
+        } else {
+          this._checkPermission().then((hasPermission) => {
+            this.setState({ hasPermission });
+            this.prepareRecordingPath(this.state.audioPath);
+      
+            AudioRecorder.onProgress = (data) => {
+              this.setState({ currentTime: Math.floor(data.currentTime) });
+            };
+            AudioRecorder.onFinished = (data) => {
+              if (Platform.OS === 'ios') {
+                this._finishRecording(data.status === "OK", data.audioFileURL, data.audioFileSize);
+              }
+            };
+          });
+        }        
+      }) 
+    } else {
+      this._checkPermission().then((hasPermission) => {
+          this.setState({ hasPermission });
+          this.prepareRecordingPath(this.state.audioPath);
+    
+          AudioRecorder.onProgress = (data) => {
+            this.setState({ currentTime: Math.floor(data.currentTime) });
+          };
+          AudioRecorder.onFinished = (data) => {
+            if (Platform.OS === 'ios') {
+              this._finishRecording(data.status === "OK", data.audioFileURL, data.audioFileSize);
+            }
+          };
+        });
+    }
+    
   }
 
   _checkPermission() {
@@ -217,16 +244,13 @@ class AudioRec extends Component {
     setTimeout(() => {
       var sound = new Sound(this.state.audioPath, '', (error) => {
         if (error) {
-          console.log('failed to load the sound', error);
         }
       });
 
       setTimeout(() => {
         sound.play((success) => {
           if (success) {
-            console.log('successfully finished playing');
           } else {
-            console.log('playback failed due to audio decoding errors');
           }
         });
       }, 100);
@@ -301,10 +325,44 @@ class AudioRec extends Component {
     startControlArray();
   }
 
+  saved() {
+    this.setState({ savedNote: true });
+    let that = this;
+    setTimeout(function () { that.setState({ savedNote: false }); }, 4000);
+  }
 
-  render(filePath) {
-    const { data_name, label, hint, default_value, newState } = this.props.data;
+
+  render() {
+    const { 
+      data_name, 
+      label, 
+      hint, 
+      default_value, 
+      newState,
+      note,
+    } = this.props.data;
+    const { noteState, resetSaveNote } = this.props;
     const { saveStep, step } = this.props.form;
+    const { filePath, audioPath, savedNote } = this.state;
+    if (note){
+      if (noteState.saveNote) {
+        noteState.data.map(note => {
+          if (note.key === data_name) {
+            this.props.addNote({
+              key: data_name,
+              value: {
+                uri: 'file://' + filePath,
+                type: 'audio/amr',
+                name: audioPath,
+                stateAudio: this.state,
+              },
+            });
+          }
+        })
+        this.saved();        
+        resetSaveNote();
+      }  
+    }
 
     if (saveStep) {
       this.saveFormAudio({ data_name, default_value });
@@ -312,6 +370,11 @@ class AudioRec extends Component {
     return (
 
       <View style={styles.container}>
+        {
+          savedNote && (
+            <Text style={styles.msgsave}>Nota Salva</Text>
+          )
+        }
         <View style={styles.controls}>
           {this._renderButton('GRAVAR', () => { this._record(); this.gravar() }, this.state.recording)}
           {this._renderButton('PARAR', () => { this._stop(); this.stop() })}
@@ -331,8 +394,9 @@ class AudioRec extends Component {
 
 const mapStateToProps = state => ({
   form: state.formState,
+  noteState:  state.noteState,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(FormActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ ...FormActions, ...NoteActions }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AudioRec);

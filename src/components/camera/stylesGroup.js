@@ -92,11 +92,13 @@ const stylesGroup = StyleSheet.create({
     },
 
     input: {
-      backgroundColor: colors.light,
+      backgroundColor: 'white',
       height: responsividade.ALTURA_INPUT,
       width: responsividade.LARGURA_INPUT,
       borderRadius: responsividade.BORDER_RADIUS_INPUT,
-      paddingLeft: 20,
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      paddingTop: 20,
       fontSize: 16,
     },
 

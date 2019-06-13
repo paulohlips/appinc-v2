@@ -22,6 +22,8 @@ import Api from '../../services/api';
 import { bindActionCreators } from 'redux';
 import { Creators as FormAction } from '../../store/ducks/form';
 import { Creators as HistActions } from '../../store/ducks/hist';
+import { Creators as GroupActions } from '../../store/ducks/group';
+import { Creators as NoteActions } from '../../store/ducks/notes';
 import { SnackBar } from '../../globalComponents';
 
 
@@ -37,6 +39,7 @@ class StepList extends Component {
     matriculaAsync: '',
     saved: false,
     error: false,
+    mensageError: 'Error',
   }
 
   componentWillMount() {
@@ -63,16 +66,34 @@ class StepList extends Component {
   }
 
   saveForm = () => {
-    const { reference, saveForm, setSaveContentForm, form } = this.props;
+    const {
+      reference,
+      saveForm,
+      setSaveContentForm,
+      form,
+      saveGroup,
+      saveNoteState
+    } = this.props;
     saveForm(reference);
-    this.saved();
+    //this.saved();
+    saveGroup(reference);
+    saveNoteState(reference);
     this.props.navigation.goBack();
     return true;
   }
 
   saveForm2 = () => {
-    const { reference, saveForm, setSaveContentForm, form } = this.props;
+    const {
+      reference,
+      saveForm,
+      saveGroup,
+      setSaveContentForm,
+      form,
+      saveNoteState,
+    } = this.props;
     saveForm(reference);
+    saveGroup(reference);
+    saveNoteState(reference);
     this.saved();
   }
 
@@ -80,8 +101,8 @@ class StepList extends Component {
     AsyncStorage.clear();
   }
 
-  errorMessage = () => {
-    this.setState({ viewError: true });
+  errorMessage = msg => {
+    this.setState({ viewError: true, mensageError: msg });
     let that = this;
     setTimeout(function () { that.setState({ viewError: false }) }, 4000);
   }
@@ -95,7 +116,7 @@ class StepList extends Component {
 
   enviaForm = async () => {
     const { matriculaAsync } = this.state;
-    const { reference, formulario, setUpdateHistory, login, group } = this.props;
+    const { reference, formulario, setUpdateHistory, login, group, note } = this.props;
     const { dataGroup } = group;
 
     this.setState({ sending: true, original: false });
@@ -105,13 +126,14 @@ class StepList extends Component {
 
     const arrayRef = await AsyncStorage.getItem("arrayRef");
     const array = JSON.parse(arrayRef);
-    
+
     let contentGroup = false;
     let count = 0;
     console.log(dataGroup.length);
-    if(dataGroup.length > 0) {
+    if (dataGroup.length > 0) {
       contentGroup = true;
     }
+
 
     array.map(item => {
       if (item === formulario.ref) {
@@ -120,48 +142,55 @@ class StepList extends Component {
       count += 1;
     });
 
+
     await AsyncStorage.setItem('arrayRef', JSON.stringify(array));
 
-    const dataForm = new FormData();   
-   
+    const dataForm = new FormData();
+
     dataForm.append('form_name', formulario.form.form_name);
 
-    for (var key in formulario.step) { 
-      if(formulario.step[key].type === 'camera') {
+    for (var key in formulario.step) {
+      if (formulario.step[key].type === 'camera') {
         formulario.step[key].value.map(item => {
           dataForm.append(`${key}[]`, item);
-        })       
+        })
       } else {
         dataForm.append(formulario.step[key].key, formulario.step[key].value)
-      }      
+      }
     }
+
+    note.data.map(item => {
+      dataForm.append(`note_${item.key}`, item.value)
+    })
 
     setUpdateHistory();
     this.setState({ matriculaAsync: matricula });
 
     this.onSendForm({
-      dataForm, 
-      userId: login.userID, 
-      token: login.token, 
-      reference, 
+      dataForm,
+      userId: login.userID,
+      token: login.token,
+      reference,
       contentGroup,
       dataGroup,
+      formName: formulario.form.form_name,
     });
 
-   
+
   }
-  
+
   onSendForm = (data) => {
-    const { 
-      dataForm, 
-      userId, 
-      token, 
-      reference, 
+    const {
+      dataForm,
+      userId,
+      token,
+      reference,
       contentGroup,
       dataGroup,
+      formName,
     } = data;
-    console.log('onSendForm', contentGroup);    
-    
+    console.log('onSendForm', contentGroup);
+
     axios({
       method: 'post',
       url: 'http://35.198.17.69/api/pericia/formulario/envio',
@@ -169,38 +198,56 @@ class StepList extends Component {
       headers: {
         'Content-Type': 'multipart/form-data',
         'matricula': userId,
-        'referencia': '',
+        'referencia': reference,
         'x-Token': token,
       }
     })
       .then(response => {
-        console.log(response);
-        AsyncStorage.setItem('@IDlaudo', response.data.number);
-        // Alert.alert('ID do laudo', 'O número do seu laudo é ' + response.data.number);
-        this.onSendGroup({ 
-          userId, 
-          token, 
-          reference,       
-          dataGroup,
-          idForm: response.data.number,
-        });
+        if (response.status === 206) {
+          this.errorMessage(response.data.mensagem);
+        } else {
+          AsyncStorage.setItem('@IDlaudo', response.data.number);
+          Alert.alert('ID do laudo', 'O número do seu laudo é ' + response.data.number);
+          this.onSendGroup({
+            userId,
+            token,
+            reference,
+            dataGroup,
+            idForm: response.data.number,
+            formName,
+          });
+        }
       })
       .catch(error => {
-        console.log(error); 
-        this.errorMessage();
+        var mensage;
+        if (error.response.status === 404) {
+          mensage = `${error.response.status} - Não encontrado`;
+          // this.errorMessage(mensage);
+        }
+        else if (error.response.status === 403) {
+          mensage = `${error.response.status} - Bloqueado pelo Firewall`;
+        }
+        else if (error.response.status === 500) {
+          mensage = `${error.response.status} - Error interno`;
+        }
+        else if (error.response.status === 0) {
+          mensage = `${error.response.status} - Formato incorreto`;
+        }
+        this.errorMessage(mensage);
       });
   }
 
   onSendGroup = (data) => {
-    const { 
-      userId, 
-      token, 
-      reference,       
+    const {
+      userId,
+      token,
+      reference,
       dataGroup,
       idForm,
+      formName,
     } = data
     console.log('onSendGroup');
-    
+
 
     dataGroup.map(group => {
       console.log(['one group map', group])
@@ -210,43 +257,55 @@ class StepList extends Component {
         console.log(['item', item])
         Object.keys(item).map(key => {
           console.log(['keys', key])
-          if(key !== 'index') {
+          if (key !== 'index') {
             formGroup.append(`${group.key}[${count}][${key}]`, item[key].value)
-          }          
+          }
         })
         count += 1;
-      }) 
+      })
 
-      console.log({ RESULTADO_GROUP_DATA: formGroup})
+      console.log({ RESULTADO_GROUP_DATA: formGroup })
       axios({
         method: 'post',
-        url: 'http://35.198.17.69/api/pericia/formularios/envio/teste',
+        url: 'http://35.198.17.69/api/pericia/formularios/envio/grupo',
         data: formGroup,
         headers: {
           'Content-Type': 'multipart/form-data',
           'matricula': userId,
           'referencia': '',
           'x-Token': token,
-          'id-form:': idForm,
+          'form-id': idForm,
+          'form-group': group.key,
+          'form-name': formName,
         }
       })
         .then(function (response) {
-          console.log(response)          
+          console.log(response)
         })
         .catch(error => {
           console.log(['error group', error])
           this.errorMessage();
         });
-      
+
     });
 
-    
+    this.props.navigation.navigate('Hist');
+
   }
 
   sendGroup = (dataGroup, userId, token, groupName) => {
-    
+
     console.log(['api envia group', dataGroup, userId, token, groupName])
   }
+
+  double = (n) => {
+    return n * 2;
+  }
+
+  increment = (y) => {
+    return y + 1;
+  }
+
 
   render() {
     const { formRedux } = this.state;
@@ -255,22 +314,19 @@ class StepList extends Component {
       this.props.setSaveContentForm(form);
       this.setState({ formRedux: false });
     }
-    const { navigation } = this.props;
-    const { viewError, load, saved } = this.state;
+    const { navigation, reference } = this.props;
+    const { viewError, load, saved, mensageError } = this.state;
     let i = 0;
-
     return (
       <View style={styles.container}>
         <Header
-          title={form.area}
+          title={reference}
           showArrow
-          showInfo
-          info={form.info_form}
           goBack={this.saveForm}
         />
         {
           viewError && (
-            <SnackBar outside content="Sem conexão!" color='#3C3C46' fontcolor="white" />
+            <SnackBar outside content={mensageError} color='#3C3C46' fontcolor="white" />
           )
         }
 
@@ -311,12 +367,15 @@ const mapStateToProps = state => ({
   formulario: state.formState,
   login: state.loginState,
   group: state.groupState,
+  note: state.noteState,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({
     ...FormAction,
     ...HistActions,
+    ...GroupActions,
+    ...NoteActions
   }, dispatch);
 
 StepList.navigationOptions = {

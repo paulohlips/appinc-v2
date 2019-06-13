@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     width: responsividade.largura_tela,
     padding: 20,
     paddingBottom: 40,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0,
     borderBottomColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     color: "black",
-    opacity: 0.5,
+    //opacity: 0.5,
   },
   button_view: {
     alignItems: 'center',
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
 
   hintview: {
     margin: responsividade.margin.mainMargin,
+    width: responsividade.LARGURA_INPUT,
     marginTop: responsividade.margin.mainMargin,
   },
 
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
   miniball: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10,
+    //padding: 10,
     borderRadius: 30,
     width: responsividade.LARGURABOLA * 0.73,
     height: responsividade.LARGURABOLA * 0.73,

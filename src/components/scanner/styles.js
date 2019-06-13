@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     width: responsividade.largura_tela,
     padding: 20,
     paddingBottom: 40,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0,
     borderBottomColor: 'black',
   },
    Name: {
@@ -28,6 +28,26 @@ const styles = StyleSheet.create({
      paddingLeft: 20,
      fontSize: 16,
   },
+
+  overlay: {
+    flex: 1,
+  },
+
+  contentRow: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  content: {
+    borderWidth: 3,
+    borderColor: colors.secundary,
+  },
+
+  scanline: {
+    backgroundColor: colors.secundary,
+    height: 1,
+  },
+
   square: {
     backgroundColor: "#FAAB1A",
     height: responsividade.ALTURA_BUTTON,

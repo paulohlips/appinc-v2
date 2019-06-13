@@ -9,7 +9,8 @@ import {
   Linking,
   BackHandler,
   ActivityIndicator,
-  RefreshControl
+  RefreshControl,
+  FlatList
 } from "react-native";
 import { Header } from "../../globalComponents";
 import {
@@ -28,6 +29,9 @@ import { bindActionCreators } from "redux";
 import { Creators as FormActions } from "../../store/ducks/form";
 import { Creators as NewActions } from "../../store/ducks/new";
 import { Creators as HistActions } from '../../store/ducks/hist';
+import { Creators as GroupActions } from '../../store/ducks/group';
+import { Creators as NoteActions } from '../../store/ducks/notes';
+
 
 class Historico extends Component {
   state = {
@@ -97,12 +101,30 @@ class Historico extends Component {
     });*/
   }
   restoreForm = async name => {
-    const { navigation, restoreFormState, setForm } = this.props;
+    const {
+      navigation,
+      restoreFormState,
+      setForm,
+      getReference,
+      recoverGroupState,
+      recoverNoteState
+    } = this.props;
     const formAsync = await AsyncStorage.getItem(name);
+    const groupAsync = await AsyncStorage.getItem(`${name}Group`);
+    const noteAsync = await AsyncStorage.getItem(`${name}Note`);
     const form = JSON.parse(formAsync);
+    const group = JSON.parse(groupAsync);
+    const note = JSON.parse(noteAsync);
 
+    await getReference(form.ref);
     await setForm(form.form);
+
+    if (group) {
+      await recoverGroupState(group);
+    }
+
     await restoreFormState(form);
+    await recoverNoteState(note);
     navigation.navigate("StepList");
   };
 
@@ -113,10 +135,14 @@ class Historico extends Component {
           style={styles.box}
           onPress={() => this.restoreForm(item)}
         >
-          <Text style={styles.status1}>{item}</Text>
           <View style={styles.row}>
-            <Text style={styles.status1}> Status :</Text>
-            <Text style={styles.status}> Em andamento</Text>
+            <Text style={styles.status1}>Referência: </Text>
+            <Text style={styles.ref}>{item}</Text>
+          </View>
+
+          <View style={styles.row}>
+            <Text style={styles.status1}>Status: </Text>
+            <Text style={styles.status}>Em andamento</Text>
           </View>
         </TouchableOpacity>
       );
@@ -124,7 +150,7 @@ class Historico extends Component {
     return null;
   }
 
-  renderEnviados = item => {
+  renderEnviados = ({ item }) => {
     return (
       <TouchableOpacity
         style={styles.box}
@@ -135,21 +161,23 @@ class Historico extends Component {
           );
         }}
       >
-        <Text style={styles.status1}>
-          {"Perícia nº" + " :" + item.matricula}
-        </Text>
         <View style={styles.row}>
-          <Text style={styles.status1}> Status :</Text>
-          <Text style={styles.statusEnviado}> Enviado </Text>
+          <Text style={styles.status1}>Laudo nº: </Text>
+          <Text style={styles.ref}>{item.matricula}</Text>
+        </View>
+
+        <View style={styles.row}>
+          <Text style={styles.status1}>Status: </Text>
+          <Text style={styles.statusEnviado}>Enviado </Text>
         </View>
       </TouchableOpacity>
     );
   }
 
   _onRefresh = () => {
-    this.setState({refreshing: true});
+    this.setState({ refreshing: true });
     this.requestFroms();
-    this.setState({refreshing: false});
+    this.setState({ refreshing: false });
   }
 
   render() {
@@ -163,10 +191,9 @@ class Historico extends Component {
 
     return (
       <View style={styles.container}>
-      
+
         <Header
           showMenu
-          showClear
           openMenu={navigation.toggleDrawer}
           title="Minhas Perícias"
         />
@@ -191,28 +218,36 @@ class Historico extends Component {
             </ScrollView>
           </View>
         </Modal>
-        {this.state.errorview && (
-             <SnackBar outside content="Sem conexão!" color='#3C3C46' fontcolor="white" />
-        )}
+        {
+          this.state.errorview && (
+            <SnackBar outside content="Sem conexão!" color='#3C3C46' fontcolor="white" />
+          )
+        }
         <View style={styles.main}>
-          <ScrollView  refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh}
-          />}>
-            {arrayRef ? arrayRef.map(item => this.renderOffline(item)) : null}
-
-            {this.state.loading && (
-              <View style={styles.loading}>
-                <ActivityIndicator size="large" color="#fff" />
-              </View>
-            )}
-
+          <ScrollView refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh}
+            />
+          }>
+            {
+              arrayRef
+                ? arrayRef.map(item => this.renderOffline(item))
+                : null
+            }
 
             {
-              arrayEnviados
-                ? arrayEnviados.map(item => this.renderEnviados(item))
-                : null}
+              this.state.loading && (
+                <View style={styles.loading}>
+                  <ActivityIndicator size="large" color="#fff" />
+                </View>
+              )
+            }
+            <FlatList
+              data={arrayEnviados}
+              keyExtractor={item => item.matricula}
+              renderItem={item => this.renderEnviados(item)}
+            />
           </ScrollView>
         </View>
       </View>
@@ -231,6 +266,8 @@ const mapDispatchToProps = dispatch =>
     ...FormActions,
     ...NewActions,
     ...HistActions,
+    ...GroupActions,
+    ...NoteActions
   }, dispatch);
 
 export default connect(

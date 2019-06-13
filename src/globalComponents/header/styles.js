@@ -3,7 +3,19 @@ import { colors, metric, responsividade } from '../../styles';
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: "#344955",
+    padding: responsividade.padding.mainPadding,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: Platform.OS === 'ios' ? 85 : responsividade.ALTURA_HEADER,
+    //height: 80,
+    //position: 'absolute',
+    zIndex: 2,
+    paddingTop: Platform.OS === 'ios' ? 30 : 0,
+  },
+
+  headerCadastro: {
+    backgroundColor: "#000",
     padding: responsividade.padding.mainPadding,
     flexDirection: 'row',
     justifyContent: 'space-between',

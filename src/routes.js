@@ -29,7 +29,7 @@ import Veiculo from './pages/components/veiculo';
 
 
 // import testes de tela
-import StepPage from './pages/Step';
+import StepPage from './pages/Step'; 
 import StepList from './pages/StepList';
 
 const Routes = StackNavigator(

@@ -53,8 +53,8 @@ class Camera extends React.Component {
       for (var key in form.step) {
         if (key === data.data_name) {
           if (form.step[key].filled === true) {
-            this.setState({ 
-              images: form.step[key].data, 
+            this.setState({
+              images: form.step[key].data,
               imagePath: form.step[key].value.uri,
               inputSave: form.step[`leg_${key}`].value,
             });
@@ -75,16 +75,16 @@ class Camera extends React.Component {
       height: 600,
     }).then(image => {
       this.setState({
-        image: { 
-          uri: image.path, 
-          width: image.width, 
-          height: image.height 
+        image: {
+          uri: image.path,
+          width: image.width,
+          height: image.height
         },
         images: [
-           ...this.state.images,
-          { 
-            uri: image.path, 
-            width: image.width, 
+          ...this.state.images,
+          {
+            uri: image.path,
+            width: image.width,
             height: image.height,
             mine: image.mime,
           }
@@ -98,11 +98,11 @@ class Camera extends React.Component {
           }
         ],
         imagePath: image.path
-      });     
+      });
 
     }).catch();
   }
- 
+
   pickSingle(cropit, circular = false) {
     ImagePicker.openPicker({
       cropping: cropping,
@@ -116,7 +116,6 @@ class Camera extends React.Component {
       });
     }).catch(e => {
       console.log(e);
-      //Alert.alert(e.message ? e.message : e);
     });
   }
 
@@ -198,7 +197,6 @@ class Camera extends React.Component {
 
     }).catch(e => {
       console.log(e);
-      //Alert.alert(e.message ? e.message : e);
     });
   }
 
@@ -214,9 +212,9 @@ class Camera extends React.Component {
         this.setState({
           images: [
             ...this.state.images,
-            { 
-              uri: image.path, 
-              width: image.width, 
+            {
+              uri: image.path,
+              width: image.width,
               height: image.height,
               mine: image.mime,
             }
@@ -317,44 +315,45 @@ class Camera extends React.Component {
     const size = arrayCamera.length;
 
 
-    if (size > 0) {     
-        for (var key in form.step) {
-          if (key === info.data_name) {
-            const form = {};
-            form[info.data_name] = { 
-              key: info.data_name, 
-              value: arrayCamera, 
-              data: images, 
-              filled: true,
-              type: info.component_type,
-            };
+    if (size > 0) {
+      for (var key in form.step) {
+        if (key === info.data_name) {
+          const form = {};
+          form[info.data_name] = {
+            key: info.data_name,
+            value: arrayCamera,
+            data: images,
+            filled: true,
+            type: info.component_type,
+          };
 
-            getSaveStateForm(form);
-            form[`leg_${info.data_name}`] = { 
-              key: `leg_${info.data_name}`, 
-              value: inputSave, data: null, 
-              filled: true,
-              type: 'text', 
-            };
+          getSaveStateForm(form);
+          form[`leg_${info.data_name}`] = {
+            key: `leg_${info.data_name}`,
+            value: inputSave, data: null,
+            filled: true,
+            type: 'text',
+          };
 
 
             getSaveStateForm(form);
           }
         }
-      
+      }
+
     } else {
       for (var key in form.step) {
         if (key === info.data_name && info.data_name.filled === false) {
           const form = {};
-          form[info.data_name] = { 
-            key: info.data_name, 
-            value: { 
-              uri: '', 
-              type: '', 
-              name: '' 
-            }, 
-            data: image, 
-            filled: false 
+          form[info.data_name] = {
+            key: info.data_name,
+            value: {
+              uri: '',
+              type: '',
+              name: ''
+            },
+            data: image,
+            filled: false
           };
           getSaveStateForm(form);
           form[`leg_${info.data_name}`] = { key: `leg_${info.data_name}`, value: inputSave, data: null, filled: true };
@@ -367,14 +366,14 @@ class Camera extends React.Component {
   }
 
   render() {
-    const { 
-      data_name, 
-      label, 
-      hint, 
-      default_value, 
-      newState, 
-      groupFlag, 
-      component_type 
+    const {
+      data_name,
+      label,
+      hint,
+      default_value,
+      newState,
+      groupFlag,
+      component_type
     } = this.props.data;
     const { saveStep } = this.props.form;
     const { group } = this.props;
@@ -387,10 +386,10 @@ class Camera extends React.Component {
       this.saveGroupCamera({ data_name, default_value })
     }
     return (
-      
+
       <View style={groupFlag ? stylesGroup.container : styles.container}>
 
-        <ScrollView 
+        <ScrollView
           horizontal
           pagingEnabled
           ref={ref => this.scrollView = ref}
@@ -400,6 +399,7 @@ class Camera extends React.Component {
         >
           {/*this.state.image ? this.renderAsset(this.state.image) : null*/}
           {this.state.images ? this.state.images.map(i => <View key={i.uri}>{this.renderAsset(i)}</View>) : null}
+          {console.tron.log('EAE', this.state.images)}
         </ScrollView>
         <View style={styles.buttonsView}>
           <TouchableOpacity onPress={() => this.pickSingleWithCamera(true)}>

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
+import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import { ModalCheck } from '../../globalComponents';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import { SnackBar } from '../../globalComponents';
 import {
   View,
@@ -71,14 +74,7 @@ class Login extends Component {
   }
 
   navigateToSignUp = () => {
-    const resetAction = StackActions.reset({
-      index: 0,
-      actions: [
-        // Logged
-        NavigationActions.navigate({ routeName: 'SignUp' }),
-      ]
-    });
-    this.props.navigation.dispatch(resetAction);
+    this.props.navigation.navigate('SignUp');
   }
 
   navigateToChangeService = () => {
@@ -99,7 +95,7 @@ class Login extends Component {
       <ImageBackground source={require('../../assents/imgs/local_crime.jpg')} style={styles.backgroundImage} >
         <KeyboardAwareScrollView
           contentContainerStyle={styles.container}
-          scrollEnabled={false}
+          scrollEnabled={true}
         >
           <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
           <Text style={styles.title}>Bem-Vindo</Text>
@@ -108,7 +104,7 @@ class Login extends Component {
             <TextInput
               style={styles.input}
               autoCapitalize="none"
-              autoCorrect={false}
+              autoCorrect={true}
               placeholder="ID"
               underlineColorAndroid="rgba(0,0,0,0)"
               onChangeText={inputSave => this.setState({ inputSave })}
@@ -118,7 +114,7 @@ class Login extends Component {
             <TextInput
               style={styles.input}
               autoCapitalize="none"
-              autoCorrect={false}
+              autoCorrect={true}
               placeholder="Senha"
               underlineColorAndroid="rgba(0,0,0,0)"
               secureTextEntry={true}
@@ -130,24 +126,21 @@ class Login extends Component {
                 Entrar
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cadastrobutton} onPress={() => { this.navigateToSignUp(); }}>
+            <TouchableOpacity style={styles.cadastrobutton} onPress={() => this.navigateToSignUp()}>
               <Text style={styles.buttonText}>
                 Cadastrar
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cadastrobutton} onPress={() => { this.navigateToChangeService(); }}>
-              <Text style={styles.buttonText}>
-                Servidor
-              </Text>
-            </TouchableOpacity>
+
           </View>
-          </KeyboardAwareScrollView>
-        {
-          login.error && (
-            <SnackBar inside content={login.messageError} color="white" />
-          )
-        }
+        </KeyboardAwareScrollView>
+        <HideWithKeyboard>
+          <TouchableOpacity style={styles.serverbutton} onPress={() => { this.navigateToChangeService(); }}>
+            <Icon name='server' size={20} color="rgb(225, 200, 133)" style={styles.icon} />
+          </TouchableOpacity>
+        </HideWithKeyboard>
       </ImageBackground>
+
     );
   }
 }

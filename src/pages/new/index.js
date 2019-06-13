@@ -8,7 +8,7 @@ import {
   AsyncStorage,
   TextInput,
   Animated,
-  BackHandler
+  BackHandler,
 } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { Header, ModalCheck, PickerItem } from '../../globalComponents';
@@ -19,6 +19,7 @@ import { bindActionCreators } from 'redux';
 import { Creators as NewActions } from '../../store/ducks/new';
 import { Creators as FormActios } from '../../store/ducks/form';
 
+
 const imageCheck = require('../../assents/lottie/warning.json');
 
 class New extends Component {
@@ -27,6 +28,7 @@ class New extends Component {
   }
 
   state = {
+    errorInput: false,
     tipo: null,
     subtipo: null,
     ssubtipo: null,
@@ -48,32 +50,32 @@ class New extends Component {
     viewModal: false,
     messageRequest: 'Sem conexão',
     viewError: false,
-    infopicker: [
-      {
-        name: 'Veículos',
-        value: 30,
-      },
-      {
-        name: 'Incêndio',
-        value: 32,
-      },
-      {
-        name: 'Genética Forense',
-        value: 33,
-      },
-      {
-        name: 'Arrombamento de Caixa',
-        value: 6,
-      },
-      {
-        name: 'Catálogo de Componentes',
-        value: 1,
-      },
-    ],
+    infopicker: [],
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+
+    let array = [];
+    try{
+      const response = await AsyncStorage.getItem('arrayKeys');      
+      const keyPops = JSON.parse(response); 
+
+      for (let i = 0; i < keyPops.length; i++) {
+        const popJSON = await AsyncStorage.getItem(keyPops[i]);
+        const pop = JSON.parse(popJSON);
+        array = [
+          ...array,
+          {
+            value: pop,
+            name: pop.form_titulo,
+          }         
+        ] 
+      }
+    } catch(err) {
+      console.log('errorNEW', err);
+    }
+    this.setState({ infopicker: array });
   }
 
   async componentWillMount() {
@@ -95,24 +97,43 @@ class New extends Component {
     return true;
   }
 
-  onPressButton = () => {
+  onPressButton = async () => {
     const { navigation, getReference, resetEditForm } = this.props;
-    const { inputSave } = this.state;
-    if (inputSave) {
-      getReference(this.state.inputSave);
-      resetEditForm();
-      navigation.navigate('StepList', { inputSave: this.state.inputSave });
+    const { inputSave, errorInput } = this.state;
+    let err = false;
+
+    const arrayRef = await AsyncStorage.getItem('arrayRef');
+    const refs = JSON.parse(arrayRef);
+
+    if(arrayRef !== null) {
+      refs.map(async item => {
+        if (item === inputSave) {
+          err = true;
+          this.setState({ errorInput: true });
+        }
+      })
+    }
+   
+
+    if (err) {
     } else {
-      getReference('Laudo sem Nome');
-      resetEditForm();
-      navigation.navigate('StepList');
+      if (inputSave) {
+        getReference(this.state.inputSave);
+        resetEditForm();
+        navigation.navigate('StepList', { inputSave: this.state.inputSave });
+      } else {
+        getReference('Laudo sem Nome');
+        resetEditForm();
+        navigation.navigate('StepList');
+      }
     }
   }
 
   reqUrl = (value) => {
-    const { getNewRequest } = this.props;
-    getNewRequest(value);
-    this.setState({ showRef: true });
+    const { getNewRequest, getNewSucsses } = this.props;
+    getNewSucsses(value);
+
+    this.setState({ showRef: true, showButton: true });
     Animated.timing(                  // Animate over time
       this.state.fadeAnim_ref,            // The animated value to drive
       {
@@ -127,6 +148,10 @@ class New extends Component {
     this.props.closeModalError();
   };
 
+  closeModalErr = () => {
+    this.setState({ errorInput: false });
+  }
+
   receiveParams = params => {
     this.setState({ testeParam: params, baseUrl: params });
     this.reqUrl(params)
@@ -139,6 +164,8 @@ class New extends Component {
       viewError,
       messageRequest,
       infopicker,
+      errorInput,
+      showButton
     } = this.state;
     const { navigation, newState } = this.props;
     return (
@@ -162,12 +189,16 @@ class New extends Component {
                 <Text style={styles.numberType}>1</Text>
               </View>
               <Text style={styles.textType}> Perícia: </Text>
-            </View>
+            </View> 
             <View style={styles.Picker}>
-              <PickerItem
-                receiveProps={(params => this.receiveParams(params))}
-                arrayConfig={infopicker}
-              />
+              {
+                infopicker.length !== 0 && (
+                  <PickerItem
+                    receiveProps={(params => this.receiveParams(params))}
+                    arrayConfig={infopicker}
+                  />
+                ) 
+              }              
             </View>
           </View>
 
@@ -184,7 +215,6 @@ class New extends Component {
                   <TextInput
                     style={styles.input}
                     autoCapitalize="words"
-                    autoCorrect={false}
                     maxLength={72}
                     underlineColorAndroid="rgba(0,0,0,0)"
                     onChangeText={inputSave => this.setState({ inputSave })}
@@ -194,7 +224,7 @@ class New extends Component {
             )
           }
           {
-            newState.showButton && (
+            showButton && (
               <TouchableOpacity style={styles.button} onPress={() => this.onPressButton()}>
                 <Text style={styles.buttonText}>
                   CONTINUAR
@@ -210,6 +240,17 @@ class New extends Component {
                 failure
                 sourceImage={imageCheck}
                 onClose={this.closeModal}
+              />
+            )
+          }
+          {
+            errorInput && (
+              <ModalCheck
+                message={'Ja existe uma perícia com essa refêrencia'}
+                viewModal={errorInput}
+                failure
+                sourceImage={imageCheck}
+                onClose={this.closeModalErr}
               />
             )
           }
@@ -230,41 +271,3 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(New);
-
-/*
- <Picker
-                style={styles.estiloPicker}
-                onValueChange={(hahaha => { this.setState({ baseUrl: hahaha }); this.reqUrl(hahaha); })}
-                selectedValue={this.state.baseUrl}
-              >
-                <Picker.Item label='Selecione a perícia' />
-                <Picker.Item label='Veículos' value='30' />
-                <Picker.Item label='Incêndio' value='32' />
-                <Picker.Item label='Genética Forense' value='33' />
-                <Picker.Item label='Arrombamento de Caixa' value='6' />
-                <Picker.Item label='Catálogo de Componentes' value='1' />
-              </Picker>
-
-              [
-                {
-                  name: 'Veículos',
-                  value: 30,
-                },
-                {
-                  name: 'Incêndio',
-                  value: 32,
-                },
-                {
-                  name: 'Genética Forense',
-                  value: 33,
-                },
-                {
-                  name: 'Arrombamento de Caixa',
-                  value: 6,
-                },
-                {
-                  name: 'Catálogo de Componentes',
-                  value: 1,
-                },
-              ]
-*/

@@ -16,21 +16,21 @@ import {
   Alert,
   BackHandler
 } from 'react-native';
-import { ModalCheck } from '../../globalComponents';
-import {SnackBar} from './../../globalComponents';
 import StepIndicator from 'react-native-step-indicator';
 import Axios from 'axios';
 import Api from '../../services/api';
+
+import { SnackBar, HeaderCadastro, ModalCheck, PickerItem, Header } from '../../globalComponents';
 
 const imageCheck = require('../../assents/lottie/warning.json');
 const imageCheck2 = require('../../assents/lottie/check.json');
 
 import styles from './styles';
 
-const labels = ["ID","PIN","Senha"];
+const labels = ["ID", "PIN", "Senha"];
 const customStyles = {
   stepIndicatorSize: 45,
-  currentStepIndicatorSize:45,
+  currentStepIndicatorSize: 45,
   separatorStrokeWidth: 2,
   currentStepStrokeWidth: 3,
   stepStrokeCurrentColor: 'rgb(225, 200, 133)',
@@ -83,7 +83,7 @@ class Login extends Component {
     BackHandler.addEventListener('hardwareBackPress', this.navigateToEmail);
   }
 
-  navigateToEmail = async () => {
+  navigateToLogin = async () => {
     const resetAction = StackActions.reset({
       index: 0,
       actions: [
@@ -95,10 +95,10 @@ class Login extends Component {
   }
 
 
-   salvarId = async () => {
+  salvarId = async () => {
     const { id, idRegistro, pinRegistro, inputSave1, inputSave2 } = this.state;
-    this.setState({ viewModal: false});
-    
+    this.setState({ viewModal: false });
+
     if (inputSave1 == inputSave2) {
       try {
         const response = await Api.user.createPassword({ matricula: idRegistro, pin: pinRegistro, pass: inputSave2 });
@@ -108,14 +108,14 @@ class Login extends Component {
           Alert.alert(response.data.mensagem);
         }
       } catch {
-        this.setState({ viewModal: true , messageRequest: 'Erro de conexão' });
+        this.setState({ viewModal: true, messageRequest: 'Erro de conexão' });
       }
     } else {
-      this.setState({ viewModal: true , messageRequest: 'Senhas diferentes' });
+      this.setState({ viewModal: true, messageRequest: 'Senhas diferentes' });
     }
-   
-    if(id){
-    AsyncStorage.setItem('@Id', id);
+
+    if (id) {
+      AsyncStorage.setItem('@Id', id);
     }
   }
 
@@ -128,54 +128,61 @@ class Login extends Component {
   }
 
   render() {
-    const { viewModal, messageRequest , viewModals} = this.state;
+    const { viewModal, messageRequest, viewModals } = this.state;
     return (
       <View style={styles.container}>
-      <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
+
+        <Header
+          title='Cadastro'
+          showArrow
+          goBack={this.navigateToLogin}
+        />
+
+        <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
         <View style={styles.mainContainer}>
-        <View style={styles.icon}>
-        <Icon name="vpn-key" size={60} color="#fff" style={styles.icon} />
-        </View>
-        
+          <View style={styles.icon}>
+            <Icon name="vpn-key" size={60} color="#fff" style={styles.icon} />
+          </View>
+
           <Text style={styles.descript}>Escolha uma senha</Text>
-            <View style={styles.forms}>
-              <TextInput
-                  style={styles.input}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  placeholder="Senha"
-                  secureTextEntry={true}
-                  underlineColorAndroid="rgba(0,0,0,0)"
-                  onChangeText={inputSave1 => this.setState({ inputSave1 })}
-                  value={this.state.inputSave1}
+          <View style={styles.forms}>
+            <TextInput
+              style={styles.input}
+              autoCapitalize="none"
+              autoCorrect={false}
+              placeholder="Senha"
+              secureTextEntry={true}
+              underlineColorAndroid="rgba(0,0,0,0)"
+              onChangeText={inputSave1 => this.setState({ inputSave1 })}
+              value={this.state.inputSave1}
             />
             <TextInput
-                  style={styles.input}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  placeholder="Senha"
-                  secureTextEntry={true}
-                  underlineColorAndroid="rgba(0,0,0,0)"
-                  onChangeText={inputSave2 => this.setState({ inputSave2 })}
-                  value={this.state.inputSave2}
+              style={styles.input}
+              autoCapitalize="none"
+              autoCorrect={false}
+              placeholder="Senha"
+              secureTextEntry={true}
+              underlineColorAndroid="rgba(0,0,0,0)"
+              onChangeText={inputSave2 => this.setState({ inputSave2 })}
+              value={this.state.inputSave2}
             />
 
             <TouchableOpacity style={styles.testebutton} onPress={() => { this.salvarId(); }}>
               <Text style={styles.buttonText}>
                 Cadastrar
                </Text>
-             </TouchableOpacity>
-           </View>
+            </TouchableOpacity>
+          </View>
         </View>
         <HideWithKeyboard>
-        <View style={styles.indicadorContainer}>
-          <StepIndicator
-            customStyles={customStyles}
-            currentPosition={this.state.currentPosition}
-            labels={labels}
-            stepCount={3}
-          />
-        </View>
+          <View style={styles.indicadorContainer}>
+            <StepIndicator
+              customStyles={customStyles}
+              currentPosition={this.state.currentPosition}
+              labels={labels}
+              stepCount={3}
+            />
+          </View>
         </HideWithKeyboard>
         {
           viewModals && (
@@ -189,13 +196,13 @@ class Login extends Component {
         }
         {
           viewModal && (
-          <SnackBar inside content = {this.state.messageRequest} color = "white" fontcolor = "grey"/>
+            <SnackBar inside content={this.state.messageRequest} color="white" fontcolor="grey" />
           )
         }
       </View>
     );
   }
-  onPageChange(position){
+  onPageChange(position) {
     this.setState({ currentPosition: position });
   }
 }

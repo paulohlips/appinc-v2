@@ -94,6 +94,21 @@ const styles = StyleSheet.create({
      marginTop: metrics.baseMargin / 3,
      backgroundColor: colors.whiteTransparent
    },
+
+   serverbutton: {
+    borderRadius: 100,
+    //backgroundColor: 'rgb(225, 200, 133)',
+    borderWidth: 1.5,
+    borderColor: 'rgb(225, 200, 133)',
+    position: 'absolute',
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 20,
+    bottom: 30,
+
+   },
 });
 
 export default styles;

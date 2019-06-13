@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { StackActions, NavigationActions } from 'react-navigation';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { SnackBar } from '../../globalComponents';
 import {
   View,
   Text,
@@ -15,9 +14,12 @@ import {
   Easing,
   AsyncStorage,
   Alert,
-  BackHandler
+  BackHandler,
+  ActivityIndicator
 } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
+
+import { SnackBar, HeaderCadastro, ModalCheck, PickerItem, Header } from '../../globalComponents';
 
 const imageCheck = require('../../assents/lottie/warning.json');
 
@@ -63,6 +65,8 @@ class Login extends Component {
     inputSave: null,
     viewModal: false,
     messageRequest: '',
+    load: false,
+    cont: true,
   }
 
   componentWillMount() {
@@ -97,33 +101,18 @@ class Login extends Component {
 
   confereID = async () => {
     const { inputSave } = this.state;
+    const { navigation } = this.props;
     this.setState({ viewModal: false });
     try {
       const response = await Api.user.postCadastroId({ matricula: inputSave })
       if (response.status === 200) {
-        this.navigateToHash();
+        navigation.navigate('Hash', { key: inputSave })
       } else {
-        this.setState({ viewModal: true, messageRequest: response.data.mensagem });
+        this.setState({ viewModal: true, messageRequest: response.data.mensagem, load: false, cont: true });
       }
     } catch {
       this.setState({ viewModal: true, messageRequest: response.data.mensagem });
     }
-
-    /* Axios({
-      method: 'post',
-      url: 'http://35.198.17.69/api/pericia/usuario/cadastro',
-      data: { matricula: inputSave },
-    })
-      .then((resp) => {
-        if (resp.status === 200) {
-          this.navigateToHash();
-        } else {
-          this.setState({ viewModal: true, messageRequest: resp.data.mensagem });
-        }
-      }).catch(err => {
-        this.setState({ viewModal: true, messageRequest: resp.data.mensagem });
-      });*/
-    AsyncStorage.setItem('@IdRegistro', inputSave);
   }
 
   onPressAnimated = async () => {
@@ -131,10 +120,14 @@ class Login extends Component {
   }
 
   render() {
-    const { viewModal, messageRequest } = this.state;
+    const { viewModal, messageRequest, load, cont } = this.state;
     return (
-
       <View style={styles.container}>
+        <Header
+          title='Cadastro'
+          showArrow
+          goBack={this.navigateToLogin}
+        />
         <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
         <View style={styles.mainContainer}>
           <View style={styles.icon}>
@@ -145,17 +138,28 @@ class Login extends Component {
             <TextInput
               style={styles.input}
               autoCapitalize="none"
-              autoCorrect={false}
               placeholder="Digite seu ID "
               underlineColorAndroid="rgba(0,0,0,0)"
               onChangeText={inputSave => this.setState({ inputSave })}
               value={this.state.inputSave}
             />
             <TouchableOpacity style={styles.testebutton} onPress={() => { this.confereID(); }}>
-              <Text style={styles.buttonText}>
-                Continuar
+              {
+                cont && (
+                  <Text style={styles.buttonText}>
+                    Continuar
                 </Text>
+                )
+
+              }
+
+              {
+                load && (
+                  <ActivityIndicator size="small" color="rgb(225, 200, 133)" />
+                )
+              }
             </TouchableOpacity>
+
           </View>
         </View>
         <HideWithKeyboard>
@@ -181,9 +185,4 @@ class Login extends Component {
   }
 }
 
-
 export default Login;
-
-/*
- <Image style={styles.image} source={require('../../assents/imgs/policia-federal-logo.png')} />
-*/

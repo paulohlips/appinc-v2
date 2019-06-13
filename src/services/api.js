@@ -12,12 +12,18 @@ const api = axios.create({
   baseURL: URL,
 });
 
-const tokenAuth = null;
 
-const setToken = (token, matricula) => {
+const setToken = (token, matricula) => { 
   axios.defaults.headers.common['X-Token'] = `${token}`;
   axios.defaults.headers.common['matricula'] = `${matricula}`;
 }
+
+
+const setTokenTest = () => { 
+  axios.defaults.headers.common['X-Token'] = '4e6e179ba5deda20d62bd030e21d475d';
+  axios.defaults.headers.common['matricula'] = 10;
+}
+
 
 const user = {
   // realiza o login do usuario
@@ -66,6 +72,9 @@ const form = {
   getNewForm: number => {
     return axios.get(`${URL}/pericia/formularios/${number}`)
   },
+  getHierarchyPops: () => {
+    return api.post('/pericia/formulario/hierarquia')
+  },
   getAllPops: () => {
     return api.get('/pericia/formularios')
   },
@@ -89,5 +98,6 @@ export default Api = {
   user,
   form,
   setToken,
+  setTokenTest,
   changeBaseURL,
 };

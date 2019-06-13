@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 //redux
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Creators as FormsActions } from '../../../../store/ducks/form'
-import { Creators as GroupActions } from '../../../../store/ducks/group'
+import { Creators as FormsActions } from '../../../../store/ducks/form';
+import { Creators as GroupActions } from '../../../../store/ducks/group';
+import { Creators as NotesActions } from '../../../../store/ducks/notes';
 
 // styles
 import { View, Text, TouchableOpacity, ProgressBarAndroid, Animated } from 'react-native';
@@ -26,7 +27,7 @@ class StepBoxComponent extends Component {
     array: '',
     paolo: 2,
 
-    move: new Animated.Value(30),
+    move: new Animated.Value(0),
   }
 
   componentDidMount() {
@@ -38,11 +39,12 @@ class StepBoxComponent extends Component {
   }
 
   createFormsSave = async () => {
-    const { 
-      getCreateForm, 
-      steps, 
-      formState, 
-      createDataGroup, 
+    const {
+      getCreateForm,
+      steps,
+      formState,
+      createDataGroup,
+      creteArrayNotes,
     } = this.props;
 
     this.setState({ createdForms: true });
@@ -53,7 +55,7 @@ class StepBoxComponent extends Component {
     };
 
     if (formState.formEdit) {
-      steps.item.components.forEach(component => {    
+      steps.item.components.forEach(component => {
 
         const form = {};
 
@@ -70,6 +72,7 @@ class StepBoxComponent extends Component {
             }
           }
         }
+
         getCreateForm(form);
         arrayProgress.array.push(component.data_name);
         const lengthArray = arrayProgress.array.length;
@@ -80,46 +83,52 @@ class StepBoxComponent extends Component {
       steps.item.components.forEach(component => {
 
         const form = {};
+        let notes = {};
         let group = {};
         let prototype = {};
 
         if (component.component_type === 'date') {
           form[component.data_name] = { key: component.data_name, value: '1980-01-21', filled: null };
-        }  else if (component.component_type === 'group') {         
-          component.components_group.map(item => {            
+        } else if (component.component_type === 'group') {
+          component.components_group.map(item => {
             prototype[item.data_name] = {
               key: item.data_name,
               value: null,
               filled: false,
-              extra: null,              
-            }; 
-          })          
+              extra: null,
+            };
+          })
           form[component.data_name] = { key: component.data_name, value: component.default_value, filled: null };
           createDataGroup(component.data_name, prototype);
-        } else if(component.component_type === 'camera'){
-          form[`leg_${component.data_name}`] = { 
-            key: component.data_name, 
-            value: component.default_value, 
-            filled: null, 
+        } else if (component.component_type === 'camera') {
+          form[`leg_${component.data_name}`] = {
+            key: component.data_name,
+            value: component.default_value,
+            filled: null,
             type: 'text',
           };
           getCreateForm(form);
-          form[component.data_name] = { 
-            key: component.data_name, 
-            value: [], 
+          form[component.data_name] = {
+            key: component.data_name,
+            value: [],
             filled: null,
             type: component.component_type,
           };
           getCreateForm(form);
         } else {
-          form[component.data_name] = { 
-            key: component.data_name, 
-            value: component.default_value, 
+          form[component.data_name] = {
+            key: component.data_name,
+            value: component.default_value,
             filled: null,
             type: component.component_type
           };
         }
-        
+
+        notes = {
+          key: component.data_name,
+          value: null,
+        }
+        creteArrayNotes(notes);
         getCreateForm(form);
         arrayProgress.array.push(component.data_name);
         const lengthArray = arrayProgress.array.length;
@@ -150,8 +159,8 @@ class StepBoxComponent extends Component {
     progress = countProgress / arrayProgress.length;
 
     variable = (responsividade.LARGURACARD * 0.82) * progress;
-    
-    
+
+
     this.setState({ progress, count: countProgress, array: arrayProgress.length, paolo: variable });
   }
 
@@ -184,7 +193,7 @@ class StepBoxComponent extends Component {
           </View>
           <View style={styles.row}>
             <View style={styles.bar}>
-            <ProgressBar progress = { paolo }/>
+              <ProgressBar progress={paolo} />
             </View>
             <View style={styles.number_view}>
               <Text style={styles.number}>
@@ -192,7 +201,7 @@ class StepBoxComponent extends Component {
               </Text>
             </View>
           </View>
-          
+
         </TouchableOpacity>
       </Animated.View>
     );
@@ -204,7 +213,12 @@ const mapStateToProps = state => ({
   form: state.formState,
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({...FormsActions, ...GroupActions }, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({
+    ...FormsActions,
+    ...GroupActions,
+    ...NotesActions,
+  }, dispatch);
 
 const StepBox = connect(mapStateToProps, mapDispatchToProps)(StepBoxComponent);
 

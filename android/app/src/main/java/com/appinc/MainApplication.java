@@ -11,13 +11,13 @@ import fr.bamlab.rnimageresizer.ImageResizerPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import fr.snapp.imagebase64.RNImgToBase64Package;
 import org.reactnative.camera.RNCameraPackage;
-import com.spyworldxp.barcodescanner.BarcodeScannerPackage;
 import com.rnim.rn.audio.ReactNativeAudioPackage;
 import com.terrylinla.rnsketchcanvas.SketchCanvasPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.dooboolab.RNAudioRecorderPlayerPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +34,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new BarcodeScannerPackage(),
             new RNFetchBlobPackage(),
             new VectorIconsPackage(),
             new RNSoundPackage(),
@@ -44,7 +43,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNCameraPackage(),
             new BarcodeScannerPackage(),
             new ReactNativeAudioPackage(),
-            new SketchCanvasPackage()
+            new SketchCanvasPackage(),
+            new RNAudioRecorderPlayerPackage()
       );
     }
 

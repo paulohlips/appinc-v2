@@ -23,6 +23,7 @@ class DownloadPops extends Component {
     subclasseId: null,
     allPops: [],
     viewPops: [],
+    keysOfArray: []
   };
 
   async componentDidMount() {
@@ -54,6 +55,13 @@ class DownloadPops extends Component {
     })
     this.setState({ area: array });
 
+    const arrayKeys = await AsyncStorage.getItem('arrayKeys');
+    
+    if(arrayKeys !== null) {
+      console.tron.log('equal arrayKeys', arrayKeys)
+      const keys = JSON.parse(arrayKeys);
+      this.setState({ keysOfArray: keys })
+    }
     
   }
 
@@ -111,15 +119,38 @@ class DownloadPops extends Component {
     this.setState({ viewPops: array })
   }
 
-  rederItem = (item) => (
-    <TouchableOpacity style={styles.card} onPress={() => this.setFormOffline(item)}>
-      <Text style={styles.title}>{item.form_titulo}</Text>
-      <Text style={styles.version}>versão: {item.form_version}</Text>
-    </TouchableOpacity>
-  )
+  rederItem = (item) => {
+    const { keysOfArray } = this.state;
+    var equal = false;
+
+    keysOfArray.map(key => {
+      if(key === item.form_name) {
+        console.tron.log('equal', equal)
+        equal = true;
+      }
+    })
+
+    return (
+      <TouchableOpacity 
+        style={styles.card} 
+        onPress={() => (equal ? {} : this.setFormOffline(item))}
+        activeOpacity={equal ? 1 : 0.5}
+      >
+        {
+          equal &&
+            <Text style={styles.baixado}>
+              Baixado
+            </Text>
+        }
+        <Text style={styles.title}>{item.form_titulo}</Text>
+        <Text style={styles.version}>versão: {item.form_version}</Text>
+      </TouchableOpacity>
+    )
+}
 
   setFormOffline = async (item) => {
     var arrayKeys = await AsyncStorage.getItem('arrayKeys');
+    
 
     try{
       const resp = await Api.form.getNewForm(item.form_id);

@@ -69,7 +69,7 @@ class Historico extends Component {
 
   requestFroms = async () => {
     const { login } = this.props;
-    const arrayRef = await AsyncStorage.getItem('arrayRef');
+    const arrayRef = await AsyncStorage.getItem(`arrayRef${login.userID}`);
     const id = await AsyncStorage.getItem("@AppInc:matricula");
     const array = JSON.parse(arrayRef);
     this.setState({ arrayRef: array, idUser: id, errorview: false });
@@ -107,11 +107,12 @@ class Historico extends Component {
       setForm,
       getReference,
       recoverGroupState,
-      recoverNoteState
+      recoverNoteState,
+      login
     } = this.props;
-    const formAsync = await AsyncStorage.getItem(name);
-    const groupAsync = await AsyncStorage.getItem(`${name}Group`);
-    const noteAsync = await AsyncStorage.getItem(`${name}Note`);
+    const formAsync = await AsyncStorage.getItem(`${login.userID}-${name}`);
+    const groupAsync = await AsyncStorage.getItem(`${login.userID}-${name}Group`);
+    const noteAsync = await AsyncStorage.getItem(`${login.userID}-${name}Note`);
     const form = JSON.parse(formAsync);
     const group = JSON.parse(groupAsync);
     const note = JSON.parse(noteAsync);

@@ -198,7 +198,7 @@ class DownloadPops extends Component {
                 />
               </View>
             )
-          }
+          } 
           {
             subclasse.length !== 0 && (
               <View style={styles.picker}>

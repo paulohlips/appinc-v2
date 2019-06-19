@@ -82,6 +82,7 @@ export default function groupState(state = INITIAL_STATE, action) {
     case Types.SAVE_OFFLINE_GROUP: {
       saveGroupAsync({
         ref: action.payload.ref,
+        matricula: action.payload.matricula,
         state: {
           ...state,
           formEdit: true,
@@ -122,9 +123,9 @@ export const Creators = {
     type: Types.RESET_UPDATE_VIEW,
   }),
   // salva o GROUP  no asyncstorage com o nome de referencia
-  saveGroup: ref => ({
+  saveGroup: (ref, matricula) => ({
     type: Types.SAVE_OFFLINE_GROUP,
-    payload: { ref }
+    payload: { ref, matricula }
   }),
   // recupera o group save
   recoverGroupState: data => ({
@@ -220,30 +221,30 @@ const controlArray = (state, name) => {
 // save group async
 const saveGroupAsync = async data => {
   // console.tron.log('savegroupAsync', data);
-  const arrayRef = await AsyncStorage.getItem('arrayRefGroup');
-  //console.tron.log('arrayrefgroup', arrayRef);
+  const arrayRef = await AsyncStorage.getItem(`arrayRefGroup${data.matricula}`);
+  //console.tron.log(`arrayRefGroup${data.matricula}`, arrayRef);
   let arrayControl = false;
   // verifica se ja existe um array de referencia se nao cria um e ja puxa a primeira referencia pra primeiro campod do array
   if (arrayRef === null) {
     const array = [];
     array.push(data.ref);
-    await AsyncStorage.setItem('arrayRefGroup', JSON.stringify(array));
+    await AsyncStorage.setItem(`arrayRefGroup${data.matricula}`, JSON.stringify(array));
     //adiciona o group para diferenciar do form
     //console.tron.log('KEY group', `${data.ref}Group`);
-    await AsyncStorage.setItem(`${data.ref}Group`, JSON.stringify(data.state));
+    await AsyncStorage.setItem(`${data.matricula}-${data.ref}Group`, JSON.stringify(data.state));
   } else {
     // caso contrario varre o array pra ver se tem aguma ref caso sim ele so substitui caso nao pussh a ref pro fim do array e os dados
     const array = JSON.parse(arrayRef);
     array.map(item => {
       if (item === data.ref) {
-        AsyncStorage.setItem(`${data.ref}Group`, JSON.stringify(data.state));
+        AsyncStorage.setItem(`${data.matricula}-${data.ref}Group`, JSON.stringify(data.state));
         arrayControl = true;
       }
     });
     if (!arrayControl) {
       array.push(data.ref);
-      await AsyncStorage.setItem('arrayRefGroup', JSON.stringify(array));
-      await AsyncStorage.setItem(`${data.ref}Group`, JSON.stringify(data.state));
+      await AsyncStorage.setItem(`arrayRefGroup${data.matricula}`, JSON.stringify(array));
+      await AsyncStorage.setItem(`${data.matricula}-${data.ref}Group`, JSON.stringify(data.state));
     }
   }
 };

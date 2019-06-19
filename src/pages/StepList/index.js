@@ -72,12 +72,13 @@ class StepList extends Component {
       setSaveContentForm,
       form,
       saveGroup,
-      saveNoteState
+      saveNoteState,
+      login
     } = this.props;
     saveForm(reference);
     //this.saved();
-    saveGroup(reference);
-    saveNoteState(reference);
+    saveGroup(reference, login.userID);
+    saveNoteState(reference, login.userID);
     this.props.navigation.goBack();
     return true;
   }
@@ -90,10 +91,11 @@ class StepList extends Component {
       setSaveContentForm,
       form,
       saveNoteState,
+      login
     } = this.props;
-    saveForm(reference);
-    saveGroup(reference);
-    saveNoteState(reference);
+    saveForm(reference, login.userID);
+    saveGroup(reference, login.userID);
+    saveNoteState(reference, login.userID);
     this.saved();
   }
 

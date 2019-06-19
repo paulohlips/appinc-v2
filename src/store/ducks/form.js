@@ -50,11 +50,12 @@ export default function formState(state = initialState, action) {
     }
     case Types.SAVE_FORM: {
       saveFormAsync({ 
-        ref: action.payload.ref, 
+        ref: action.payload.ref,
+        matricula: action.payload.matricula,
         state: { 
           ...state, 
           formEdit: true, 
-          ref: action.payload.ref 
+          ref: action.payload.ref,          
         }
       });
       return state;
@@ -104,9 +105,9 @@ export const Creators = {
     payload: { data }
   }),
   // salva o formulario  no asyncstorage com o nome de referencia
-  saveForm: ref => ({
+  saveForm: (ref, matricula) => ({
     type: Types.SAVE_FORM,
-    payload: { ref }
+    payload: { ref, matricula }
   }),
   startUpdateProgress: () => ({
     type: Types.START_UPDATE_PROGRESS,
@@ -142,27 +143,27 @@ const controlArraySte = state => {
 };
 
 const saveFormAsync = async data => {
-  const arrayRef = await AsyncStorage.getItem('arrayRef');
+  const arrayRef = await AsyncStorage.getItem(`arrayRef${data.matricula}`);
   let arrayControl = false;
   // verifica se ja existe um array de referencia se nao cria um e ja puxa a primeira referencia pra primeiro campod do array
   if (arrayRef === null) {
     const array = [];
     array.push(data.ref);
-    await AsyncStorage.setItem('arrayRef', JSON.stringify(array));
-    await AsyncStorage.setItem(data.ref, JSON.stringify(data.state));
+    await AsyncStorage.setItem(`arrayRef${data.matricula}`, JSON.stringify(array));
+    await AsyncStorage.setItem(`${data.matricula}-${data.ref}`, JSON.stringify(data.state));
   } else {
     // caso contrario varre o array pra ver se tem aguma ref caso sim ele so substitui caso nao pussh a ref pro fim do array e os dados
     const array = JSON.parse(arrayRef);
     array.map(item => {
       if (item === data.ref) {
-        AsyncStorage.setItem(data.ref, JSON.stringify(data.state));
+        AsyncStorage.setItem(`${data.matricula}-${data.ref}`, JSON.stringify(data.state));
         arrayControl = true;
       }
     });
     if (!arrayControl) {
       array.push(data.ref);
-      await AsyncStorage.setItem('arrayRef', JSON.stringify(array));
-      await AsyncStorage.setItem(data.ref, JSON.stringify(data.state));
+      await AsyncStorage.setItem(`arrayRef${data.matricula}`, JSON.stringify(array));
+      await AsyncStorage.setItem(`${data.matricula}-${data.ref}`, JSON.stringify(data.state));
     }
   }
 };

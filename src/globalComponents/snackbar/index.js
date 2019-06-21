@@ -44,7 +44,7 @@ export default class SnackBar extends Component {
   
 
   render() {
-      const { inside , outside } = this.props;
+      const { inside , outside , Login } = this.props;
     return (
       <View style = {styles.container}>
       
@@ -96,6 +96,32 @@ export default class SnackBar extends Component {
                     <Text style = {{ fontSize: 16 , color: this.props.fontcolor,}}>{this.props.content}</Text>
                 </View>
             
+            </Animated.View> 
+          )
+      }
+
+{
+          Login && (
+           
+            <Animated.View style = {{ 
+                justifyContent: 'space-between',
+                width: responsividade.largura_tela*0.9,
+                height: 60,
+                left: this.state.x,
+                top: responsividade.largura_tela * 0.05,
+                borderRadius: 5,
+                alignItems: 'center',
+                backgroundColor: this.props.color,
+                margin: 20,
+                elevation: 1,
+                flexDirection: 'row',
+                paddingHorizontal : 20,
+                //position: 'absolute',
+            }}>
+                <View style = {styles.text_view}>
+                    <Text style = {{ fontSize: 16 , color: this.props.fontcolor,}}>{this.props.content}</Text>
+                </View>
+                
             </Animated.View> 
           )
       }

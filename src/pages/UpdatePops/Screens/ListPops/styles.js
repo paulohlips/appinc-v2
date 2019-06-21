@@ -9,54 +9,14 @@ const styles = StyleSheet.create({
         //backgroundColor: '#a09545',
         //paddingTop: Platform.OS === 'ios' ? 30 : 0
     },
-    main: {
-        padding: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    card: {
-        marginHorizontal: 20,
-        marginVertical: 10,
-        padding: 15,
-        borderRadius: 5,
-        elevation: 3,
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        backgroundColor: colors.white,
-    },
-    title: {
-        fontSize: responsividade.fonts.nameSize,
-        color: colors.darker,
-    },
-    name: {
-        fontSize: responsividade.fonts.descriptionSize,
-        fontWeight: 'bold',
-        color: colors.black
-    },
-    containerModal: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: colors.darkTransparent,
-        padding: 15,
-    },
-    buttonContainer: {
-        width: 300,
-        alignItems: 'flex-end',
-        backgroundColor: "#67382643",
-    },
-    iconClose: {
-        color: colors.white,
-    },
     box: {
         backgroundColor: 'white',
         borderRadius: 5,
         margin: 5,
         width: responsividade.LARGURACARD * 0.99,
         height: responsividade.ALTURACARD * 0.7,
-        // justifyContent: "flex-start",
-        // alignItems: "center",
+        alignItems: "center",
+        flexDirection: 'row',
         padding: 20,
 
     },
@@ -64,28 +24,6 @@ const styles = StyleSheet.create({
         color: colors.black,
         fontSize: 16,
         textAlign: 'justify',
-    },
-    status: {
-
-        height: 20,
-        color: '#002F7F',
-        fontSize: responsividade.fonts.descriptionSize,
-        fontWeight: '500',
-        lineHeight: 21,
-        opacity: 0.6,
-        marginTop: responsividade.margin.mainMargin
-
-    },
-    statusEnviado: {
-
-        height: 20,
-        color: 'green',
-        fontSize: responsividade.fonts.descriptionSize,
-        fontWeight: '500',
-        lineHeight: 21,
-        opacity: 0.6,
-        marginTop: responsividade.margin.mainMargin,
-
     },
     status1: {
         height: 20,
@@ -106,36 +44,30 @@ const styles = StyleSheet.create({
         marginTop: responsividade.margin.mainMargin,
 
     },
-
-    row: {
-        flexDirection: "row",
-    },
-
-    loading: {
-
-        paddingBottom: 100,
-    },
-
-    erro: {
-
-        padding: 10,
-        width: responsividade.LARGURABOX,
-        height: responsividade.ALTURABOX * 0.8,
-        //backgroundColor: '#FE3636',
-        borderRadius: 4,
-        marginTop: 10,
-        justifyContent: 'center',
+    removeButton: {
+        height: 30,
+        width: 30,
+        borderRadius: 20,
         alignItems: 'center',
-
-
-
+        justifyContent: 'center',
+        margin: 15,
     },
-
-    errot: {
-        //fontWeight: 'bold',
-        color: "#B83E3E",
+    iconRemove: {
+        color: 'white',
     },
-
+    trash: {
+        position: 'absolute',
+        //backgroundColor: 'white',
+        width: 55,
+        height: 55,
+        borderRadius: 28,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 6,
+        top: (responsividade.altura_tela * 0.95) - responsividade.ALTURA_HEADER - 115,
+        left: (responsividade.largura_tela * 0.95) - 75,
+        margin: 10,
+    }
 });
 
 export default styles;

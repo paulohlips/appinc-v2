@@ -130,7 +130,6 @@ class ListPops extends Component {
 
   render() {
     const { offlinePops, showRemove, viewModal } = this.state;
-    console.tron.log('state', this.state);
     return (
       <View style={styles.container}>
         <TouchableOpacity 

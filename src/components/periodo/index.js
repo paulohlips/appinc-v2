@@ -135,7 +135,6 @@ class DifDatas extends Component {
         const { group } = this.props
         const { showDate, dataInicio, dataFinal, date, date2, formattedDate } = this.state;
         const { largura_tela } = responsividade;
-        console.tron.log('state perioo', this.state)
 
         if (saveStep) {
             this.saveFormInput({ data_name, default_value });

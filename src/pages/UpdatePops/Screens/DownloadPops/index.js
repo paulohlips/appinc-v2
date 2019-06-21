@@ -58,7 +58,6 @@ class DownloadPops extends Component {
     const arrayKeys = await AsyncStorage.getItem('arrayKeys');
     
     if(arrayKeys !== null) {
-      console.tron.log('equal arrayKeys', arrayKeys)
       const keys = JSON.parse(arrayKeys);
       this.setState({ keysOfArray: keys })
     }
@@ -125,7 +124,6 @@ class DownloadPops extends Component {
 
     keysOfArray.map(key => {
       if(key === item.form_name) {
-        console.tron.log('equal', equal)
         equal = true;
       }
     })

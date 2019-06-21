@@ -395,7 +395,6 @@ class Camera extends React.Component {
         >
           {/*this.state.image ? this.renderAsset(this.state.image) : null*/}
           {this.state.images ? this.state.images.map(i => <View key={i.uri}>{this.renderAsset(i)}</View>) : null}
-          {console.tron.log('EAE', this.state.images)}
         </ScrollView>
         <View style={styles.buttonsView}>
           <TouchableOpacity onPress={() => this.pickSingleWithCamera(true)}>

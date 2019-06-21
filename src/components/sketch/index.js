@@ -84,7 +84,6 @@ class Sketch extends Component {
   }
 
   renderImage(image) {
-    console.tron.log(image);
     return <Image resizeMode="contain" style={styles.avatar} source={{ uri: 'file://' + image }} />
   }
   
@@ -107,7 +106,6 @@ class Sketch extends Component {
       <View style={{ justifyContent: "center", alignItem: "center" }}>
 
         {this.state.uri ? this.renderAsset(this.state.uri) : null}
-        {console.tron.log("EAE MAN", "File://" + this.state.uri)}
 
         {showButton && (
           <TouchableOpacity

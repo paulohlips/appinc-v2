@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   AsyncStorage,
+  ScrollView
 } from "react-native";
 import styles from "./styles";
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -85,6 +86,16 @@ class ListPops extends Component {
       this.setState({ viewModal: true });    
   }
 
+  onCloseModeEdit = () => {
+    this.closeModal();
+    this.setState({ showRemove: false });
+  }
+
+  onCloseAndDeletPops = () => {
+    this.closeModal();
+    this.setState({ showRemove: false });
+  }
+
   renderPops = item => {
     const { showRemove, viewModal } = this.state;
     if (item) {
@@ -133,25 +144,30 @@ class ListPops extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity 
-          style={{ ...styles.trash, backgroundColor: showRemove ? "#444" : "#FFF" }} 
-          onPress={() => this.pressTrash()} 
-        >
+            style={{ ...styles.trash, backgroundColor: showRemove ? "#444" : "#FFF" }} 
+            onPress={() => this.pressTrash()}
+            activeOpacity={1.0}
+          >
+            {
+              showRemove 
+                ? <Icon name="md-close" size={28} color="#FFF" />
+                : <Icon name="md-trash" size={28} color="#444" />
+            }          
+          </TouchableOpacity>
+        <ScrollView contentContainerStyle={styles.styleScroll}>          
           {
-            showRemove 
-              ? <Icon name="md-close" size={28} color="#FFF" />
-              : <Icon name="md-trash" size={28} color="#444" />
+            offlinePops.map(item => this.renderPops(item))         
           }          
-        </TouchableOpacity>
+        </ScrollView>
         {
-          offlinePops.map(item => this.renderPops(item))         
-        }
-        {
-          viewModal && 
-            <CheckModal
-              viewModal
-              onClose={this.closeModal}
-            />
-        }      
+            viewModal && 
+              <CheckModal
+                viewModal
+                onClose={this.closeModal}
+                onCloseEdit={this.onCloseModeEdit}
+                onCloseDeletePops={this.onCloseAndDeletPops}
+              />
+          }  
       </View>
     );
   }

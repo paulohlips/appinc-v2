@@ -147,8 +147,14 @@ class DownloadPops extends Component {
 }
 
   setFormOffline = async (item) => {
+    const { keysOfArray } = this.state;
     var arrayKeys = await AsyncStorage.getItem('arrayKeys');
-    
+    this.setState({ 
+      keysOfArray:[
+        ...keysOfArray,
+        item.form_name
+      ] 
+    });
 
     try{
       const resp = await Api.form.getNewForm(item.form_id);

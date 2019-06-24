@@ -5,7 +5,6 @@ import { colors, responsividade } from '../../../../styles';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingBottom: 60,
         //backgroundColor: '#a09545',
         //paddingTop: Platform.OS === 'ios' ? 30 : 0
     },
@@ -19,6 +18,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 20,
 
+    },
+    styleScroll: {
+        paddingBottom: 40,
     },
     text: {
         color: colors.black,
@@ -67,6 +69,7 @@ const styles = StyleSheet.create({
         top: (responsividade.altura_tela * 0.95) - responsividade.ALTURA_HEADER - 115,
         left: (responsividade.largura_tela * 0.95) - 75,
         margin: 10,
+        zIndex: 10,
     }
 });
 

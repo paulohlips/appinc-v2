@@ -10,14 +10,65 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     box: {        
-        width: 300,
+        width: 305,
         backgroundColor: 'white',
         alignItems: 'center',
         borderRadius: 10,
     },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        margin: 10,
+    },
+    description: {
+        fontSize: 16,
+        textAlign: 'center',
+        margin: 10,
+    },
     containerButton: {
         flexDirection: 'row',
-    }
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 10
+    },
+    buttonNo: {
+        width: 135,
+        borderRadius: 23,
+        height: 45,
+        borderColor: colors.secundary,
+        borderWidth: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 10,
+        marginRight: 10
+    },    
+    buttonYes: {
+        width: 135,
+        borderRadius: 23,
+        height: 45,
+        backgroundColor: colors.secundary,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 5
+    },
+    textNo: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: colors.secundary,       
+    },
+    textYes: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: colors.white,
+    },
+    buttonExit: {
+        width: 200,
+        height: 30,
+        margin: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
 });
 
 export default styles;

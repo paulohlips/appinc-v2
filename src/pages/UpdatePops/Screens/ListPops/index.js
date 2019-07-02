@@ -96,7 +96,6 @@ class ListPops extends Component {
     let array = offlinePops;
     const response = await AsyncStorage.getItem('arrayKeys');
     const keyPops = JSON.parse(response);
-    console.tron.log('keypops2', keyPops)
 
     for(let i = 0; i < array.length ; i++) {
       if (array[i].checkRemove === true) {
@@ -106,14 +105,12 @@ class ListPops extends Component {
           if (keyPops[j] === array[i].form_name) {
             keyPops.splice(j, 1);
           }
-          console.tron.log('546', array[i])
         }
 
         array.splice(i, 1);
         i--;
       }
     }
-    console.tron.log('keypops', keyPops)
 
     await AsyncStorage.setItem('arrayKeys', JSON.stringify(keyPops));
     this.closeModal();

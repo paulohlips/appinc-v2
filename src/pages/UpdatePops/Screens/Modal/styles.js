@@ -10,10 +10,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     box: {        
-        width: 305,
+        width: 310,
         backgroundColor: 'white',
         alignItems: 'center',
         borderRadius: 10,
+        paddingBottom: 10,
+        paddingTop: 10,
     },
     title: {
         fontSize: 20,

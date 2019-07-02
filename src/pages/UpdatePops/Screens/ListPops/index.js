@@ -91,9 +91,33 @@ class ListPops extends Component {
     this.setState({ showRemove: false });
   }
 
-  onCloseAndDeletPops = () => {
+  onCloseAndDeletPops = async () => {
+    const { offlinePops } = this.state;
+    let array = offlinePops;
+    const response = await AsyncStorage.getItem('arrayKeys');
+    const keyPops = JSON.parse(response);
+    console.tron.log('keypops2', keyPops)
+
+    for(let i = 0; i < array.length ; i++) {
+      if (array[i].checkRemove === true) {
+        await AsyncStorage.removeItem(array[i].form_name)
+
+        for (let j = 0; j < keyPops.length; j++) {
+          if (keyPops[j] === array[i].form_name) {
+            keyPops.splice(j, 1);
+          }
+          console.tron.log('546', array[i])
+        }
+
+        array.splice(i, 1);
+        i--;
+      }
+    }
+    console.tron.log('keypops', keyPops)
+
+    await AsyncStorage.setItem('arrayKeys', JSON.stringify(keyPops));
     this.closeModal();
-    this.setState({ showRemove: false });
+    this.setState({ showRemove: false, offlinePops: array });
   }
 
   renderPops = item => {
@@ -124,7 +148,7 @@ class ListPops extends Component {
                 >
                   <Icon 
                     name={ item.checkRemove ? "ios-checkmark" : "md-remove" }
-                    size={28} 
+                    size={ item.checkRemove ? 32 : 28} 
                     style={{ 
                         color:  item.checkRemove ? '#fff' : '#FE3636',
                       }}
@@ -144,14 +168,17 @@ class ListPops extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity 
-            style={{ ...styles.trash, backgroundColor: showRemove ? "#444" : "#FFF" }} 
+            style={{ 
+              ...styles.trash, 
+              backgroundColor: showRemove ? "#444" : "#FFF",                            
+            }} 
             onPress={() => this.pressTrash()}
             activeOpacity={1.0}
           >
             {
               showRemove 
-                ? <Icon name="md-close" size={28} color="#FFF" />
-                : <Icon name="md-trash" size={28} color="#444" />
+                ? <Icon name="md-trash" size={28} color="#FFF" />
+                : <Icon name="md-create" size={28} color="#444" />
             }          
           </TouchableOpacity>
         <ScrollView contentContainerStyle={styles.styleScroll}>          
@@ -179,4 +206,6 @@ export default ListPops;
   <ScrollView>
     {popList ? pops.map(item => this.renderPops(item)) : null}
   </ScrollView>
+
+  <Icon name="md-close" size={28} color="#FFF" />
 */

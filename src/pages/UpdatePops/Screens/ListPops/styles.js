@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
     trash: {
         position: 'absolute',
         //backgroundColor: 'white',
-        width: 55,
         height: 55,
+        width: 55,        
         borderRadius: 28,
         alignItems: 'center',
         justifyContent: 'center',
@@ -70,6 +70,11 @@ const styles = StyleSheet.create({
         left: (responsividade.largura_tela * 0.95) - 75,
         margin: 10,
         zIndex: 10,
+    },
+    removeText: {
+        color: colors.white,
+        fontSize: 16,
+        textAlign: 'justify',
     }
 });
 

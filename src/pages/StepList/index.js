@@ -126,7 +126,7 @@ class StepList extends Component {
     const matriculaProv = await AsyncStorage.getItem('@AppInc:matricula');
     const matricula = JSON.stringify(matriculaProv);
 
-    const arrayRef = await AsyncStorage.getItem("arrayRef");
+    const arrayRef = await AsyncStorage.getItem(`arrayRef${login.userID}`);
     const array = JSON.parse(arrayRef);
 
     let contentGroup = false;
@@ -145,7 +145,7 @@ class StepList extends Component {
     });
 
 
-    await AsyncStorage.setItem('arrayRef', JSON.stringify(array));
+    await AsyncStorage.setItem(`arrayRef${login.userID}`, JSON.stringify(array));
 
     const dataForm = new FormData();
 

@@ -155,6 +155,7 @@ class DownloadPops extends Component {
         item.form_name
       ] 
     });
+    console.tron.log('teste catalogo', item)
 
     try{
       const resp = await Api.form.getNewForm(item.form_id);

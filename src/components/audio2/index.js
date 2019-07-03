@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   Text,
   View,
+  Platform
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
@@ -64,7 +65,9 @@ class AudioRec extends Component {
 
   onStartRecord = async () => {
     const { name } = this.state;
-    const result = await this.audioRecorderPlayer.startRecorder(`${name}.m4a`);
+    console.tron.log('audioResult', name);
+    const result = await this.audioRecorderPlayer.startRecorder(Platform.OS === 'ios' ? `${name}.m4a`: `/storage/emulated/0/Music/${name}.mp3`);
+    console.tron.log('audioResult', result);
     this.audioRecorderPlayer.addRecordBackListener((e) => {
       this.setState({
         recordSecs: e.current_position,
@@ -85,7 +88,7 @@ class AudioRec extends Component {
 
   onStartPlay = async () => {
     const { name } = this.state;
-    const msg = await this.audioRecorderPlayer.startPlayer(`${name}.m4a`);
+    const msg = await this.audioRecorderPlayer.startPlayer(Platform.OS === 'ios' ? `${name}.m4a`: `/storage/emulated/0/Music/${name}.mp3`);
     this.audioRecorderPlayer.addPlayBackListener((e) => {
       if (e.current_position === e.duration) {
         this.audioRecorderPlayer.stopPlayer();

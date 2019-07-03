@@ -122,7 +122,7 @@ class New extends Component {
         resetEditForm();
         navigation.navigate('StepList', { inputSave: this.state.inputSave });
       } else {
-        getReference('Laudo sem Nome');
+        getReference('LaudosemNome');
         resetEditForm();
         navigation.navigate('StepList');
       }

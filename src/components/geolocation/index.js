@@ -1,35 +1,31 @@
-
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   Image,
   AsyncStorage,
-  ActivityIndicator,
-} from 'react-native';
-import styles from './styles';
+  ActivityIndicator
+} from "react-native";
+import styles from "./styles";
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Creators as FormActions } from '../../store/ducks/form';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { responsividade } from '../../styles';
-
-
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Creators as FormActions } from "../../store/ducks/form";
+import Icon from "react-native-vector-icons/Ionicons";
+import { responsividade } from "../../styles";
 
 class GeoLocation extends Component {
-
   state = {
-    dataGeo: '',
+    dataGeo: "",
     position: null,
     latitude: null,
     longitude: null,
     acuracia: null,
     error: null,
     view: null,
-    load: null,
-  }
+    load: null
+  };
 
   componentDidMount() {
     const { form, data } = this.props;
@@ -38,7 +34,7 @@ class GeoLocation extends Component {
       if (key === data.data_name) {
         if (form.step[key].filled === true) {
           if (form.step[key].position !== null) {
-            const value = JSON.stringify(form.step[key].value)
+            const value = JSON.stringify(form.step[key].value);
             this.setState({
               position: form.step[key].position,
               latitude: form.step[key].position.coords.latitude,
@@ -46,7 +42,7 @@ class GeoLocation extends Component {
               acuracia: form.step[key].position.coords.accuracy,
               altitude: form.step[key].position.coords.altitude,
               error: null,
-              view: true,
+              view: true
             });
           } else {
             this.setState({ error: form.step[key].value });
@@ -63,13 +59,12 @@ class GeoLocation extends Component {
       acuracia: null,
       error: null,
       view: null,
-      load: true,
+      load: true
     });
     navigator.geolocation.getCurrentPosition(
       // acessando os campos retornados na mensagem JSON e atribuindo a variavel de estado correspondente
-      (position) => {
-
-        AsyncStorage.setItem('@Geolocalizacao', (JSON.stringify(position)));
+      position => {
+        AsyncStorage.setItem("@Geolocalizacao", JSON.stringify(position));
 
         this.setState({
           dataGeo: position,
@@ -80,16 +75,17 @@ class GeoLocation extends Component {
           altitude: position.coords.altitude,
           error: false,
           view: true,
-          load: false,
+          load: false
         });
       },
-      (error) => this.setState({
-        error: error.message,
-        dataGeo: 'GPS indísponivel',
-        view: true,
-        load: false,
-      }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+      error =>
+        this.setState({
+          error: error.message,
+          dataGeo: "GPS indísponivel",
+          view: true,
+          load: false
+        }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   };
 
@@ -103,12 +99,16 @@ class GeoLocation extends Component {
       dg = JSON.stringify(dataGeo.coords);
     }
 
-
-    if (position || dataGeo) {
+    if ((position || dataGeo && !error)) {
       for (var key in form.step) {
         if (key === data.data_name) {
           const form = {};
-          form[data.data_name] = { key: data.data_name, value: dg, filled: true, position };
+          form[data.data_name] = {
+            key: data.data_name,
+            value: dg,
+            filled: true,
+            position
+          };
 
           getSaveStateForm(form);
         }
@@ -117,77 +117,83 @@ class GeoLocation extends Component {
       for (var key in form.step) {
         if (key === data.data_name && data.data_name === false) {
           const form = {};
-          form[data.data_name] = { key: data.data_name, value: '', filled: false, position: null };
+          form[data.data_name] = {
+            key: data.data_name,
+            value: "",
+            filled: false,
+            position: null
+          };
           getSaveStateForm(form);
         }
       }
     }
     startControlArray();
-  }
+  };
 
   render() {
-    const {
-      data_name,
-      label,
-      hint,
-      default_value,
-      newState
-    } = this.props.data;
-    const {
-      saveStep,
-      step } = this.props.form;
-    const {
-      load,
-      error,
-      view,
-    } = this.state;
+    const { data_name, label, hint, default_value, newState } = this.props.data;
+    const { saveStep, step } = this.props.form;
+    const { load, error, view } = this.state;
 
     if (saveStep) {
       this.saveFormGeoloc({ data_name, default_value });
     }
-    const  { largura_tela } = responsividade;
+    const { largura_tela } = responsividade;
     return (
       <View style={styles.container}>
-      <View>
-      {
-          error && (
-           <View style={styles.errov}><Text style={styles.erro}>Não foi possível capturar a localização</Text></View>
-          )
-        }
+        <View>
+          {error && (
+            <View style={styles.errov}>
+              <Text style={styles.erro}>
+                Não foi possível capturar a localização
+              </Text>
+            </View>
+          )}
           <TouchableOpacity onPress={this.refresh} style={styles.button}>
-           
-                  <View style={styles.button}><View style={styles.square}>
-                { load
-                  ? <ActivityIndicator size="small" color="#FFF" />
-                  : <Icon name="ios-pin" size={largura_tela< 430 ? 28 : 40} color="black" style={styles.icon}/>
-
-                }
-                   
-                    </View>
-
-                    <View style={styles.parale}><Text style={styles.button_text}>VERIFICAR LOCALIZAÇÃO</Text></View></View>
-           
-          </TouchableOpacity>
-    
-
-        {
-          view && (
-            <View style={styles.info}>
-                <View style={styles.input}>
-                  <Text style={styles.info_text}>Latitude: {this.state.latitude}</Text>
-                </View>
-                <View style={styles.input}>
-                  <Text style={styles.info_text}>Longitude: {this.state.longitude}</Text>
-                </View>
-                <View style={styles.input}>
-                  <Text style={styles.info_text}>Altitute: {this.state.altitude} </Text>
-                </View>
-                <View style={styles.input}>
-                  <Text style={styles.info_text}>Acurácia: {this.state.acuracia} </Text>
-                </View>
+            <View style={styles.button}>
+              <View style={styles.square}>
+                {load ? (
+                  <ActivityIndicator size="small" color="#FFF" />
+                ) : (
+                  <Icon
+                    name="ios-pin"
+                    size={largura_tela < 430 ? 28 : 40}
+                    color="black"
+                    style={styles.icon}
+                  />
+                )}
               </View>
-            )
-          }
+
+              <View style={styles.parale}>
+                <Text style={styles.button_text}>VERIFICAR LOCALIZAÇÃO</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          {view && !error && (
+            <View style={styles.info}>
+              <View style={styles.input}>
+                <Text style={styles.info_text}>
+                  Latitude: {this.state.latitude}
+                </Text>
+              </View>
+              <View style={styles.input}>
+                <Text style={styles.info_text}>
+                  Longitude: {this.state.longitude}
+                </Text>
+              </View>
+              <View style={styles.input}>
+                <Text style={styles.info_text}>
+                  Altitute: {this.state.altitude}{" "}
+                </Text>
+              </View>
+              <View style={styles.input}>
+                <Text style={styles.info_text}>
+                  Acurácia: {this.state.acuracia}{" "}
+                </Text>
+              </View>
+            </View>
+          )}
         </View>
       </View>
     );
@@ -195,10 +201,13 @@ class GeoLocation extends Component {
 }
 
 const mapStateToProps = state => ({
-  form: state.formState,
+  form: state.formState
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(FormActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(GeoLocation);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GeoLocation);

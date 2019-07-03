@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import styles from "./styles";
 import Icon from 'react-native-vector-icons/Ionicons';
+import { connect } from 'react-redux';
 
 import CheckModal from '../Modal';
 
@@ -20,9 +21,10 @@ class ListPops extends Component {
   };
 
   async componentWillMount() {
+    const { login } =  this.props;
     let array = [];
     try{
-      const response = await AsyncStorage.getItem('arrayKeys');
+      const response = await AsyncStorage.getItem(`${login.userID}-arrayKeys`);
       const keyPops = JSON.parse(response);
 
       for (let i = 0; i < keyPops.length; i++) {
@@ -92,9 +94,10 @@ class ListPops extends Component {
   }
 
   onCloseAndDeletPops = async () => {
+    const { login } =  this.props;
     const { offlinePops } = this.state;
     let array = offlinePops;
-    const response = await AsyncStorage.getItem('arrayKeys');
+    const response = await AsyncStorage.getItem(`${login.userID}-arrayKeys`);
     const keyPops = JSON.parse(response);
 
     for(let i = 0; i < array.length ; i++) {
@@ -112,7 +115,7 @@ class ListPops extends Component {
       }
     }
 
-    await AsyncStorage.setItem('arrayKeys', JSON.stringify(keyPops));
+    await AsyncStorage.setItem(`${login.userID}-arrayKeys`, JSON.stringify(keyPops));
     this.closeModal();
     this.setState({ showRemove: false, offlinePops: array });
   }
@@ -197,7 +200,11 @@ class ListPops extends Component {
   }
 }
 
-export default ListPops;
+const mapStateToProps = state => ({ 
+  login: state.loginState,
+});
+
+export default connect(mapStateToProps, null)(ListPops);
 
 /*
   <ScrollView>

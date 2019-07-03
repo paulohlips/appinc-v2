@@ -54,11 +54,12 @@ class New extends Component {
   }
 
   async componentDidMount() {
+    const { login } = this.props;
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
 
     let array = [];
     try{
-      const response = await AsyncStorage.getItem('arrayKeys');      
+      const response = await AsyncStorage.getItem(`${login.userID}-arrayKeys`);      
       const keyPops = JSON.parse(response); 
 
       for (let i = 0; i < keyPops.length; i++) {
@@ -262,7 +263,8 @@ class New extends Component {
 }
 
 const mapStateToProps = state => ({
-  newState: state.newState
+  newState: state.newState,
+  login: state.loginState
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

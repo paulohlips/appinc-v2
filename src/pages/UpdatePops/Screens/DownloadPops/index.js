@@ -6,10 +6,10 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
+import { connect } from 'react-redux';
 import styles from "./styles";
 
 import Api from '../../../../services/api';
-
 import { PickerItem } from '../../../../globalComponents';
 
 
@@ -27,6 +27,7 @@ class DownloadPops extends Component {
   };
 
   async componentDidMount() {
+    const { login } = this.props;
     try {
       const response = await Api.form.getHierarchyPops();
       
@@ -55,7 +56,7 @@ class DownloadPops extends Component {
     })
     this.setState({ area: array });
 
-    const arrayKeys = await AsyncStorage.getItem('arrayKeys');
+    const arrayKeys = await AsyncStorage.getItem(`${login.userID}-arrayKeys`);
     
     if(arrayKeys !== null) {
       const keys = JSON.parse(arrayKeys);
@@ -147,8 +148,9 @@ class DownloadPops extends Component {
 }
 
   setFormOffline = async (item) => {
+    const { login } = this.props;
     const { keysOfArray } = this.state;
-    var arrayKeys = await AsyncStorage.getItem('arrayKeys');
+    var arrayKeys = await AsyncStorage.getItem(`${login.userID}-arrayKeys`);
     this.setState({ 
       keysOfArray:[
         ...keysOfArray,
@@ -165,13 +167,13 @@ class DownloadPops extends Component {
         await AsyncStorage.setItem(item.form_name, JSON.stringify(resp.data));
         array.push(item.form_name);
 
-        await AsyncStorage.setItem('arrayKeys', JSON.stringify(array));
+        await AsyncStorage.setItem(`${login.userID}-arrayKeys`, JSON.stringify(array));
       } else {
         const array = JSON.parse(arrayKeys);
 
         await AsyncStorage.setItem(item.form_name, JSON.stringify(resp.data));
         array.push(item.form_name);
-        await AsyncStorage.setItem('arrayKeys', JSON.stringify(array));
+        await AsyncStorage.setItem(`${login.userID}-arrayKeys`, JSON.stringify(array));
       }
     } catch(err) {
       console.log('error', err)
@@ -180,6 +182,8 @@ class DownloadPops extends Component {
 
   render() {
     const { area, classe, subclasse, viewPops } = this.state;
+    const { login } = this.props;
+    console.tron.log('login', login);
     return (
       <View style={styles.container}>
         <View style={styles.main}>
@@ -226,5 +230,10 @@ class DownloadPops extends Component {
   }
 }
 
-export default (DownloadPops);
+
+const mapStateToProps = state => ({ 
+  login: state.loginState,
+});
+
+export default connect(mapStateToProps, null)(DownloadPops);
 

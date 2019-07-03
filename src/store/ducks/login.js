@@ -46,6 +46,8 @@ export default function LoginState(state = InitialState, action) {
         token: null,
         userID: null,
         logged: false,
+        error: false,
+        valToken: null,
       };
     default:
       return state;

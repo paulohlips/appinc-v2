@@ -81,8 +81,8 @@ class Veiculos extends Component {
           await this.setState({
             dadosVeiculo: form.step[key].dadosVeiculo,
             dadosFipe: form.step[key].dadosFipe,
-            viewDenatran: true,
-            viewFipe: true,
+            viewDenatran: form.step[key].dadosVeiculo === '' ? null : true,
+            viewFipe: form.step[key].dadosFipe === '' ? null : true,
           });
         }
       }
@@ -290,6 +290,7 @@ class Veiculos extends Component {
       renderPicker,
       renderPickerModelos,
       erroFipeAPI,
+      erroconsulta,
       renderPickerAno,
       loading,
       loadingfipe,
@@ -472,7 +473,7 @@ class Veiculos extends Component {
           )
         }
         {
-          this.state.viewDenatran && (
+          this.state.viewDenatran && !erroconsulta && (
             <View style={styles.info}>
               <View style={styles.input_o}>
                 <Text style={styles.info_text}>Placa: {dadosVeiculo.placa}</Text>

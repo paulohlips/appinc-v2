@@ -9,9 +9,10 @@ import { responsividade } from '../../styles';
 import { connect } from 'react-redux';
 
 import { NavigationActions, withNavigation, StackActions } from 'react-navigation';
+import { bindActionCreators } from 'redux';
+import { Creators as UserActions } from '../../store/ducks/login';
 
 
-const dias = 23;
 class Main extends Component {
 
   navigateToScreen = (route) => () => {
@@ -32,7 +33,7 @@ class Main extends Component {
   }
   
   componentWillMount() {
-    const { login } = this.props;
+    const { login, getExitLogin } = this.props;
 
     let days;
     const currentDate = new Date();
@@ -54,8 +55,23 @@ class Main extends Component {
     } else {
       days = dateDay - currentDay;
     }
-    
-    this.setState({ day: days })  
+    if (days <= 0) {
+      getExitLogin();
+      this.navigateToLogout();
+    } else {
+      this.setState({ day: days })
+    }
+  }
+
+  navigateToLogout = () => {
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [
+        // Logged
+        NavigationActions.navigate({ routeName: 'Login' }),
+      ]
+    });
+    this.props.navigation.dispatch(resetAction);
   }
 
   convertDate = starttime => {
@@ -148,4 +164,6 @@ const mapStateToProps = state => ({
   login: state.loginState,
 });
 
-export default connect( mapStateToProps , null )(Main);
+const mapDispatchToProps = dispatch => bindActionCreators(UserActions, dispatch)
+
+export default connect( mapStateToProps , mapDispatchToProps )(Main);

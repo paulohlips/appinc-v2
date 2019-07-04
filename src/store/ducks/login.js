@@ -5,7 +5,8 @@ export const Types = {
   GET__USER_ID: 'login/GET_USER_ID',
   GET_TOKEN: 'login/GET_TOKEN',
   GET_EXIT_USER: 'login/GET_EXIT_USER',
-  GET_FAILURE: 'login/GET_FAILURE'
+  GET_FAILURE: 'login/GET_FAILURE',
+  SET_INFO_USER: 'login/SET_INFO_USER',
 };
 
 const InitialState = {
@@ -39,6 +40,14 @@ export default function LoginState(state = InitialState, action) {
         error: true,
         messageError: action.payload.messageError,
       };
+    case Types.SET_INFO_USER:
+      return {
+        userName: action.payload.data.userName,
+        userID: action.payload.data.userID,
+        token: action.payload.data.token,
+        logged: action.payload.data.logged,
+        valToken: action.payload.data.valToken,
+      }
     case Types.GET_EXIT_USER:
       return {
         ...state,
@@ -72,8 +81,12 @@ export const Creators = {
 
   getExitLogin: () => ({
     type: Types.GET_EXIT_USER
-  })
+  }),
 
+  setInfoUser: (data) => ({
+    type: Types.SET_INFO_USER,
+    payload: { data }
+  })
 };
 
 export const LoginToken = state => {

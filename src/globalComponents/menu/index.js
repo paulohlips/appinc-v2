@@ -23,9 +23,10 @@ class MenuClass extends Component {
         });
    }
 
-    navigateToScreen = (route, exit) => () => {
+    navigateToScreen = async (route, exit) => () => {
         if (exit) {
             this.props.getExitLogin();
+            await AsyncStorage.setItem('@infoUser', null);
         }
         const navigateAction = NavigationActions.navigate({
             routeName: route

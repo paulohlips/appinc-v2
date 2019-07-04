@@ -51,14 +51,34 @@ class Login extends Component {
     call: false,
   }
 
+  async componentDidMount() {
+    const { setInfoUser } = this.props
+    try {
+      const data = await AsyncStorage.getItem('@infoUser');
+      const infoUser = JSON.parse(data)
+      console.log('infoUser', infoUser);
+      if(infoUser) {
+        setInfoUser(infoUser);
+      }      
+    } catch (error) {
+      console.log('erro get user')
+    }
+  }
+
   async componentWillMount() {
     const id = await AsyncStorage.getItem('@Id');
     this.setState({ btt: id });
   }
 
-  componentWillReceiveProps(nextProps) {
+  async componentWillReceiveProps(nextProps) {
+    const { login } = this.props;
     if (nextProps.login.logged !== this.props.login.logged) {
+      await AsyncStorage.setItem('@infoUser', login);
       this.navigateToLogged();
+    }
+
+    if(this.props.login.logged === (false || null)) {
+      await AsyncStorage.setItem('@infoUser', null);
     }
   }
 
@@ -82,6 +102,7 @@ class Login extends Component {
   }
   confereCadastro = () => {
     const data = { inputSave: this.state.inputSave, password: this.state.password };
+    console.log('confcadastro', data)
     this.props.getLoginRequest(data);
   }
   onPressAnimated = async () => {

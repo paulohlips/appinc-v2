@@ -12,6 +12,11 @@ const saveAuthToken = store => next => action => {
     // after a successful login, update the token in the API
     Api.setToken(action.payload.response.token, action.payload.userID);
   }
+
+  if (action.type === 'login/SET_INFO_USER') {
+    // after a successful login, update the token in the API
+    Api.setToken(action.payload.data.token, action.payload.data.userID);
+  }
   // continue processing this action
   return next(action);
 }

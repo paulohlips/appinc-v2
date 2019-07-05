@@ -16,7 +16,7 @@ const InitialState = {
   logged: false,
   error: false,
   messageError: '',
-  valToken: null,
+  valtoken: null,
 };
 
 
@@ -46,7 +46,7 @@ export default function LoginState(state = InitialState, action) {
         userID: action.payload.data.userID,
         token: action.payload.data.token,
         logged: action.payload.data.logged,
-        valToken: action.payload.data.valToken,
+        valtoken: action.payload.data.valtoken,
       }
     case Types.GET_EXIT_USER:
       return {
@@ -56,7 +56,7 @@ export default function LoginState(state = InitialState, action) {
         userID: null,
         logged: false,
         error: false,
-        valToken: null,
+        valtoken: null,
       };
     default:
       return state;

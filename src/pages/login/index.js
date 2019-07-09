@@ -30,6 +30,7 @@ import { responsividade } from '../../styles';
 
 import styles from './styles';
 
+
 const imageCheck = require('../../assents/lottie/warning.json');
 
 class Login extends Component {
@@ -49,6 +50,7 @@ class Login extends Component {
     viewModal: false,
     messageRequest: '',
     call: false,
+    error: false,
   }
 
   async componentDidMount() {
@@ -107,25 +109,38 @@ class Login extends Component {
   navigateToChangeService = () => {
     this.props.navigation.navigate('ChangeService')
   }
-  confereCadastro = () => {
+
+  confereCadastro = async () => {
+    await this.setState({error: false})
     const data = { inputSave: this.state.inputSave, password: this.state.password };
     console.log('confcadastro', data)
     this.props.getLoginRequest(data);
+    if( this.props.login.error == true){
+      await this.setState({ error : true });
+    }
+
   }
+
   onPressAnimated = async () => {
     this.animation.play(30, 1000);
   }
 
   render() {
     const { login } = this.props;
-    const { btt, viewModal, messageRequest, call } = this.state;
+    const { btt, viewModal, messageRequest, call, error } = this.state;
     return (
       <ImageBackground source={require('../../assents/imgs/local_crime.jpg')} style={styles.backgroundImage} >
+                  {
+          error && (
+            <SnackBar Login content={this.props.login.messageError} color='#FFF' fontcolor="black" />
+          )
+          }
         <KeyboardAwareScrollView
           contentContainerStyle={styles.container}
           scrollEnabled={true}
         >
           <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
+
           <Text style={styles.title}>Bem-Vindo</Text>
           <Text style={styles.descript}>Por favor, digite suas credenciais</Text>
           <View style={styles.forms}>

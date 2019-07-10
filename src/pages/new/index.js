@@ -199,7 +199,19 @@ class New extends Component {
                     arrayConfig={infopicker}
                   />
                 ) 
-              }              
+              } 
+
+              {
+                infopicker.length == 0 && (
+                  
+                  <View style = {styles.preView}> 
+                    <Text>AInda não há POPs baixados. Para iniciar uma perícia, baixe os formulários
+                      no atalho "Baixar POPs", que pode ser acessado pelo menu lateral.
+                    </Text>
+                  </View>  
+                  
+                )
+              }             
             </View>
           </View>
 

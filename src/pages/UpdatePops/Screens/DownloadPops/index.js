@@ -183,7 +183,6 @@ class DownloadPops extends Component {
   render() {
     const { area, classe, subclasse, viewPops } = this.state;
     const { login } = this.props;
-    console.tron.log('login', login);
     return (
       <View style={styles.container}>
         <View style={styles.main}>

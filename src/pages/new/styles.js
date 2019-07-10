@@ -125,7 +125,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: responsividade.largura_tela,
-   }
+   },
+
+   preViewContainer: {
+     //backgroundColor: 'transparent',
+     justifyContent: 'center',
+     alignItems: 'center',
+
+   },
+   
+   preView: {
+    width: responsividade.largura_tela * 0.9,
+    padding: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    //backgroundColor: 'green',
+     
+   },
 
 });
 

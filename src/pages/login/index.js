@@ -61,17 +61,13 @@ class Login extends Component {
     const { setInfoUser } = this.props
     try {
       const data = await AsyncStorage.getItem('@infoUser');
-      console.tron.log(data);
       const infoUser = JSON.parse(data)
-      console.tron.log('infoUser1', infoUser);
       const dateVal = infoUser.valtoken;
-      console.tron.log('dateval', dateVal);
       if(infoUser !== '') {
         setInfoUser(infoUser);
         this.navigateToLogged();
       }      
     } catch (error) {
-      console.tron.log(error)
     }
     const id = await AsyncStorage.getItem('@Id');
     this.setState({ btt: id });
@@ -80,7 +76,6 @@ class Login extends Component {
   async componentWillReceiveProps(nextProps) {
     const { login } = this.props;
     if (nextProps.login.logged !== this.props.login.logged) {
-      console.tron.log(login, nextProps.login)
       await AsyncStorage.setItem('@infoUser', JSON.stringify(nextProps.login));
       this.navigateToLogged();
     }
@@ -91,7 +86,6 @@ class Login extends Component {
   }
 
   navigateToLogged = () => {
-    console.tron.log('navigate')
     const resetAction = StackActions.reset({
       index: 0,
       actions: [

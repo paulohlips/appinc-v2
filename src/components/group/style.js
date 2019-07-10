@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   boxGroup: {
     width: responsividade.largura_tela * 0.95,
     padding: 5,
-    backgroundColor: 'white',
+    backgroundColor: 'lightgrey',
     borderRadius: 5,    
     elevation: 2,
     margin: 10,

@@ -65,9 +65,7 @@ class AudioRec extends Component {
 
   onStartRecord = async () => {
     const { name } = this.state;
-    console.tron.log('audioResult', name);
     const result = await this.audioRecorderPlayer.startRecorder(Platform.OS === 'ios' ? `${name}.m4a`: `/storage/emulated/0/Music/${name}.mp3`);
-    console.tron.log('audioResult', result);
     this.audioRecorderPlayer.addRecordBackListener((e) => {
       this.setState({
         recordSecs: e.current_position,

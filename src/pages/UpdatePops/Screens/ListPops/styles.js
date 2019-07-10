@@ -53,6 +53,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         margin: 15,
+       
+
     },
     iconRemove: {
         color: 'white',
@@ -66,15 +68,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 6,
-        top: (responsividade.altura_tela * 0.95) - responsividade.ALTURA_HEADER - 115,
-        left: (responsividade.largura_tela * 0.95) - 75,
-        margin: 10,
+        top: (responsividade.altura_tela * 0.9) - responsividade.ALTURA_HEADER - 115,
+        left: (responsividade.largura_tela * 0.98) - 75,
+        //margin: 20,
         zIndex: 10,
     },
     removeText: {
         color: colors.white,
         fontSize: 16,
         textAlign: 'justify',
+        
     }
 });
 

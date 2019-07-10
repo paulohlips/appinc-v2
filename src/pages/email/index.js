@@ -102,7 +102,7 @@ class Login extends Component {
   confereID = async () => {
     const { inputSave } = this.state;
     const { navigation } = this.props;
-    this.setState({ viewModal: false });
+    this.setState({ viewModal: false , load: true, cont: false });
     try {
       const response = await Api.user.postCadastroId({ matricula: inputSave })
       if (response.status === 200) {

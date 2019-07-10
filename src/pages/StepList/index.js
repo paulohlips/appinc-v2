@@ -40,6 +40,8 @@ class StepList extends Component {
     saved: false,
     error: false,
     mensageError: 'Error',
+    load: false,
+    cont: true
   }
 
   componentWillMount() {
@@ -117,11 +119,11 @@ class StepList extends Component {
 
 
   enviaForm = async () => {
-    const { matriculaAsync } = this.state;
+    const { matriculaAsync , load , cont  } = this.state;
     const { reference, formulario, setUpdateHistory, login, group, note } = this.props;
     const { dataGroup } = group;
 
-    this.setState({ sending: true, original: false });
+    this.setState({ sending: true, original: false , load: true , cont: false });
     console.log(['group', group])
     const matriculaProv = await AsyncStorage.getItem('@AppInc:matricula');
     const matricula = JSON.stringify(matriculaProv);
@@ -210,6 +212,7 @@ class StepList extends Component {
         } else {
           AsyncStorage.setItem('@IDlaudo', response.data.number);
           Alert.alert('ID do laudo', 'O número do seu laudo é ' + response.data.number);
+          this.setState({load : false , cont: true});
           this.onSendGroup({
             userId,
             token,
@@ -222,6 +225,7 @@ class StepList extends Component {
       })
       .catch(error => {
         var mensage;
+        this.setState({load : false , cont: true});
         if (error.response.status === 404) {
           mensage = `${error.response.status} - Não encontrado`;
           // this.errorMessage(mensage);
@@ -317,7 +321,7 @@ class StepList extends Component {
       this.setState({ formRedux: false });
     }
     const { navigation, reference } = this.props;
-    const { viewError, load, saved, mensageError } = this.state;
+    const { viewError, load, saved, mensageError , cont } = this.state;
     let i = 0;
     return (
       <View style={styles.container}>
@@ -346,9 +350,20 @@ class StepList extends Component {
           <View style={styles.container}>
 
             <TouchableOpacity style={styles.enviarbutton} onPress={() => this.enviaForm()}>
-              <Text style={styles.buttonText}>
-                ENVIAR
-              </Text>
+            {
+                cont && (
+                  <Text style={styles.buttonText}>
+                    ENVIAR
+                </Text>
+                )
+
+              }
+
+              {
+                load && (
+                  <ActivityIndicator size="small" color="rgb(225, 200, 133)" />
+                )
+              }
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.salvarbutton} onPress={() => this.saveForm2()}>

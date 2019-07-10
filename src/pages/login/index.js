@@ -16,7 +16,8 @@ import {
   Animated,
   Easing,
   AsyncStorage,
-  Alert
+  Alert,
+  ActivityIndicator
 } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -51,6 +52,8 @@ class Login extends Component {
     messageRequest: '',
     call: false,
     error: false,
+    notLoading: true,
+    Loading: false,
   }
 
   async componentDidMount() {
@@ -77,12 +80,21 @@ class Login extends Component {
     const { login } = this.props;
     if (nextProps.login.logged !== this.props.login.logged) {
       await AsyncStorage.setItem('@infoUser', JSON.stringify(nextProps.login));
+      this.setState({ error: false });
       this.navigateToLogged();
     }
 
+    if (nextProps.login.error == true ) {
+      await this.setState({ error: true , Loading: false , notLoading: true  });
+    }
+    
+
     if(this.props.login.logged === (false || null)) {
       await AsyncStorage.setItem('@infoUser', null);
+      this.setState({ error: true });
     }
+
+
   }
 
   navigateToLogged = () => {
@@ -105,14 +117,10 @@ class Login extends Component {
   }
 
   confereCadastro = async () => {
-    await this.setState({error: false})
+    await this.setState({error: false , Loading: true , notLoading: false })
     const data = { inputSave: this.state.inputSave, password: this.state.password };
     console.log('confcadastro', data)
     this.props.getLoginRequest(data);
-    if( this.props.login.error == true){
-      await this.setState({ error : true });
-    }
-
   }
 
   onPressAnimated = async () => {
@@ -121,7 +129,7 @@ class Login extends Component {
 
   render() {
     const { login } = this.props;
-    const { btt, viewModal, messageRequest, call, error } = this.state;
+    const { btt, viewModal, messageRequest, call, error, notLoading, Loading} = this.state;
     return (
       <ImageBackground source={require('../../assents/imgs/local_crime.jpg')} style={styles.backgroundImage} >
                   {
@@ -159,9 +167,19 @@ class Login extends Component {
               value={this.state.password}
             />
             <TouchableOpacity style={styles.testebutton} onPress={() => this.confereCadastro()}>
-              <Text style={styles.buttonText}>
-                Entrar
-              </Text>
+              {
+                notLoading && (
+                  <Text style={styles.buttonText}>
+                    Entrar
+                  </Text>
+                ) 
+              }
+
+              {
+                Loading && (
+                  <ActivityIndicator size ="small" color='rgb(225, 200, 133)'/>
+                )
+              }
             </TouchableOpacity>
             <TouchableOpacity style={styles.cadastrobutton} onPress={() => this.navigateToSignUp()}>
               <Text style={styles.buttonText}>

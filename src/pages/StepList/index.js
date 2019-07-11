@@ -136,14 +136,15 @@ class StepList extends Component {
       contentGroup = true;
     }
 
-
-    array.map(item => {
-      if (item === formulario.ref) {
-        array.splice(count, 1);
-      }
-      count += 1;
-    });
-
+    console.tron.log('array', array)
+    if (array) {
+      array.map(item => {
+        if (item === formulario.ref) {
+          array.splice(count, 1);
+        }
+        count += 1;
+      });
+    }
 
     await AsyncStorage.setItem(`arrayRef${login.userID}`, JSON.stringify(array));
 
@@ -162,7 +163,7 @@ class StepList extends Component {
     }
 
     note.data.map(item => {
-      dataForm.append(`note_${item.key}`, item.value)
+      dataForm.append(`notas[${item.key}][]`, item.value)
     })
 
     setUpdateHistory();

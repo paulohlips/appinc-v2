@@ -14,7 +14,8 @@ import {
   Easing,
   AsyncStorage,
   Alert,
-  BackHandler
+  BackHandler,
+  ActivityIndicator
 } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import Axios from 'axios';
@@ -68,6 +69,8 @@ class Login extends Component {
     id: null,
     viewModals: false,
     messageRequest: '',
+    load: false,
+    cont: true,
   }
 
   async componentWillMount() {
@@ -96,8 +99,8 @@ class Login extends Component {
 
 
   salvarId = async () => {
-    const { id, idRegistro, pinRegistro, inputSave1, inputSave2 } = this.state;
-    this.setState({ viewModal: false });
+    const { id, idRegistro, pinRegistro, inputSave1, inputSave2 , load , cont} = this.state;
+    this.setState({ viewModal: false ,load: true, cont: false });
 
     if (inputSave1 == inputSave2) {
       try {
@@ -106,12 +109,13 @@ class Login extends Component {
           this.setState({ viewModals: true })
         } else {
           Alert.alert(response.data.mensagem);
+          this.setState({load: false , cont : true })
         }
       } catch {
-        this.setState({ viewModal: true, messageRequest: 'Erro de conexão' });
+        this.setState({ viewModal: true, load: false, cont: true, messageRequest: 'Erro de conexão' });
       }
     } else {
-      this.setState({ viewModal: true, messageRequest: 'Senhas diferentes' });
+      this.setState({ viewModal: true, load: false, cont: true, messageRequest: 'Senhas diferentes' });
     }
 
     if (id) {
@@ -128,7 +132,7 @@ class Login extends Component {
   }
 
   render() {
-    const { viewModal, messageRequest, viewModals } = this.state;
+    const { viewModal, messageRequest, viewModals , load , cont } = this.state;
     return (
       <View style={styles.container}>
 
@@ -168,9 +172,20 @@ class Login extends Component {
             />
 
             <TouchableOpacity style={styles.testebutton} onPress={() => { this.salvarId(); }}>
-              <Text style={styles.buttonText}>
-                Cadastrar
-               </Text>
+            {
+                cont && (
+                  <Text style={styles.buttonText}>
+                    Cadastrar
+                </Text>
+                )
+
+              }
+
+              {
+                load && (
+                  <ActivityIndicator size="small" color="rgb(225, 200, 133)" />
+                )
+              }
             </TouchableOpacity>
           </View>
         </View>

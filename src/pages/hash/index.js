@@ -15,7 +15,8 @@ import {
   Easing,
   AsyncStorage,
   Alert,
-  BackHandler
+  BackHandler,
+  ActivityIndicator
 } from 'react-native';
 import StepIndicator from 'react-native-step-indicator';
 import Axios from 'axios';
@@ -64,6 +65,8 @@ class Login extends Component {
     inputSave: null,
     viewModal: false,
     messageRequest: '',
+    load: false, 
+    cont: true
   }
 
   async componentWillMount() {
@@ -105,15 +108,15 @@ class Login extends Component {
   }
 
   conferePIN = async () => {
-    const { inputSave, idRegistro } = this.state;
-
+    const { inputSave, idRegistro , load , cont} = this.state;
+    this.setState({  viewModal: false ,load: true, cont: false });
     try {
       const response = await Api.user.postConferePIN({ matricula: idRegistro, pin: inputSave });
       if (response.status === 200) {
         AsyncStorage.setItem('@PinRegistro', inputSave);
         this.navigateToPassword();
       } else {
-        this.setState({ viewModal: true, messageRequest: response.data.mensagem });
+        this.setState({ viewModal: true, messageRequest: response.data.mensagem , load: false, cont: true});
       }
     } catch {
       this.setState({ viewModal: true, messageRequest: response.data.mensagem });
@@ -121,7 +124,7 @@ class Login extends Component {
   }
 
   render() {
-    const { viewModal, messageRequest } = this.state;
+    const { viewModal, messageRequest , cont , load } = this.state;
     return (
       <View style={styles.container}>
 
@@ -151,9 +154,20 @@ class Login extends Component {
             />
 
             <TouchableOpacity style={styles.testebutton} onPress={() => { this.conferePIN(); }}>
-              <Text style={styles.buttonText}>
-                Continuar
-               </Text>
+            {
+                cont && (
+                  <Text style={styles.buttonText}>
+                    Continuar
+                </Text>
+                )
+
+              }
+
+              {
+                load && (
+                  <ActivityIndicator size="small" color="rgb(225, 200, 133)" />
+                )
+              }
             </TouchableOpacity>
           </View>
         </View>

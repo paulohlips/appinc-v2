@@ -1,5 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet , Platform } from 'react-native';
 import { colors, metrics, responsividade } from '../../styles';
+
 
 const styles = StyleSheet.create({
 
@@ -86,7 +87,11 @@ const styles = StyleSheet.create({
 
   },
   container: {
-    flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#F5FCFF',
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    backgroundColor: '#F5FCFF',
+    paddingTop: Platform.OS === 'ios' ? 35 : 0
   },
   strokeColorButton: {
     marginHorizontal: 2.5, marginVertical: 8, width: 30, height: 30, borderRadius: 15,

@@ -210,6 +210,7 @@ class StepList extends Component {
       .then(response => {
         if (response.status === 206) {
           this.errorMessage(response.data.mensagem);
+          this.setState({load : false , cont: true});
         } else {
           AsyncStorage.setItem('@IDlaudo', response.data.number);
           Alert.alert('ID do laudo', 'O número do seu laudo é ' + response.data.number);

@@ -155,10 +155,13 @@ class StepList extends Component {
     dataForm.append('form_name', formulario.form.form_name);
 
     for (var key in formulario.step) {
+      console.tron.log(formulario.step[key].type);
       if (formulario.step[key].type === 'camera') {
         formulario.step[key].value.map(item => {
           dataForm.append(`${key}[]`, item);
         })
+      } else if (formulario.step[key].type === 'audiorec') {
+        dataForm.append(`${formulario.step[key].key}[]`, formulario.step[key].value)
       } else {
         dataForm.append(formulario.step[key].key, formulario.step[key].value)
       }
@@ -226,6 +229,7 @@ class StepList extends Component {
         }
       })
       .catch(error => {
+        console.tron.log(error);
         var mensage;
         this.setState({load : false , cont: true});
         if (error.response.status === 404) {
@@ -291,7 +295,7 @@ class StepList extends Component {
           console.log(response)
         })
         .catch(error => {
-          console.log(['error group', error])
+          console.tron.log(['error group', error])
           this.errorMessage();
         });
 

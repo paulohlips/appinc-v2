@@ -100,7 +100,7 @@ class MyDatePicker extends Component {
       for (var key in form.step) {
         if (key === data.data_name) {
           const form = {};
-          form[data.data_name] = { key: data.data_name, value: date, filled: true };
+          form[data.data_name] = { key: data.data_name, value: date, filled: true, type: data.component_type };
           getSaveStateForm(form);
         }
       }
@@ -108,7 +108,7 @@ class MyDatePicker extends Component {
       for (var key in form.step) {
         if (key === data.data_name) {
           const form = {};
-          form[data.data_name] = { key: data.data_name, value: '2100-01-21', filled: false };
+          form[data.data_name] = { key: data.data_name, value: '2100-01-21', filled: false, type: data.component_type };
           getSaveStateForm(form);
         }
       }
@@ -118,14 +118,14 @@ class MyDatePicker extends Component {
 
 
   render() {
-    const { data_name, label, hint, default_value, newState } = this.props.data
+    const { data_name, label, hint, default_value, newState, component_type } = this.props.data
     const { saveStep } = this.props.form;
     const { group } = this.props
     const { showDate } = this.state;
     const { largura_tela } = responsividade;
 
     if (saveStep) {
-      this.saveFormInput({ data_name, default_value });
+      this.saveFormInput({ data_name, default_value, component_type });
     }
     if (group.flagGroup) {
       this.saveGroupDate({ data_name, default_value })

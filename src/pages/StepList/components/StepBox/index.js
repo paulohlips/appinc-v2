@@ -88,7 +88,7 @@ class StepBoxComponent extends Component {
         let prototype = {};
 
         if (component.component_type === 'date') {
-          form[component.data_name] = { key: component.data_name, value: '1980-01-21', filled: null };
+          form[component.data_name] = { key: component.data_name, value: '1980-01-21', filled: null, type: component.component_type };
         } else if (component.component_type === 'group') {
           component.components_group.map(item => {
             prototype[item.data_name] = {
@@ -98,7 +98,12 @@ class StepBoxComponent extends Component {
               extra: null,
             };
           })
-          form[component.data_name] = { key: component.data_name, value: component.default_value, filled: null };
+          form[component.data_name] = { 
+            key: component.data_name, 
+            value: component.default_value, 
+            filled: null, 
+            type: component.component_type
+          };
           createDataGroup(component.data_name, prototype);
         } else if (component.component_type === 'camera') {
           form[`leg_${component.data_name}`] = {
@@ -115,6 +120,13 @@ class StepBoxComponent extends Component {
             type: component.component_type,
           };
           getCreateForm(form);
+        } else if (component.component_type === 'audiorec') {
+          form[component.data_name] = {
+            key: component.data_name,
+            value: component.default_value,
+            filled: null,
+            type: component.component_type
+          };
         } else {
           form[component.data_name] = {
             key: component.data_name,
@@ -126,7 +138,7 @@ class StepBoxComponent extends Component {
 
         notes = {
           key: component.data_name,
-          value: null,
+          value: null
         }
         creteArrayNotes(notes);
         getCreateForm(form);
@@ -168,6 +180,11 @@ class StepBoxComponent extends Component {
     const { steps, form, formState, index } = this.props;
     const { createdForms, arrayProgress, callFunction, progress, paolo } = this.state;
     const { item } = steps;
+    let group = false;
+    if(item.components[0].component_type === 'group') {
+      group = true
+    }
+    
     if (!createdForms) {
       this.createFormsSave();
     }
@@ -193,12 +210,19 @@ class StepBoxComponent extends Component {
           </View>
           <View style={styles.row}>
             <View style={styles.bar}>
-              <ProgressBar progress={paolo} />
+              {
+                !group &&
+                  <ProgressBar progress={paolo} />
+              }
+              
             </View>
             <View style={styles.number_view}>
-              <Text style={styles.number}>
-                {this.state.count + "/" + this.state.array}
-              </Text>
+              {
+                !group &&
+                  <Text style={styles.number}>
+                    {this.state.count + "/" + this.state.array}
+                  </Text>
+              }              
             </View>
           </View>
 

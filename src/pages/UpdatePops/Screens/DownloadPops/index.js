@@ -217,7 +217,7 @@ class DownloadPops extends Component {
             )
           }
           <View style={styles.viewCard}>
-            <ScrollView>
+            <ScrollView contentContainerStyle={{ paddingBottom: 200 }}>
               {
                 viewPops.map(item => this.rederItem(item))
               }

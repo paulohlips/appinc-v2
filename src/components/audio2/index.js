@@ -116,6 +116,7 @@ class AudioRec extends Component {
     const { form, getSaveStateForm, startControlArray } = this.props;
     const { data_name } = data;
 
+    console.tron.log(['Testando',data])
     if (filePath) {
       for (var key in form.step) {
         if (key === data.data_name) {
@@ -125,10 +126,11 @@ class AudioRec extends Component {
             value: {
               uri: filePath,
               type: 'audio/mp3',
-              name: data_name,
+              name: `${data_name}.mp3`,
               stateAudio: this.state,
             },
-            filled: true
+            filled: true,
+            type: data.component_type
           };
           getSaveStateForm(form);
         }
@@ -145,6 +147,7 @@ class AudioRec extends Component {
               name: '',
             },
             filled: false,
+            type: data.component_type
           };
           getSaveStateForm(form);
         }
@@ -162,7 +165,7 @@ class AudioRec extends Component {
   render() {
     const { filePath, savedNote, recordTime } = this.state;
     const { data, noteState, form, resetSaveNote } = this.props;
-    const { data_name, default_value, note } = data;
+    const { data_name, default_value, note, component_type } = data;
     const { saveStep } = form;
 
     if (note) {
@@ -174,7 +177,7 @@ class AudioRec extends Component {
               value: {
                 uri: filePath,
                 type: 'audio/mp3',
-                name: `note_${data_name}`,
+                name: `note_${data_name}.mp3`,
                 stateAudio: this.state,
               },
             });
@@ -186,7 +189,7 @@ class AudioRec extends Component {
     }
 
     if (saveStep) {
-      this.saveFormAudio({ data_name, default_value });
+      this.saveFormAudio({ data_name, default_value, component_type });
     }
     return (
       <View style={styles.container}>

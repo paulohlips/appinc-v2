@@ -439,8 +439,7 @@ class Veiculos extends Component {
               style={styles.input}
               autoCapitalize="none"
               autoCorrect={false}
-              multiline
-              placeholder={hint}
+              placeholder="Digite..."
               maxLength={72}
               autoCapitalize="characters"
               underlineColorAndroid="rgba(0,0,0,0)"

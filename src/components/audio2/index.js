@@ -116,7 +116,6 @@ class AudioRec extends Component {
     const { form, getSaveStateForm, startControlArray } = this.props;
     const { data_name } = data;
 
-    console.tron.log(['Testando',data])
     if (filePath) {
       for (var key in form.step) {
         if (key === data.data_name) {

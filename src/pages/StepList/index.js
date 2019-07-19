@@ -137,8 +137,6 @@ class StepList extends Component {
     if (dataGroup.length > 0) {
       contentGroup = true;
     }
-
-    console.tron.log('array', array)
     if (array) {
       array.map(item => {
         if (item === formulario.ref) {
@@ -155,7 +153,6 @@ class StepList extends Component {
     dataForm.append('form_name', formulario.form.form_name);
 
     for (var key in formulario.step) {
-      console.tron.log(formulario.step[key].type);
       if (formulario.step[key].type === 'camera') {
         formulario.step[key].value.map(item => {
           dataForm.append(`${key}[]`, item);
@@ -229,7 +226,6 @@ class StepList extends Component {
         }
       })
       .catch(error => {
-        console.tron.log(error);
         var mensage;
         this.setState({load : false , cont: true});
         if (error.response.status === 404) {
@@ -295,7 +291,6 @@ class StepList extends Component {
           console.log(response)
         })
         .catch(error => {
-          console.tron.log(['error group', error])
           this.errorMessage();
         });
 

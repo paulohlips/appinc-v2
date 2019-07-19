@@ -422,9 +422,8 @@ class Camera extends React.Component {
         <View style={styles.containerText}>
           <TextInput
             style={groupFlag ? stylesGroup.input : styles.input}
-            autoCapitalize="none"
-            autoCorrect={false}
-            multiline
+            autoCapitalize="sentences"
+            autoCorrect={true}
             placeholder={"Descrição..."}
             maxLength={100}
             underlineColorAndroid="rgba(0,0,0,0)"

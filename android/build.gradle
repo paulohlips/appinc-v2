@@ -6,7 +6,8 @@ buildscript {
         minSdkVersion = 16
         compileSdkVersion = 28
         targetSdkVersion = 28
-        supportLibVersion = "27.1.1"
+        androidXAnnotation = "1.1.0"
+        androidXBrowser = "1.0.0"
         googlePlayServicesVersion = "10.2.4"
     }
     repositories {

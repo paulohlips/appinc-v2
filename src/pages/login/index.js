@@ -127,9 +127,7 @@ class Login extends Component {
     const { login } = this.props;
     const {
       btt,
-      viewModal,
-      messageRequest,
-      call,
+
       error,
       notLoading,
       Loading

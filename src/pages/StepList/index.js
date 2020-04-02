@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   View,
   FlatList,
@@ -10,45 +10,44 @@ import {
   ActivityIndicator,
   Animated,
   BackHandler
-} from 'react-native';
-import styles from './styles';
-import StepBox from './components/StepBox';
-import { Load } from '../../components';
-import { Header } from '../../globalComponents';
-import { connect } from 'react-redux';
-import axios from 'axios';
-import Api from '../../services/api';
+} from "react-native";
+import styles from "./styles";
+import StepBox from "./components/StepBox";
+import { Load } from "../../components";
+import { Header } from "../../globalComponents";
+import { connect } from "react-redux";
+import axios from "axios";
+import Api from "../../services/api";
 
-import { bindActionCreators } from 'redux';
-import { Creators as FormAction } from '../../store/ducks/form';
-import { Creators as HistActions } from '../../store/ducks/hist';
-import { SnackBar } from '../../globalComponents';
-
+import { bindActionCreators } from "redux";
+import { Creators as FormAction } from "../../store/ducks/form";
+import { Creators as HistActions } from "../../store/ducks/hist";
+import { SnackBar } from "../../globalComponents";
 
 class StepList extends Component {
   state = {
     modalVisible: false,
     load: false,
-    form: '',
+    form: "",
     teste: 10,
     showAlert: false,
     formRedux: true,
     viewError: false,
-    matriculaAsync: '',
+    matriculaAsync: "",
     saved: false,
-    error: false,
-  }
+    error: false
+  };
 
   componentWillMount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.saveForm);
+    BackHandler.removeEventListener("hardwareBackPress", this.saveForm);
   }
 
   componentDidMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.saveForm);
+    BackHandler.addEventListener("hardwareBackPress", this.saveForm);
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.saveForm);
+    BackHandler.removeEventListener("hardwareBackPress", this.saveForm);
   }
 
   cancel() {
@@ -56,10 +55,11 @@ class StepList extends Component {
   }
 
   saved() {
-    this.setState({ saved: true })
+    this.setState({ saved: true });
     let that = this;
-    setTimeout(function () { that.setState({ saved: false }); }, 4000);
-
+    setTimeout(function() {
+      that.setState({ saved: false });
+    }, 4000);
   }
 
   saveForm = () => {
@@ -68,37 +68,40 @@ class StepList extends Component {
     this.saved();
     this.props.navigation.goBack();
     return true;
-  }
+  };
 
   saveForm2 = () => {
     const { reference, saveForm, setSaveContentForm, form } = this.props;
     saveForm(reference);
     this.saved();
-  }
+  };
 
   resetAsync = () => {
     AsyncStorage.clear();
-  }
+  };
 
   errorMessage = () => {
     this.setState({ viewError: true });
     let that = this;
-    setTimeout(function () { that.setState({ viewError: false }) }, 4000);
-  }
+    setTimeout(function() {
+      that.setState({ viewError: false });
+    }, 4000);
+  };
 
   error = () => {
     this.setState({ error: true });
     let that = this;
-    setTimeout(function () { that.setState({ error: false }) }, 4000);
-  }
-
+    setTimeout(function() {
+      that.setState({ error: false });
+    }, 4000);
+  };
 
   enviaForm = async () => {
     const { matriculaAsync } = this.state;
     const { reference, formulario, setUpdateHistory, login } = this.props;
     this.setState({ sending: true, original: false });
 
-    const matriculaProv = await AsyncStorage.getItem('@AppInc:matricula');
+    const matriculaProv = await AsyncStorage.getItem("@AppInc:matricula");
     const matricula = JSON.stringify(matriculaProv);
 
     const arrayRef = await AsyncStorage.getItem("arrayRef");
@@ -113,14 +116,14 @@ class StepList extends Component {
       count += 1;
     });
 
-    await AsyncStorage.setItem('arrayRef', JSON.stringify(array));
+    await AsyncStorage.setItem("arrayRef", JSON.stringify(array));
 
     const data = new FormData();
     const data2 = new FormData();
-    data.append('form_name', formulario.form.form_name);
-    console.tron.log(['entrei no evia3', data, formulario]);
-    data2.append('imagem_frontal', formulario.step[imagem_frontal].value)
-
+    data.append("form_name", formulario.form.form_name);
+    console.tron.log(["entrei no evia3", data, formulario]);
+    data2.append("imagem_frontal", formulario.step[imagem_frontal].value);
+  };
   render() {
     const { formRedux } = this.state;
     const form = this.props.form;
@@ -141,35 +144,44 @@ class StepList extends Component {
           info={form.info_form}
           goBack={this.saveForm}
         />
-        {
-          viewError && (
-            <SnackBar outside content="Sem conexão!" color='#3C3C46' fontcolor="white" />
-          )
-        }
+        {viewError && (
+          <SnackBar
+            outside
+            content="Sem conexão!"
+            color="#3C3C46"
+            fontcolor="white"
+          />
+        )}
 
-        {
-          saved && (
-            <SnackBar outside content="Progresso Salvo!" color='#3C3C46' fontcolor="white" />
-
-          )
-        }
+        {saved && (
+          <SnackBar
+            outside
+            content="Progresso Salvo!"
+            color="#3C3C46"
+            fontcolor="white"
+          />
+        )}
         <ScrollView>
           <FlatList
             data={form.steps}
-            renderItem={item => { i = i + 1; return <StepBox steps={item} form={form} index={i} /> }}
+            renderItem={item => {
+              i = i + 1;
+              return <StepBox steps={item} form={form} index={i} />;
+            }}
           />
           <View style={styles.container}>
-
-            <TouchableOpacity style={styles.enviarbutton} onPress={() => this.enviaForm()}>
-              <Text style={styles.buttonText}>
-                ENVIAR
-                  </Text>
+            <TouchableOpacity
+              style={styles.enviarbutton}
+              onPress={() => this.enviaForm()}
+            >
+              <Text style={styles.buttonText}>ENVIAR</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.salvarbutton} onPress={() => this.saveForm2()}>
-              <Text style={styles.buttonTextsalvar}>
-                SALVAR
-              </Text>
+            <TouchableOpacity
+              style={styles.salvarbutton}
+              onPress={() => this.saveForm2()}
+            >
+              <Text style={styles.buttonTextsalvar}>SALVAR</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -186,13 +198,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({
-    ...FormAction,
-    ...HistActions,
-  }, dispatch);
+  bindActionCreators(
+    {
+      ...FormAction,
+      ...HistActions
+    },
+    dispatch
+  );
 
 StepList.navigationOptions = {
-  title: 'Perícia',
+  title: "Perícia"
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StepList);

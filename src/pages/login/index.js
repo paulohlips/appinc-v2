@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { StackActions, NavigationActions } from 'react-navigation';
-import { ModalCheck } from '../../globalComponents';
-import { SnackBar } from '../../globalComponents';
+import React, { Component } from "react";
+import { StackActions, NavigationActions } from "react-navigation";
+import { ModalCheck } from "../../globalComponents";
+import { SnackBar } from "../../globalComponents";
 import {
   View,
   Text,
@@ -14,22 +14,22 @@ import {
   Easing,
   AsyncStorage,
   Alert
-} from 'react-native';
+} from "react-native";
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { Creators as LoginActions } from '../../store/ducks/login';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Creators as LoginActions } from "../../store/ducks/login";
 
-import axios from 'axios';
-import { responsividade } from '../../styles';
+import axios from "axios";
+import { responsividade } from "../../styles";
 
-import styles from './styles';
+import styles from "./styles";
 
-const imageCheck = require('../../assents/lottie/warning.json');
+const imageCheck = require("../../assents/lottie/warning.json");
 
 class Login extends Component {
   static navigationOptions = {
-    header: null,
+    header: null
   };
 
   state = {
@@ -42,13 +42,13 @@ class Login extends Component {
     idUser: null,
     currentPosition: 0,
     viewModal: false,
-    messageRequest: '',
-    call: false,
-  }
+    messageRequest: "",
+    call: false
+  };
 
   async componentWillMount() {
     //console.tron.log(this.props)
-    const id = await AsyncStorage.getItem('@Id');
+    const id = await AsyncStorage.getItem("@Id");
     this.setState({ btt: id });
   }
 
@@ -63,40 +63,48 @@ class Login extends Component {
       index: 0,
       actions: [
         // Logged
-        NavigationActions.navigate({ routeName: 'Logged' }),
+        NavigationActions.navigate({ routeName: "Logged" })
       ]
     });
     this.props.navigation.dispatch(resetAction);
-  }
+  };
 
   navigateToSignUp = () => {
     const resetAction = StackActions.reset({
       index: 0,
       actions: [
         // Logged
-        NavigationActions.navigate({ routeName: 'SignUp' }),
+        NavigationActions.navigate({ routeName: "SignUp" })
       ]
     });
     this.props.navigation.dispatch(resetAction);
-  }
+  };
 
   confereCadastro = () => {
-    const data = { inputSave: this.state.inputSave, password: this.state.password };
+    const data = {
+      inputSave: this.state.inputSave,
+      password: this.state.password
+    };
     this.props.getLoginRequest(data);
-  }
+  };
   onPressAnimated = async () => {
     this.animation.play(30, 1000);
-  }
+  };
 
   render() {
     const { login } = this.props;
     const { btt, viewModal, messageRequest, call } = this.state;
     return (
-      <ImageBackground source={require('../../assents/imgs/local_crime.jpg')} style={styles.backgroundImage} >
+      <ImageBackground
+        source={require("../../assents/imgs/local_crime.jpg")}
+        style={styles.backgroundImage}
+      >
         <View style={styles.container}>
           <StatusBar backgroundColor="rgba(45, 45, 45, 0.8)" />
           <Text style={styles.title}>Bem-Vindo</Text>
-          <Text style={styles.descript}>Por favor, digite suas credenciais</Text>
+          <Text style={styles.descript}>
+            Por favor, digite suas credenciais
+          </Text>
           <View style={styles.forms}>
             <TextInput
               style={styles.input}
@@ -118,34 +126,39 @@ class Login extends Component {
               onChangeText={password => this.setState({ password })}
               value={this.state.password}
             />
-            <TouchableOpacity style={styles.testebutton} onPress={() => this.confereCadastro()}>
-              <Text style={styles.buttonText}>
-                Entrar
-              </Text>
+            <TouchableOpacity
+              style={styles.testebutton}
+              onPress={() => this.confereCadastro()}
+            >
+              <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cadastrobutton} onPress={() => { this.navigateToSignUp(); }}>
-              <Text style={styles.buttonText}>
-                Cadastrar
-              </Text>
+            <TouchableOpacity
+              style={styles.cadastrobutton}
+              onPress={() => {
+                this.navigateToSignUp();
+              }}
+            >
+              <Text style={styles.buttonText}>Cadastrar</Text>
             </TouchableOpacity>
           </View>
         </View>
-        {
-          login.error && (
-            <SnackBar inside content={login.messageError} color="white" />
-          )
-        }
+        {login.error && (
+          <SnackBar
+            inside
+            content={login.messageError.response.data.mensagem}
+            color="white"
+          />
+        )}
       </ImageBackground>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  login: state.loginState,
+  login: state.loginState
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(LoginActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
-

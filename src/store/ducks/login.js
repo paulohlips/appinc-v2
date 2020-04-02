@@ -1,11 +1,11 @@
 export const Types = {
-  GET_REQUEST_LOGIN: 'login/GET_REQUEST_LOGIN',
-  GET_SUCSSES: 'login/GET_SUCSSES',
-  GET_USER_NAME: 'login/GET_USER_NAME',
-  GET__USER_ID: 'login/GET_USER_ID',
-  GET_TOKEN: 'login/GET_TOKEN',
-  GET_EXIT_USER: 'login/GET_EXIT_USER',
-  GET_FAILURE: 'login/GET_FAILURE'
+  GET_REQUEST_LOGIN: "login/GET_REQUEST_LOGIN",
+  GET_SUCSSES: "login/GET_SUCSSES",
+  GET_USER_NAME: "login/GET_USER_NAME",
+  GET__USER_ID: "login/GET_USER_ID",
+  GET_TOKEN: "login/GET_TOKEN",
+  GET_EXIT_USER: "login/GET_EXIT_USER",
+  GET_FAILURE: "login/GET_FAILURE"
 };
 
 const InitialState = {
@@ -14,9 +14,8 @@ const InitialState = {
   token: null,
   logged: false,
   error: false,
-  messageError: '',
+  messageError: ""
 };
-
 
 export default function LoginState(state = InitialState, action) {
   switch (action.type) {
@@ -35,7 +34,7 @@ export default function LoginState(state = InitialState, action) {
         ...state,
         logged: false,
         error: true,
-        messageError: action.payload.messageError,
+        messageError: action.payload.messageError
       };
     case Types.GET_EXIT_USER:
       return {
@@ -43,7 +42,7 @@ export default function LoginState(state = InitialState, action) {
         userName: null,
         token: null,
         userID: null,
-        logged: false,
+        logged: false
       };
     default:
       return state;
@@ -53,25 +52,24 @@ export default function LoginState(state = InitialState, action) {
 export const Creators = {
   getLoginRequest: data => ({
     type: Types.GET_REQUEST_LOGIN,
-    payload: { data },
+    payload: { data }
   }),
 
   getLoginSucsses: (response, userID) => ({
     type: Types.GET_SUCSSES,
-    payload: { response, userID },
+    payload: { response, userID }
   }),
 
   getLoginFailure: messageError => ({
     type: Types.GET_FAILURE,
-    payload: { messageError },
+    payload: { messageError }
   }),
 
   getExitLogin: () => ({
     type: Types.GET_EXIT_USER
   })
-
 };
 
 export const LoginToken = state => {
-  return 'ksjdhfkjsdhf';
-}
+  return "ksjdhfkjsdhf";
+};

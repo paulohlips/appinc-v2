@@ -1,15 +1,21 @@
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Animated } from 'react-native';
+import React, { Component } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Animated
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import styles from './styles';
+import styles from "./styles";
 import { NotesForm } from "../../../../globalComponents";
 
-import ComponentList from "../ComponentsList"; 
+import ComponentList from "../ComponentsList";
 
 class ComponentBox extends Component {
   state = {
-    viewModal: false,  
-  }
+    viewModal: false
+  };
 
   onCloseModal = () => {
     const { viewModal } = this.state;
@@ -27,7 +33,6 @@ class ComponentBox extends Component {
     return true;
   };
 
-  
   render() {
     const { data, num } = this.props;
     const { viewModal } = this.state;
@@ -40,7 +45,7 @@ class ComponentBox extends Component {
           <View style={styles.textTypeView}>
             <Text style={styles.textType}> {data.label}: </Text>
           </View>
-          
+
           <TouchableOpacity onPress={() => this.onCloseModal()}>
             <Icon
               name="ellipsis-h"
@@ -51,15 +56,13 @@ class ComponentBox extends Component {
           </TouchableOpacity>
         </View>
         <ComponentList data={data} index={num} />
-        {
-          viewModal && (
-            <NotesForm 
-              viewNotes={viewModal} 
-              onCloseNotes={this.onCloseModal} 
-              data={data}
-            />
-          )
-        }
+        {viewModal && (
+          <NotesForm
+            viewNotes={viewModal}
+            onCloseNotes={this.onCloseModal}
+            data={data}
+          />
+        )}
       </View>
     );
   }

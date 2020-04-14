@@ -8,7 +8,11 @@ if (__DEV__) {
     .use(reactotronRedux())
     .use(sagaPlugin())
     .use(asyncStorage())
-    .connect(); // let's connect!
+    .connect({
+      server: "192.168.56.101", // for Genymotion
+      port: 9090,
+      enabled: true,
+    }); // let's connect!
 
   console.tron = tron;
   tron.clear();

@@ -26,6 +26,7 @@
     "react-native-image-crop-picker": "^0.21.3",
     "react-native-image-resizer": "^1.0.1",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
+    "react-native-permissions": "^2.0.10",
     "react-native-scan-barcode": "^3.1.5",
     "react-native-sound": "^0.10.9",
     "react-native-step-indicator": "^0.0.9",

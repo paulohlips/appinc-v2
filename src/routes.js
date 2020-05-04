@@ -26,6 +26,7 @@ import CameraPage from './pages/components/camera';
 
 import BarCode from './pages/components/scanner';
 import Veiculo from './pages/components/veiculo';
+import InfoVeiculo from './components/InfoVeiculo';
 
 
 // import testes de tela
@@ -34,6 +35,7 @@ import StepList from './pages/StepList';
 
 const Routes = StackNavigator(
   {
+    InfoVeiculo: { screen: InfoVeiculo },
     Login: { screen: Login },
     SignUp: { screen: Singup },
     Hash: { screen: Hash },

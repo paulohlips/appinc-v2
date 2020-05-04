@@ -1,15 +1,24 @@
-import { StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 
-const styles = StyleSheet.create({
-    checkBox: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        margin: 3,
-    },
-    textOptionStyle: {
-        fontWeight: 'bold',
-        fontSize: 15,
-    },
-});
+export const ViewButtons = styled.View`
+  flex-direction: row;
+`;
 
-export default styles;
+export const ViewButtonYes = styled.View`
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+`;
+
+export const ViewButtonNo = styled.View`
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+`;
+
+export const RadioText = styled.Text`
+  justify-content: center;
+  align-self: center;
+  font-weight: bold;
+  color: #000;
+`;

@@ -7,9 +7,9 @@ const styles = StyleSheet.create({
     //backgroundColor: colors.light,
     width: responsividade.largura_tela,
     padding: 20,
-    
+
   },
-   Name: {
+  Name: {
     width: responsividade.LARGURABOX,
     height: 30,
     backgroundColor: colors.transparent,
@@ -17,14 +17,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '400',
     lineHeight: 21,
-   },
+  },
 
   input: {
-     //backgroundColor: 'white',
-     height: responsividade.ALTURA_INPUT * 1.1,
-     borderRadius: 4,
-     paddingLeft: 20,
-     fontSize: 16,
+    //backgroundColor: 'white',
+    height: responsividade.ALTURA_INPUT * 1.1,
+    borderRadius: 4,
+    paddingLeft: 20,
+    fontSize: 16,
   },
 
   hint: {
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'green',
     opacity: 0.5,
-    paddingVertical: 10,   
+    paddingVertical: 10,
   }
 
 });

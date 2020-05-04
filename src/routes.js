@@ -35,7 +35,7 @@ import StepList from './pages/StepList';
 
 const Routes = StackNavigator(
   {
-    VeiculoTeste: { screen: VeiculoTeste },
+    // VeiculoTeste: { screen: VeiculoTeste },
     Login: { screen: Login },
     SignUp: { screen: Singup },
     Hash: { screen: Hash },

@@ -1,32 +1,47 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { RadioButton } from 'react-native-paper';
+import { colors } from '../../styles';
 
 import { TouchableOpacity, Text } from 'react-native';
-import styles from './styles';
+import { ViewButtons, ViewButtonNo, ViewButtonYes, RadioText } from './styles';
 
-const Check = ({
-    selected,
-    onPress,
-    style,
-    textStyle,
-    size = 30,
-    color = '#211f30',
-    text = '',
-    ...props
-}) => (
-        <TouchableOpacity
-            style={[styles.checkBox, style]}
-            onPress={onPress}
-            {...props}
-        >
-            <Icon
-                size={size}
-                color={color}
-                name={selected ? 'radio-button-checked' : 'radio-button-unchecked'}
-            />
+export default class CheckBall extends Component {
+    state = {
+        checked: null,
+    };
 
-            <Text style={styles.textOptionStyle}> {text} </Text>
-        </TouchableOpacity>
-    );
+    render() {
+        const { checked } = this.state;
 
-export default Check;
+        return (
+            <ViewButtons>
+                <RadioText>FOTO LEGÍVEL?</RadioText>
+                <ViewButtonYes>
+                    <RadioButton
+                        value="yes"
+                        status={checked === 'yes' ? 'checked' : 'unchecked'}
+                        onPress={() => {
+                            this.setState({ checked: 'yes' });
+                        }}
+                        color={colors.secundary}
+                        uncheckedColor={colors.black}
+                    />
+                    <RadioText>SIM</RadioText>
+                </ViewButtonYes>
+                <ViewButtonNo>
+                    <RadioButton
+                        value="no"
+                        status={checked === 'no' ? 'checked' : 'unchecked'}
+                        onPress={() => {
+                            this.setState({ checked: 'no' });
+                        }}
+                        color={colors.secundary}
+                        uncheckedColor={colors.black}
+                    />
+                    <RadioText>NÃO</RadioText>
+                </ViewButtonNo>
+            </ViewButtons>
+        )
+    }
+}

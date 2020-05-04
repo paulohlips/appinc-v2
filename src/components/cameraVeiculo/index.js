@@ -23,42 +23,6 @@ class Camera extends React.Component {
         arrayCamera: [],
     };
 
-
-    /*componentWillMount() {
-      const { form, data, group, index } = this.props;
-  
-      if (data.group === 'true') {
-  
-        group.dataGroup.map(item => {
-          item.value.map(components => {
-            if (components.index === index) {
-              Object.keys(components).map(key => {
-                if (key === data.data_name) {
-                  if (components[key].value !== null && components[key].value !== undefined) {
-                    this.setState({ image: components[key].extra, imagePath: components[key].value.uri });
-                  }
-                }
-              })
-            }
-          })
-        });
-  
-      } else {
-        for (var key in form.step) {
-          if (key === data.data_name) {
-            if (form.step[key].filled === true) {
-              this.setState({
-                images: form.step[key].data,
-                imagePath: form.step[key].value.uri,
-                inputSave: form.step[`leg_${key}`].value,
-              });
-            }
-          }
-        }
-      }
-  
-    }*/
-
     pickSingleWithCamera(cropping) {
         const { data } = this.props;
         ImagePicker.openCamera({
@@ -88,7 +52,7 @@ class Camera extends React.Component {
                     {
                         uri: image.path,
                         type: 'image/jpeg',
-                        name: `${data.data_name}.jpg`,
+                        name: `Teste.jpg`,
                     }
                 ],
                 imagePath: image.path

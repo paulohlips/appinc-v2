@@ -6,6 +6,7 @@ import histState from './hist';
 import groupState from './group';
 import loginState from './login';
 import noteState from './notes';
+import infoVeiculoState from './infoVeiculo'
 
 export default combineReducers({
   newState,
@@ -14,6 +15,7 @@ export default combineReducers({
   groupState,
   loginState,
   noteState,
+  infoVeiculoState
 });
 
 /*empty: (state = {}) => state,*/

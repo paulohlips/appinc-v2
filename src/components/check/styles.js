@@ -9,12 +9,14 @@ export const ViewButtonYes = styled.View`
   flex-direction: row;
   align-content: center;
   justify-content: center;
+  margin: 0px 5px 0px 5px
 `;
 
 export const ViewButtonNo = styled.View`
   flex-direction: row;
   align-content: center;
   justify-content: center;
+  margin: 0px 5px 0px 5px
 `;
 
 export const RadioText = styled.Text`

@@ -17,7 +17,7 @@ export default CheckBall = ({ handleCheck, checked }) => (
                 color={colors.secundary}
                 uncheckedColor={colors.black}
             />
-            <RadioText>SIM</RadioText>
+            <RadioText onPress={() => { handleCheck({ checked: 'yes' }) }}>SIM</RadioText>
         </ViewButtonYes>
         <ViewButtonNo>
             <RadioButton
@@ -27,7 +27,7 @@ export default CheckBall = ({ handleCheck, checked }) => (
                 color={colors.secundary}
                 uncheckedColor={colors.black}
             />
-            <RadioText>NÃO</RadioText>
+            <RadioText onPress={() => { handleCheck({ checked: 'no' }) }}>NÃO</RadioText>
         </ViewButtonNo>
     </ViewButtons>
 );

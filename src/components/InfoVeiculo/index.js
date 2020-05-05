@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 
 // styles
-import { View, Text, Image, Picker } from "react-native";
+import { View, Text, Image } from "react-native";
 import { CheckBox } from "react-native-elements";
 import { PickerItem } from '../../globalComponents';
 
 import styles from "./styles";
+import {Picker} from "@react-native-community/picker";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";

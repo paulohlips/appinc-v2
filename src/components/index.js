@@ -10,7 +10,8 @@ import Scanner from "./scanner";
 import DifDatas from "./periodo";
 import Veiculos from "./veiculo";
 import Sketch from "./sketch";
-import InfoVeiculo from './InfoVeiculo'
+import InfoVeiculo from  './InfoVeiculo'
+import AvariaVeiculo from './avariaVeiculo'
 
 export {
   InputText,
@@ -25,5 +26,6 @@ export {
   Group,
   Scanner,
   DifDatas,
-  InfoVeiculo
+  InfoVeiculo,
+  AvariaVeiculo
 };

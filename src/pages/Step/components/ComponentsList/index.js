@@ -14,6 +14,7 @@ import {
   OCR,
   DifDatas,
   Group,
+  InfoVeiculo
 } from '../../../../components';
 import styles from './styles';
 
@@ -44,6 +45,13 @@ class ComponentList extends Component {
             this.props.data.component_type === 'group' && (
               <View style={styles.component}>
                 <Group data={this.props.data} />
+              </View>
+            )
+          }
+          {
+            this.props.data.component_type === 'infoveiculo' && (
+              <View style={styles.component}>
+                <InfoVeiculo data={this.props.data} />
               </View>
             )
           }

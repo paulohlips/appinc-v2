@@ -7,9 +7,6 @@ import { CheckBox } from 'react-native-elements';
 import styles from './styles';
 import { colors } from '../../styles';
 
-const car = '../../assents/imgs/car.png';
-const moto = '../../assents/imgs/moto.png';
-const truck = '../../assents/imgs/truck.png';
 
 
 class InfoVeiculo extends Component {
@@ -33,10 +30,11 @@ class InfoVeiculo extends Component {
 
       <View style={styles.container}>
         
-        <Text  style={styles.header}>INFORMAÇÕES GERAIS DO VEÍCULO</Text>
+        <Text  style={styles.header}>DADOS EXTERNOS DO VEÍCULO</Text>
         
         <View style={styles.box}>
             <CheckBox
+            checkedColor={'#cdad00'}
                 checked={this.state.checked1}
                 onPress={() => this.setState({checked1: !this.state.checked1})} 
             />
@@ -45,6 +43,7 @@ class InfoVeiculo extends Component {
 
         <View style={styles.box}>
             <CheckBox
+            checkedColor={'#cdad00'}
                 checked={this.state.checked2}
                 onPress={() => this.setState({checked2: !this.state.checked2})} 
             />
@@ -53,6 +52,7 @@ class InfoVeiculo extends Component {
 
         <View style={styles.box}>
             <CheckBox
+            checkedColor={'#cdad00'}
                 checked={this.state.checked3}
                 onPress={() => this.setState({checked3: !this.state.checked3})} 
             />
@@ -61,6 +61,7 @@ class InfoVeiculo extends Component {
 
         <View style={styles.box}>
             <CheckBox
+                checkedColor={'#cdad00'}
                 checked={this.state.checked4}
                 onPress={() => this.setState({checked4: !this.state.checked4})} 
             />
@@ -69,6 +70,7 @@ class InfoVeiculo extends Component {
 
         <View style={styles.box}>
             <CheckBox
+            checkedColor={'#cdad00'}
                 checked={this.state.checked5}
                 onPress={() => this.setState({checked5: !this.state.checked5})} 
             />
@@ -77,6 +79,7 @@ class InfoVeiculo extends Component {
 
         <View style={styles.box}>
             <CheckBox
+            checkedColor={'#cdad00'}
                 checked={this.state.checked6}
                 onPress={() => this.setState({checked6: !this.state.checked6})} 
             />
@@ -85,16 +88,18 @@ class InfoVeiculo extends Component {
 
         <View style={styles.box}>
             <CheckBox
+            checkedColor={'#cdad00'}
                 checked={this.state.checked7}
                 onPress={() => this.setState({checked7: !this.state.checked7})} 
             />
-            <Text  style={styles.titulo}>Hodômetro: <Text style={styles.text}>99999.9 KM</Text></Text>
+            <Text  style={styles.titulo}>HODÔMETRO: <Text style={styles.text}>99999.9 KM</Text></Text>
         </View> 
         <View style={styles.picker}>
-        <Text>Trocar Imagem</Text>
+        <Text style={styles.customText}>Trocar Imagem</Text>
+        <View style={styles.pickerView}>
             <Picker
                 selectedValue={this.state.image}
-                style={{ height: 50, width: 50 }}
+                style={{ height: 40, width: 40, color: '#cdad00'}}
                 onValueChange={value =>
                 this.setState({ image: value })
                 }
@@ -103,6 +108,7 @@ class InfoVeiculo extends Component {
                 <Picker.Item label="Caminhão" value={2}/>
                 <Picker.Item label="Moto" value={3} />
             </Picker>
+            </View>
                         
         </View>
 

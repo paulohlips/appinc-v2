@@ -9,6 +9,7 @@ import stylesGroup from './stylesGroup';
 import axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { responsividade } from '../../styles';
+import CheckBall from '../check';
 
 var ImagePicker = NativeModules.ImageCropPicker;
 
@@ -27,11 +28,14 @@ class Camera extends React.Component {
     images: [],
     inputSave: '',
     arrayCamera: [],
+    checked: '',
   };
 
 
   componentWillMount() {
     const { form, data, group, index } = this.props;
+
+    console.tron.log(form);
 
     if (data.group === 'true') {
 
@@ -52,11 +56,13 @@ class Camera extends React.Component {
     } else {
       for (var key in form.step) {
         if (key === data.data_name) {
+          console.tron.log(form.step[key], key)
           if (form.step[key].filled === true) {
             this.setState({
               images: form.step[key].data,
               imagePath: form.step[key].value.uri,
               inputSave: form.step[`leg_${key}`].value,
+              checked: form.step[key].checked,
             });
           }
         }
@@ -118,8 +124,6 @@ class Camera extends React.Component {
       console.log(e);
     });
   }
-
-
 
   pickSingleBase64(cropit) {
     ImagePicker.openPicker({
@@ -299,7 +303,7 @@ class Camera extends React.Component {
 
   saveFormInput = info => {
 
-    const { imageData, imagePath, image, inputSave, images, arrayCamera } = this.state;
+    const { imageData, imagePath, image, inputSave, images, arrayCamera, checked } = this.state;
     const {
       form,
       getSaveStateForm,
@@ -322,6 +326,7 @@ class Camera extends React.Component {
             data: images,
             filled: true,
             type: info.component_type,
+            checked
           };
 
           getSaveStateForm(form);
@@ -349,10 +354,11 @@ class Camera extends React.Component {
               name: ''
             },
             data: image,
-            filled: false
+            filled: false,
+            checked
           };
           getSaveStateForm(form);
-          form[`leg_${info.data_name}`] = { key: `leg_${info.data_name}`, value: inputSave, data: null, filled: true };
+          form[`leg_${info.data_name}`] = { key: `leg_${info.data_name}`, value: inputSave, data: null, filled: true, checked, };
 
           getSaveStateForm(form);
         }
@@ -372,8 +378,9 @@ class Camera extends React.Component {
       component_type
     } = this.props.data;
     const { saveStep } = this.props.form;
-    const { group } = this.props;
+    const { group, cameraVeiculo } = this.props;
     const { largura_tela } = responsividade;
+    const { checked } = this.state;
 
     if (saveStep) {
       this.saveFormInput({ data_name, default_value, component_type });
@@ -381,6 +388,9 @@ class Camera extends React.Component {
     if (group.flagGroup) {
       this.saveGroupCamera({ data_name, default_value })
     }
+
+    console.tron.log(checked);
+
     return (
 
       <View style={groupFlag ? stylesGroup.container : styles.container}>
@@ -431,6 +441,11 @@ class Camera extends React.Component {
             onChangeText={inputSave => this.setState({ inputSave })}
           />
         </View>
+        {
+          cameraVeiculo && (
+            <CheckBall handleCheck={(value) => this.setState(value)} checked={checked} />
+          )
+        }
       </View>
     );
   }

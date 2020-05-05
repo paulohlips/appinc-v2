@@ -14,6 +14,7 @@ import {
   OCR,
   DifDatas,
   Group,
+  VeiculoCheck,
 } from '../../../../components';
 import styles from './styles';
 
@@ -58,6 +59,18 @@ class ComponentList extends Component {
             this.props.data.component_type === 'ocr' && (
               <View style={styles.component}>
                 <OCR data={this.props.data} index={this.props.data.group ? this.props.index : null} />
+              </View>
+            )
+          }
+          {
+            this.props.data.component_type === 'cameraVeiculo' && (
+              <View style={styles.component}>
+                <Camera
+                  data={this.props.data}
+                  index={this.props.data.group ? this.props.index : null}
+                  groupMother={this.props.data.group ? this.props.groupName : null}
+                  cameraVeiculo
+                />
               </View>
             )
           }

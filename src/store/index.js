@@ -22,7 +22,6 @@ const saveAuthToken = store => next => action => {
 }
 
 const saveForm = store => next => action => {
-  //console.tron.log('middlewere saveform\n\n', store, action);
   return next(action);
 }
 

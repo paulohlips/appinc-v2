@@ -1,5 +1,7 @@
 export const Types = {
   SET_CHECKBOX_STATE: "infoVeiculoState/SET_CHECKBOX_STATE",
+  START_UPDATE_PROGRESS: 'form/UPDATE_PROGRESS',
+  FINISH_UPDATE_PROGRESS: 'form/FINISH_UPDATE_PROGRESS',
 };
 
 const INITIAL_STATE = {
@@ -12,10 +14,15 @@ const INITIAL_STATE = {
   checked7: false,
   checked8: false,
   image: 1,
+  updateProgress: true,
 };
 
 export default function infoVeiculoState(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case Types.START_UPDATE_PROGRESS:
+      return { ...state, updateProgress: true };
+    case Types.FINISH_UPDATE_PROGRESS:
+      return { ...state, updateProgress: false };
     case Types.SET_CHECKBOX_STATE:
       const { data } = action;
       return {
@@ -39,5 +46,11 @@ export const Creators = {
   setInfoVeiculoState: (data) => ({
     type: Types.SET_CHECKBOX_STATE,
     data,
+  }),
+  startUpdateProgress: () => ({
+    type: Types.START_UPDATE_PROGRESS,
+  }),
+  finishUpdateProgress: () => ({
+    type: Types.FINISH_UPDATE_PROGRESS,
   }),
 };

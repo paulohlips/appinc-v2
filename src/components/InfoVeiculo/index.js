@@ -8,12 +8,14 @@ import styles from "./styles";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import infoVeiculoState, {
-  Creators as InfoVeiculoActions,
-} from "../../store/ducks/infoVeiculo";
+import { Creators as InfoVeiculoActions }  from "../../store/ducks/infoVeiculo";
+import { Creators as FormActions } from '../../store/ducks/form';
+
 
 class InfoVeiculo extends Component {
+  
   state = {
+    progress: false,
     checked1: false,
     checked2: false,
     checked3: false,
@@ -26,8 +28,8 @@ class InfoVeiculo extends Component {
   };
 
   componentWillMount() {
-    const { infoVeiculo } = this.props;
-
+    const { infoVeiculo,  startUpdateProgress} = this.props;
+    startUpdateProgress()
     this.setState({
       checked1: infoVeiculo.checked1,
       checked2: infoVeiculo.checked2,
@@ -38,11 +40,37 @@ class InfoVeiculo extends Component {
       checked7: infoVeiculo.checked7,
       checked8: infoVeiculo.checked8,
       image: infoVeiculo.image,
+      progress: true
     });
+
+    const { form, data, group, index, noteState } = this.props;
+
+    if (data.group === 'true') {
+      group.dataGroup.map(item => {
+        item.value.map(components => {
+          if (components.index === index) {
+            Object.keys(components).map(key => {
+              if (key === data.data_name) {
+                this.setState({ inputSave: components[key].value })
+              }
+            })
+          }
+        })
+      });
+    } else {
+      for (var key in form.step) {
+        if (key === data.data_name) {
+          if (form.step[key].filled === true) {
+            this.setState({ inputSave: form.step[key].value });
+          }
+        }
+      }
+    }
+
   }
   componentWillUnmount() {
-    const { setInfoVeiculoState } = this.props;
-
+    const { setInfoVeiculoState, startUpdateProgress } = this.props;
+    startUpdateProgress()
     const {
       checked1,
       checked2,
@@ -68,14 +96,58 @@ class InfoVeiculo extends Component {
     };
 
     setInfoVeiculoState(data);
+    
+  }
+
+  saveFormInput = info => {
+    const { inputSave } = this.state;
+    const {
+      form,
+      getSaveStateForm,
+      startControlArray,
+      data,
+    } = this.props;
+
+    if (inputSave) {
+      if (data.note === true) {
+      } else {
+        for (var key in form.step) {
+          if (key === info.data_name) {
+            const form = {};
+            form[info.data_name] = { key: info.data_name, value: inputSave, filled: true };
+            getSaveStateForm(form);
+          }
+        }
+      }
+    } else {
+      for (var key in form.step) {
+        if (key === info.data_name) {
+          const form = {};
+          form[info.data_name] = { key: info.data_name, value: inputSave, filled: true };
+          getSaveStateForm(form);
+        }
+      }
+    }
+    startControlArray();
   }
 
   render() {
     const { infoVeiculo, setInfoVeiculoState } = this.props;
+    const { 
+      data_name,
+      label, hint,
+      default_value,
+    } = this.props.data;
+    const { saveStep, step } = this.props.form;
+    
+    if (saveStep) {
+      this.saveFormInput({ data_name, default_value });
+    }
+
 
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>DADOS EXTERNOS DO VEÍCULO</Text>
+        <Text style={styles.header}>{hint}</Text>
 
         <View style={styles.box}>
           <CheckBox
@@ -203,12 +275,14 @@ class InfoVeiculo extends Component {
 
 const mapStateToProps = (state) => ({
   infoVeiculo: state.infoVeiculoState,
+  form: state.formState,
 });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...InfoVeiculoActions,
+      ...FormActions, 
     },
     dispatch
   );

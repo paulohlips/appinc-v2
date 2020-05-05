@@ -7,7 +7,7 @@ class PickerItem extends Component {
     state = {
         shift: new Animated.Value(responsividade.ALTURA_INPUT),
         setPicker: false,
-        valueText: 'Escolha um Item',
+        valueText: 'Escolha uma opção',
         valuePicker: null,
         configPicker: [],
     }
@@ -18,13 +18,13 @@ class PickerItem extends Component {
     }
     setPicker = item => {
         const { setPicker, shift, configPicker, valueText } = this.state
-        const { receiveProps } = this.props; 
+        const { receiveProps } = this.props;
         const size = configPicker.length;
         if (item !== undefined) {
             this.setState({ valueText: item.name, valuePicker: item.value });
             receiveProps(item.value);
         }
-        
+
         if (setPicker) {
             this.setState({ setPicker: false })
             Animated.timing(shift, {
@@ -38,7 +38,7 @@ class PickerItem extends Component {
                 duration: 200,
             }).start();
         }
-        
+
     }
 
     renderPicker = props => {
@@ -48,19 +48,19 @@ class PickerItem extends Component {
                     <Text>{props.item.name}</Text>
                 </View>
             </TouchableOpacity>
-        );            
+        );
     }
 
     render() {
         const { valueText, valuePicker, configPicker } = this.state;
-        return(
+        return (
             <Animated.View style={{ ...styles.container, height: this.state.shift }}>
                 <TouchableOpacity onPress={() => this.setPicker()}>
                     <View style={styles.onePicker}>
                         <Text>{valueText}</Text>
                     </View>
                 </TouchableOpacity>
-                <FlatList 
+                <FlatList
                     data={configPicker}
                     keyExtractor={key => key.text}
                     renderItem={item => this.renderPicker(item)}

@@ -3,17 +3,18 @@ import React, { Component } from "react";
 // styles
 import { View, Text, Image, Picker } from "react-native";
 import { CheckBox } from "react-native-elements";
+import { PickerItem } from '../../globalComponents';
 
 import styles from "./styles";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Creators as InfoVeiculoActions }  from "../../store/ducks/infoVeiculo";
+import { Creators as InfoVeiculoActions } from "../../store/ducks/infoVeiculo";
 import { Creators as FormActions } from '../../store/ducks/form';
 
 
 class InfoVeiculo extends Component {
-  
+
   state = {
     progress: false,
     checked1: false,
@@ -25,10 +26,24 @@ class InfoVeiculo extends Component {
     checked7: false,
     checked8: false,
     image: 1,
+    infopicker: [
+      {
+        name: 'Carro',
+        value: '1',
+      },
+      {
+        name: 'Moto',
+        value: '3',
+      },
+      {
+        name: 'Caminhão',
+        value: '2',
+      },
+    ],
   };
 
   componentWillMount() {
-    const { infoVeiculo,  startUpdateProgress} = this.props;
+    const { infoVeiculo, startUpdateProgress } = this.props;
     startUpdateProgress()
     this.setState({
       checked1: infoVeiculo.checked1,
@@ -96,7 +111,7 @@ class InfoVeiculo extends Component {
     };
 
     setInfoVeiculoState(data);
-    
+
   }
 
   saveFormInput = info => {
@@ -133,13 +148,14 @@ class InfoVeiculo extends Component {
 
   render() {
     const { infoVeiculo, setInfoVeiculoState } = this.props;
-    const { 
+    const {
       data_name,
       label, hint,
       default_value,
     } = this.props.data;
     const { saveStep, step } = this.props.form;
-    
+    const { infopicker } = this.state;
+
     if (saveStep) {
       this.saveFormInput({ data_name, default_value });
     }
@@ -226,18 +242,10 @@ class InfoVeiculo extends Component {
           </Text>
         </View>
         <View style={styles.picker}>
-          <Text style={styles.customText}>Trocar Imagem</Text>
-          <View style={styles.pickerView}>
-            <Picker
-              selectedValue={this.state.image}
-              style={{ height: 40, width: 40, color: "#cdad00" }}
-              onValueChange={(value) => this.setState({ image: value })}
-            >
-              <Picker.Item label="Carro" value={1} />
-              <Picker.Item label="Caminhão" value={2} />
-              <Picker.Item label="Moto" value={3} />
-            </Picker>
-          </View>
+          <PickerItem
+            receiveProps={(tipo => this.setState({ image: tipo }))}
+            arrayConfig={infopicker}
+          />
         </View>
 
         <View style={styles.imageBox}>
@@ -254,15 +262,15 @@ class InfoVeiculo extends Component {
             <Image
               style={styles.image}
               source={require("../../assents/imgs/truck.png")}
-              width={380}
+              width={350}
               height={200}
             />
           ) : null}
 
           {this.state.image == 3 ? (
             <Image
-              style={styles.image}
-              width={380}
+              style={styles.image2}
+              width={350}
               height={200}
               source={require("../../assents/imgs/moto.png")}
             />
@@ -282,7 +290,7 @@ const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       ...InfoVeiculoActions,
-      ...FormActions, 
+      ...FormActions,
     },
     dispatch
   );

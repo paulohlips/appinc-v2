@@ -4,7 +4,7 @@ import { colors, responsividade } from '../../styles';
 const styles = StyleSheet.create({
     container: {
         //height: responsividade.ALTURA_INPUT,
-        width: responsividade.largura_tela * 0.9,
+        width: responsividade.largura_tela * 0.8,
         alignItems: 'center',
         //justifyContent: 'center',
         flexDirection: 'column',

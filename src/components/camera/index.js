@@ -35,8 +35,6 @@ class Camera extends React.Component {
   componentWillMount() {
     const { form, data, group, index } = this.props;
 
-    console.tron.log(form);
-
     if (data.group === 'true') {
 
       group.dataGroup.map(item => {
@@ -56,7 +54,6 @@ class Camera extends React.Component {
     } else {
       for (var key in form.step) {
         if (key === data.data_name) {
-          console.tron.log(form.step[key], key)
           if (form.step[key].filled === true) {
             this.setState({
               images: form.step[key].data,
@@ -389,7 +386,6 @@ class Camera extends React.Component {
       this.saveGroupCamera({ data_name, default_value })
     }
 
-    console.tron.log(checked);
 
     return (
 

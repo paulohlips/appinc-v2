@@ -312,6 +312,25 @@ class Camera extends React.Component {
     } = this.props;
     const size = arrayCamera.length;
 
+    const form2 = {};
+    form2[info.data_name] = {
+      key: info.data_name,
+      value: arrayCamera,
+      data: images,
+      filled: true,
+      type: info.component_type,
+      checked
+    };
+    getSaveStateForm(form2);
+
+    form2[`leg_${info.data_name}`] = {
+      key: `leg_${info.data_name}`,
+      value: inputSave, data: null,
+      filled: true,
+      type: 'text',
+    };
+
+    getSaveStateForm(form2);
 
     if (size > 0) {
       for (var key in form.step) {
@@ -334,7 +353,6 @@ class Camera extends React.Component {
             type: 'text',
           };
 
-
           getSaveStateForm(form);
         }
       }
@@ -352,10 +370,9 @@ class Camera extends React.Component {
             },
             data: image,
             filled: false,
-            checked
           };
           getSaveStateForm(form);
-          form[`leg_${info.data_name}`] = { key: `leg_${info.data_name}`, value: inputSave, data: null, filled: true, checked, };
+          form[`leg_${info.data_name}`] = { key: `leg_${info.data_name}`, value: inputSave, data: null, filled: true };
 
           getSaveStateForm(form);
         }

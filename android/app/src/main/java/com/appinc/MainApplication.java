@@ -3,7 +3,6 @@ package com.appinc;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.reactnativecommunity.picker.RNCPickerPackage;
 import com.safaeean.barcodescanner.BarcodeScannerPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -35,7 +34,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNCPickerPackage(),
             new RNFetchBlobPackage(),
             new VectorIconsPackage(),
             new RNSoundPackage(),

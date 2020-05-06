@@ -6,7 +6,6 @@ import { CheckBox } from "react-native-elements";
 import { PickerItem } from '../../globalComponents';
 
 import styles from "./styles";
-import {Picker} from "@react-native-community/picker";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";

@@ -58,12 +58,19 @@ class AudioRec extends Component {
   };
 
   onStartRecord = async () => {
+    
     const { name } = this.state;
-    const result = await this.audioRecorderPlayer.startRecorder(
-      Platform.OS === "ios"
-        ? `${name}.m4a`
-        : `/storage/emulated/0/Music/${name}.mp3`
-    );
+    try {
+      const result = await this.audioRecorderPlayer.startRecorder(
+        Platform.OS === "ios"
+          ? `${name}.m4a`
+          : `/storage/emulated/0/Music/${name}.mp3`
+      );
+    } catch (error) {
+      //console.tron.log({ ERROR_START_RECORDER: error })
+      return;
+    }
+    
     this.audioRecorderPlayer.addRecordBackListener(e => {
       this.setState({
         recordSecs: e.current_position,
@@ -77,11 +84,18 @@ class AudioRec extends Component {
   };
 
   onStopRecord = async () => {
-    const result = await this.audioRecorderPlayer.stopRecorder();
-    this.audioRecorderPlayer.removeRecordBackListener();
-    this.setState({
-      recordSecs: 0
-    });
+    try {
+      const result = await this.audioRecorderPlayer.stopRecorder();
+      //console.tron.log(result);
+      this.audioRecorderPlayer.removeRecordBackListener();
+      this.setState({
+        recordSecs: 0
+      });
+    } catch (error) {
+      return;
+      //console.tron.log({ ERROR_AUDIO: error });
+    }
+   
   };
 
   onStartPlay = async () => {
